@@ -8,7 +8,7 @@ class DeviseCreateUsers < ActiveRecord::Migration[6.1]
       t.string :postal_code,                  null: false
       t.string :address,                      null: false
       t.string :phone,                        null: false
-      t.integer :is_roaster, default: false,   null: false
+      t.integer :is_roaster,                   null: false
       t.text :introduction,                   null: false
       t.string :local,                          null: false
       

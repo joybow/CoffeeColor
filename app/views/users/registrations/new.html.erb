@@ -33,12 +33,14 @@
           </div>
         </div>
 
-        <div class="form-group row">
-          <%= f.select :is_roaster, options_for_select(User.is_roasters), {prompt:"選択してください"}, class: "col-md-5 col-form-label text-md-left" do %>
-          <% end %>
-          <span class="ml-1 CoffeeColor-require-input-label">
+        <div class="form-group container">
+          <span class="ml-1 ">あなたの区分</span>
+          <span class="ml-1 m-2 CoffeeColor-require-input-label">
             <span class="CoffeeColor-require-input-label-text">必須</span>
           </span>
+          <%= f.select :is_roaster, options_for_select(User.is_roasters), {prompt:"選択してください"}, class: "col-md-5 col-form-label text-md-left offset-md-3" do %>
+          <% end %>
+          
         </div>
 
         <div class="form-group row">

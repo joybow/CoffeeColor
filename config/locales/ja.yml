@@ -1,0 +1,7 @@
+ja:
+  enums:
+  user/is_roaster:
+    status:
+      customer: ユーザー
+      roaster: 焙煎士
+      maker: メーカー
