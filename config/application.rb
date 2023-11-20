@@ -20,5 +20,6 @@ module CoffeeColor
     # config.eager_load_paths << Rails.root.join("extras")
     # バリデーションエラーの場合に'field_with_errors'というClassを発生させない
     config.action_view.field_error_proc = Proc.new { |html_tag, instance| html_tag}
+    config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.{rb,yml}').to_s]
   end
 end

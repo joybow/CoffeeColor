@@ -33,14 +33,27 @@
           </div>
         </div>
 
-        <div class="form-group container">
-          <span class="ml-1 ">あなたの区分</span>
-          <span class="ml-1 m-2 CoffeeColor-require-input-label">
-            <span class="CoffeeColor-require-input-label-text">必須</span>
-          </span>
-          <%= f.select :is_roaster, options_for_select(User.is_roasters), {prompt:"選択してください"}, class: "col-md-5 col-form-label text-md-left offset-md-3" do %>
+        <div class="form-group row ">
+
+          <%= f.label :is_roaster, "", class: "col-md-5 col-form-label text-md-left" do %>
+            あなたの区分
+            <span class="ml-1 CoffeeColor-require-input-label">
+              <span class="CoffeeColor-require-input-label-text">必須</span>
+            </span>
           <% end %>
-          
+
+          <div class="col-md-7 ">
+            <%=
+              f.select :is_roaster, User.enum_options_for_select(:is_roaster),
+              class: "form-control  #{"is-invalid" if resource.errors.messages[:is_roaster].present? } CoffeeColor-login-input"
+            %>
+
+            <% if resource.errors.messages[:is_roaster].present? %>
+              <span class="CoffeeColor-error-message">
+                <strong><%= resource.errors.full_messages_for(:is_roaster).first %></strong>
+              </span>
+            <% end %>
+          </div>
         </div>
 
         <div class="form-group row">
@@ -88,13 +101,25 @@
         </div>
 
         <div class="form-group row">
-          <%= f.label :local, "", class: "col-md-5 col-form-label text-md-left" do %>
+          <%= f.label :local, "", class: "col-md-5 col-form-label " do %>
           地域
             <span class="ml-1 CoffeeColor-require-input-label">
               <span class="CoffeeColor-require-input-label-text">必須</span>
             </span>
           <% end %>
-          <%= render partial: "form" %>
+
+          <div class="col-md-7 ">
+            <%=
+              f.select :local, User.enum_options_for_select(:local),
+              class: "form-control  #{"is-invalid" if resource.errors.messages[:local].present? } CoffeeColor-login-input"
+            %>
+
+            <% if resource.errors.messages[:local].present? %>
+              <span class="CoffeeColor-error-message">
+                <strong><%= resource.errors.full_messages_for(:is_roaster).first %></strong>
+              </span>
+            <% end %>
+          </div>
         </div>
 
         <div class="form-group row">
