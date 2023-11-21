@@ -59,7 +59,7 @@ ActiveRecord::Schema.define(version: 2023_11_16_052543) do
     t.string "phone", null: false
     t.integer "is_roaster", null: false
     t.text "introduction"
-    t.string "local", null: false
+    t.integer "local", null: false
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
