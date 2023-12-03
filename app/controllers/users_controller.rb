@@ -13,12 +13,19 @@ class UsersController < ApplicationController
     @name = current_user.name
   end
 
-  def edit address
+  def edit_address
   end
 
   def show
-
   end
+
+  def posts
+  end
+
+  def destroy
+    redirect_to root
+  end
+
   private
   def set_user
     @user = current_user

@@ -15,12 +15,13 @@
             <li class="nav-item dropdown">
               <%= link_to "#", id: "navbarDropdown", class: "nav-link dropdown-toggle",
               role: "button", data: { toggle: "dropdown" }, aria: { haspopup: "true", expanded: "false" } do %>
-                  <%= current_user.name %> <span class="caret"></span>
+              <span class="caret">マイページ</span>
               <% end %>
 
               <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                <%= link_to "ログアウト", logout_path, method: :delete, class: "dropdown-item" %>
+                <%= link_to "ログアウト", logout_path, method: :destroy, class: "dropdown-item" %>
               </div>
+                
             </li>
           <% else %>
             <li class="nav-item">

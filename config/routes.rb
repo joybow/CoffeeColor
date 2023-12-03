@@ -1,7 +1,9 @@
 Rails.application.routes.draw do
   
-  resources :posts
-  get 'users/show'
+  resources :posts do
+    resource :favorites, only: [:create, :destroy]
+  end
+
   devise_for :users, :controllers => {
     :registrations => 'users/registrations',
     :sessions => 'users/sessions',
@@ -26,6 +28,7 @@ Rails.application.routes.draw do
       put "mypage", :to => "users#update"
     end
   end
+  
 
   resources :products
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html

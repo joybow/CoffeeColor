@@ -1,9 +1,31 @@
-<div class="container d-flex  mt-3">
-  <div class="w-50">
-    <h1 class="row "><%= @name %>さん</h1>
+<div class="container d-flex  mt-1">
+  <div class="w-20">
+    <h3 class="col-md-center"><%= @name %>さん</h3>
     
     <hr>
-
+  
+    <div class="col-12 mg-5">
+      <div class="row flex-column border-info align-items-light">最近の投稿
+      </div>
+    </div>
+    <div class="posts border ">
+      <% current_user.posts.each do |f| %>
+      <%= f.title %>
+      <% end %>
+    </div>
+    <div class="container">
+      <div class="row">
+        マイレシピ
+        <div class="flex-column">
+        <% current_user.posts.each do |f|%>
+        <%= f.content %>
+        <% end %>
+        </div>
+        <div class="col-5">
+          投稿者
+        </div>
+      </div>
+    </div>
     <div class="container">
       <div class="d-flex justify-content-between">
         <div class="row">

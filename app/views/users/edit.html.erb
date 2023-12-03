@@ -2,14 +2,14 @@
   <div class="row justify-content-center">
     <div class="col-md-5">
       <span>
-        <%= link_to "マイページ", mypage_users_path %> > 会員情報の編集
+        <%= link_to "マイページ", mypage_user_path %> > 会員情報の編集
       </span>
 
       <h1 class="mt-3 mb-3">会員情報の編集</h1>
 
       <hr>
 
-      <%= form_with url: mypage_users_path, local: true, method: :put do |f| %>
+      <%= form_with url: mypage_user_path, local: true, method: :put do |f| %>
       
         
         <div class="form-group">
