@@ -11,6 +11,7 @@ import "channels"
 import 'bootstrap';
 import 'bootstrap/dist/js/bootstrap'
 import '../stylesheets/application';
+import '@fortawesome/fontawesome-free/js.all';
 
 
 Rails.start()

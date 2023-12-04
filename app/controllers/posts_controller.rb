@@ -11,6 +11,7 @@ class PostsController < ApplicationController
     @post = Post.find(params[:id])
   end
 
+
   # GET /posts/new
   def new
     @post = Post.new
@@ -19,11 +20,9 @@ class PostsController < ApplicationController
 
   # GET /posts/1/edit
   def edit
+    @post = Post.find(params[:id])
   end
 
-  def favorited?(user)
-    favorites.where(user_id: user.id).exists?
-  end
   
   # POST /posts or /posts.json
   def create
@@ -50,8 +49,9 @@ class PostsController < ApplicationController
   # DELETE /posts/1 or /posts/1.json
   def destroy
     @post.destroy
-    redirect_to posts_url, notice: "Post was successfully destroyed." 
+    redirect_to posts_path, notice: "ポストの削除が完了しました。" 
   end
+  
 
   private
     # Use callbacks to share common setup or constraints between actions.
