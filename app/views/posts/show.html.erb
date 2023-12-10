@@ -17,11 +17,17 @@
   <%= @post.title %>
 </p>
 
+<% if @post.post_images.attached? %>
+  <% @post.post_images.variant(resize: '1024x1024').processed.each do |img| %>
+  <%= image_tag img, class: "img-fluid rounded"%>
+  <% end %>
+<% end %>
+
 <p>
   <strong>Content:</strong>
   <%= @post.content %>
 </p>
 
-<%= link_to '編集', edit_post_path(@post) %> |
-<%= link_to '戻る', posts_path %>|
-<%= link_to '削除', post, "/post/#{post.id}", method: :delete %>
+<%= link_to '編集', edit_post_path(@post), class: "btn btn-outline-primary" %>
+<%= link_to '戻る', posts_path, class: "btn btn-outline-primary" %>
+<%= link_to '削除', post_path(@post), method: :delete, data: { confirm: '本当に削除しますか？' }, class: "btn btn-outline-danger" %>

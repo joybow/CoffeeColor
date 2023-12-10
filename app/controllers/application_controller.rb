@@ -6,13 +6,14 @@ class ApplicationController < ActionController::Base
       flash[:notice] = "ログインに成功しました"
       get "mypage", :to => "users#mypage"
     else
-      falsh[:notice] = "新規会員登録完了しました。マイページにて情報を更新して下さい。"
+      flash[:notice] = "新規会員登録完了しました。マイページにて情報を更新して下さい。"
       coffee_color_users_path
     end
   end
 
   protected
-  
+
+
     def configure_permitted_parameters
       devise_parameter_sanitizer.permit(:signup, keys: [:is_roaster])
     end

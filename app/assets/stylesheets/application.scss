@@ -11,13 +11,11 @@
  * It is generally better to create a new file per style scope.
  */
 // Custom bootstrap variables must be set or imported *before* 
-@import "bootstrap";
 
-.CoffeeColor-footer {
-  width: 4%;
-  height: 4%;
-  text-align: center;
-}
+@import "bootstrap";
+@import "font-awesome-sprockets";
+@import "font-awesome";
+
 
 .posts {
   margin-bottom: 15px;

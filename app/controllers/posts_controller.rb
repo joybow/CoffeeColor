@@ -1,14 +1,14 @@
 class PostsController < ApplicationController
   before_action :authenticate_user!
-
+  before_action :set_post, except: [:index]
+  
   # GET /posts or /posts.json
-  def index
+  def index    
     @posts = Post.all
   end
 
   # GET /posts/1 or /posts/1.json
   def show
-    @post = Post.find(params[:id])
   end
 
 
@@ -20,7 +20,6 @@ class PostsController < ApplicationController
 
   # GET /posts/1/edit
   def edit
-    @post = Post.find(params[:id])
   end
 
   
@@ -37,17 +36,16 @@ class PostsController < ApplicationController
 
   # PATCH/PUT /posts/1 or /posts/1.json
   def update
-    respond_to do |format|
-      if @post.update(post_params)
-        redirect_to post_url(@post), notice: "Post was successfully updated."
-      else
-        render :edit, alert: "unprocessable_entity" 
-      end
+    if @post.update!(post_params)
+      redirect_to post_url(@post), notice: "Post was successfully updated."
+    else
+      render :edit, alert: "unprocessable_entity" 
     end
   end
 
   # DELETE /posts/1 or /posts/1.json
   def destroy
+    @post = set_post
     @post.destroy
     redirect_to posts_path, notice: "ポストの削除が完了しました。" 
   end
@@ -61,6 +59,6 @@ class PostsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def post_params
-      params.require(:post).permit(:title, :body, :content)
+      params.require(:post).permit(:title, :body, :content, post_images:[])
     end
 end

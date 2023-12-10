@@ -1,0 +1,5 @@
+<%= form_with model: @comment, local: true do |f|%>
+  <%= f.text_area :content%><br>
+  <%= f.file_filed :images %><br>
+  <%= form.submit %>
+<% end %>
