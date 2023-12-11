@@ -2,12 +2,12 @@
 
 <% if @post.favorited?(current_user) %>
   <%# 一致するレコードが存在する＝すでにいいね済みの場合はdestroyアクションへ %>
-  <%= link_to post_favorites_path(@post.id), method: :delete do %>
+  <%= button_to post_favorites_path(@post.id), method: :delete do %>
       <span style="color:red;">❤︎</span>
   <% end %>
 <% else %>
   <%# # 一致するレコードが存在しない＝まだいいねしていない場合はcreateアクションへ %>
-  <%= link_to post_favorites_path(@post.id), method: :post do %>
+  <%= button_to post_favorites_path(@post.id), method: :post do %>
       <span>❤︎</span>
   <% end %>
 <% end %>
@@ -18,7 +18,7 @@
 </p>
 
 <% if @post.post_images.attached? %>
-  <% @post.post_images.variant(resize: '1024x1024').processed.each do |img| %>
+  <% @post.post_images.each do |img| %>
   <%= image_tag img, class: "img-fluid rounded"%>
   <% end %>
 <% end %>

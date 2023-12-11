@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   
   resources :comments
+  
   resources :posts do
     resource :favorites, only: [:create, :destroy]
   end
