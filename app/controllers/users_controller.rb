@@ -23,7 +23,9 @@ class UsersController < ApplicationController
   end
 
   def destroy
-    redirect_to posts_path
+    @user.deleted_flg = User.switch_flg(@user.deleted_flg)
+    @user.update(deleted_flg: @user.deleted_flg)
+    redirect_to mypage_user_path
   end
 
   private
@@ -33,7 +35,7 @@ class UsersController < ApplicationController
 
   def user_params
     params.required(:user).permit(:name,:postal_code,:address,:phone,
-    :introduction,:local,:email,:user_image).merge(is_roaster: params[:user][:is_roaster].to_i)
+    :introduction,:local,:favorites,:email,:user_image).merge(is_roaster: params[:user][:is_roaster].to_i)
   end
 
 end

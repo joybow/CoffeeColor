@@ -20,17 +20,13 @@
     <%= form.label :content %>
     <%= form.text_area :content, class:"form-control" %>
   </div>
-
-  <div class="actions">
-    <%= form.submit class:"btn btn-success btn-rounded" %>
-  </div>
-
-  <br>
 <% end %>
+<br>
 <%= form_with model: post, local: true do |f| %>
   <div class="form-group gap-2 ">
-    <%= f.file_field :post_images, multiple: true,class: "btn btn-secondary" %><br>
-    <%= f.submit class: "btn btn-secondary" %>
+    <%= f.file_field :post_images, multiple: true,class: "btn btn-primary" %>
+    <br>
+    <%= f.submit class: "btn btn-primary" %>
   </div>
 <% end %>
 

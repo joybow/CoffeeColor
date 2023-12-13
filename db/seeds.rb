@@ -21,6 +21,7 @@ User.create!(
   local: '愛知県',
   email: 'test1@test1.com',
   password: '222222',
+  password_confirmation: '222222'
 )
 
 User.create!(
@@ -33,4 +34,5 @@ User.create!(
   local: '愛知県',
   email: 'test3@test3.com',
   password: '333333',
+  password_confirmation: '333333'
 )

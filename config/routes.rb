@@ -28,6 +28,7 @@ Rails.application.routes.draw do
       get "mypage/edit", :to => "users#edit"
       get "mypage/address/edit", :to => "users#edit_address"
       put "mypage", :to => "users#update"
+      delete "mypage/delete" , :to => "users#destroy"
     end
   end
   

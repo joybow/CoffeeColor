@@ -1,6 +1,6 @@
 class PostsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_post, except: [:index]
+  before_action :set_post, except: [:new, :create, :index]
   
   # GET /posts or /posts.json
   def index    
@@ -36,11 +36,15 @@ class PostsController < ApplicationController
 
   # PATCH/PUT /posts/1 or /posts/1.json
   def update
+    @image = post_params.find(params[:post_images])
     if @post.update!(post_params)
-      redirect_to post_url(@post), notice: "Post was successfully updated."
+      @image.update!(post_params)
+      redirect_to post_url(@post), notice: "投稿はアップデートされました！"
     else
-      render :edit, alert: "unprocessable_entity" 
+      render :edit, alert: "アップデートされませんでした。" 
     end
+
+    
   end
 
   # DELETE /posts/1 or /posts/1.json
@@ -61,4 +65,5 @@ class PostsController < ApplicationController
     def post_params
       params.require(:post).permit(:title, :body, :content, post_images:[])
     end
+
 end

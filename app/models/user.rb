@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  extended SwitchFlg
   enum is_roaster: { customer: 0, roaster: 1, maker: 2 }
   enum local:{
     "---":0,
@@ -17,6 +18,6 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
       :recoverable, :rememberable, :validatable, :confirmable
   has_many :posts, dependent: :destroy
-  has_many :favorites, dependent: :destroy 
+  has_many :posts_favorites, through: :favorites,  source: :post, dependent: :destroy 
   has_one_attached :user_image
 end
