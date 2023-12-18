@@ -1,6 +1,11 @@
 class UsersController < ApplicationController
   before_action :set_user
   
+  
+  def index
+    @users = User.page(params[:page]).per(PER)
+  end 
+
   def edit
   end
 
@@ -37,5 +42,5 @@ class UsersController < ApplicationController
     params.required(:user).permit(:name,:postal_code,:address,:phone,
     :introduction,:local,:favorites,:email,:user_image).merge(is_roaster: params[:user][:is_roaster].to_i)
   end
-
+  
 end

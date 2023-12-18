@@ -10,6 +10,10 @@ Rails.application.routes.draw do
     delete "dashboard/logout", :to => "admins/sessions#destroy"
   end
 
+  namespace :dashboard do
+    resources :users, only: [:index,:update,:destroy]
+  end
+
   get "dashboard", :to => "dashboard#index"
   resources :comments
   

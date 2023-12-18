@@ -36,15 +36,12 @@ class PostsController < ApplicationController
 
   # PATCH/PUT /posts/1 or /posts/1.json
   def update
-    @image = post_params.find(params[:post_images])
-    if @post.update!(post_params)
-      @image.update!(post_params)
+    if @post.post_images.blank?
+    elsif @post.update!(post_params) 
       redirect_to post_url(@post), notice: "投稿はアップデートされました！"
     else
       render :edit, alert: "アップデートされませんでした。" 
     end
-
-    
   end
 
   # DELETE /posts/1 or /posts/1.json
