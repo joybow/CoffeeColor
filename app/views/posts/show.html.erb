@@ -28,9 +28,28 @@
   <% end %>
 <% end %>
 
-<br>
+<h2>コメント一覧</h2>
 
-<div class="btn ">
+<%= form_with model:[@post, @comment],local: false do |f|%>
+  <%= f.text_area :content, rows:'5', placeholder: "コメント追加できます！", class: "form-control mt-3"%>
+    <div class="text-right">
+      <%= f.submit "投稿！", class: "btn btn-primary mt-3 mb-3"%>
+    </div>
+<% end %>
+
+<% @post_comments.each do |comment| %>
+<div class="col-3 text-center">
+  <div class="small mb-4">
+  <%= comment.user.name %><br />
+  <%= comment.content%>
+  </div>
+</div>
+<%= link_to '削除', post_comment_path(comment.post, comment), method: :delete, data: { confirm: '本当に削除しますか？' }, class: "btn btn-outline-danger" %>
+<% end %>
+
+<br>
+<br>
+<div class="btn">
   <%= link_to "詳細ページへ", post_path(@post) %>
 </div>
 

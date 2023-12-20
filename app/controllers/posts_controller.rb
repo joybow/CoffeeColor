@@ -9,6 +9,8 @@ class PostsController < ApplicationController
 
   # GET /posts/1 or /posts/1.json
   def show
+    @comment = Comment.new
+    @post_comments = @post.comments
   end
 
 
@@ -36,8 +38,8 @@ class PostsController < ApplicationController
 
   # PATCH/PUT /posts/1 or /posts/1.json
   def update
-    if @post.post_images.blank?
-    elsif @post.update!(post_params) 
+    @post.attach(post_params) if @post.post_images.blank?
+    if @post.update!(post_params) 
       redirect_to post_url(@post), notice: "投稿はアップデートされました！"
     else
       render :edit, alert: "アップデートされませんでした。" 
@@ -48,7 +50,7 @@ class PostsController < ApplicationController
   def destroy
     @post = set_post
     @post.destroy
-    redirect_to posts_path, notice: "ポストの削除が完了しました。" 
+    redirect_to posts_path, notice: "コメントの削除が完了しました。" 
   end
   
 

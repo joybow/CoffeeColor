@@ -22,6 +22,7 @@ class User < ApplicationRecord
   has_many :posts, dependent: :destroy
   has_many :posts_favorites, through: :favorites,  source: :post, dependent: :destroy 
   has_one_attached :user_image
+  has_many :comments, dependent: :destroy
 
   scope :search_information, -> (keyword) {
     where("name like ?","%#{keyword}%").

@@ -1,24 +1,38 @@
 class CommentsController < ApplicationController
-  def new
-    @comment = Comment.new
-  end
+  before_action :authenticate_user!
+  before_action :comment_params
+
+
 
   def create
-    @comment = Comment.create params.require(:comment).permit(:content, :images)
-    redirect_to @comment
+    @post = Post.find(params[:post_id])
+    @comment = Comment.new(comment_params)
+    @comment.user_id = current_user.id
+    @comment.post_id = @post.id
+    if @comment.save
+      flash[:success] = "コメントしました"
+    else
+      falsh[:success] = "コメントできませんでした"
+      redirect_back fallback_location: posts_path
+    end
   end
 
-  def show
-    @comment = Comment.find(params[:id])
+  def destroy
+    @post = Post.find(params[:post_id])
+    @comment = @post.comments
+    Comment.find_by(id: params[:id], post_id: params[:post_id]).destroy
+    redirect_to posts_path(@post)
   end
 
-  def edit
-    @comment = Comment.find(params[:id])
-  end
+
 
   def update
-    @comment = Comment.find(params[:id])
-    @comment.update params.require(:comment).permit(:content, :image)
-    redirect_to @comment
+    @comment.update(comment_params)
+  end
+
+  private
+
+  def comment_params
+    params.require(:comment).permit(:content,:user_id,:post_id)
   end
 end

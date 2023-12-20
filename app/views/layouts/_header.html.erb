@@ -12,12 +12,12 @@
           <!-- user_signed_in? はユーザがログインしているか調べるdeviseのHelperメソッド -->
           <% if user_signed_in? %>
             <!-- current_user は現在ログインしているUserオブジェクトを返すdeviseのHelperメソッド -->
-            <li class="nav-item ">
-              <%= link_to mypage_user_path, class: "nav-link" do %>
-              <i class="fas fa-coffee p-2"></i><label>マイページ</label>
-              <%= link_to "ログアウト", logout_path, method: :delete, class: "nav-link"%>
-              <% end %>
-            </li>
+            <%= link_to image_tag('CoffeeMark.jpeg',{ :size => '50x50', :alt => 'CoffeeMark'}),posts_path, class: "nav-link nav-item"%>
+            <%= link_to mypage_user_path, class: "nav-link nav-item" do %>
+            <i class="fas fa-coffee p-2"></i><label>マイページ</label>
+            <%= link_to "ログアウト", logout_path, method: :delete, class: "nav-link nav-item"%>
+            <% end %>
+            
           <% else %>
             <li class="nav-item">
               <%= link_to "ログイン", new_user_session_path, class: "nav-link" %>
