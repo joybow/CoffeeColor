@@ -3,12 +3,12 @@
 <% if @post.favorited?(current_user) %>
   <%# 一致するレコードが存在する＝すでにいいね済みの場合はdestroyアクションへ %>
   <%= link_to post_favorites_path(@post.id), method: :delete do %>
-      <span style="color:red;">いいね！やめる</span>
+      <span><%= image_tag "heart-rib.png",size: '30x30' %></span>
   <% end %>
 <% else %>
   <%# # 一致するレコードが存在しない＝まだいいねしていない場合はcreateアクションへ %>
   <%= link_to post_favorites_path(@post.id), method: :post do %>
-      <span>❤︎</span>
+    <span><%= image_tag "heart-roast.png",size: '30x30'%>ｲｲﾈ!!</span>
   <% end %>
 <% end %>
 
@@ -38,13 +38,17 @@
 <% end %>
 
 <% @post_comments.each do |comment| %>
-<div class="col-3 text-center">
+<div class="col-3 text-left">
   <div class="small mb-4">
-  <%= comment.user.name %><br />
-  <%= comment.content%>
+    <div class="fs-6">
+      <%= comment.user.name%>
+    </div><br>
+    <div class="fs-5">
+      <%= comment.content%>
+    </div>
   </div>
 </div>
-<%= link_to '削除', post_comment_path(comment.post, comment), method: :delete, data: { confirm: '本当に削除しますか？' }, class: "btn btn-outline-danger" %>
+<%= link_to '削除', post_comments_path(post_id: comment.post, id: comment.id), method: :delete, data: { confirm: '本当に削除しますか？' }, class: "btn btn-sm btn-outline-danger" %>
 <% end %>
 
 <br>

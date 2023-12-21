@@ -15,7 +15,6 @@ Rails.application.routes.draw do
   end
 
   get "dashboard", :to => "dashboard#index"
-  resources :comments
   
   resources :posts do
     resource :favorites, only: [:create, :destroy]
@@ -43,6 +42,7 @@ Rails.application.routes.draw do
       get "mypage", :to => "users#mypage"
       get "mypage/edit", :to => "users#edit"
       get "mypage/address/edit", :to => "users#edit_address"
+      get "mypage/color_picker", :to => "users#color_picker"
       put "mypage", :to => "users#update"
       delete "mypage/delete" , :to => "users#destroy"
     end

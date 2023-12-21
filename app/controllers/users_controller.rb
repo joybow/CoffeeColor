@@ -18,6 +18,9 @@ class UsersController < ApplicationController
     @name = current_user.name
   end
 
+  def color_picker
+  end
+  
   def edit_address
   end
 

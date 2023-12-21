@@ -26,13 +26,17 @@
         <div class="card-text">
           <%= f.content%><br>
           <% end %>
-        <a href="#" calss="btn btn-primary">Go</a>
+        <a href="#" calss="btn btn-primary">
+          <%= link_to "Go",posts_path, class: "btn btn-sm btn-primary"%>
+        </a>
         </div>
       </div>
       <br>
       <div class="card col-12" style= "width: 18rem">
         <div class="card-body">
           <div class="card-title">お役立ちリンク<br>
+          <%= link_to "ColorPicker",mypage_color_picker_user_path %>
+          <br>
           <% current_user.posts.each do |f|%>
           <%= f.title %><br>
           </div>

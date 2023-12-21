@@ -1,19 +1,18 @@
 class CommentsController < ApplicationController
   before_action :authenticate_user!
-  before_action :comment_params
-
-
 
   def create
     @post = Post.find(params[:post_id])
     @comment = Comment.new(comment_params)
     @comment.user_id = current_user.id
     @comment.post_id = @post.id
+    @post_comments = @post.comments
     if @comment.save
       flash[:success] = "コメントしました"
+      redirect_back fallback_location: @post
     else
-      falsh[:success] = "コメントできませんでした"
-      redirect_back fallback_location: posts_path
+      flash[:success] = "コメントできませんでした"
+      redirect_back fallback_location: @post
     end
   end
 
@@ -21,7 +20,7 @@ class CommentsController < ApplicationController
     @post = Post.find(params[:post_id])
     @comment = @post.comments
     Comment.find_by(id: params[:id], post_id: params[:post_id]).destroy
-    redirect_to posts_path(@post)
+    redirect_to @post
   end
 
 
