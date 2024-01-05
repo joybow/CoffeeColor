@@ -8,11 +8,13 @@ class CommentsController < ApplicationController
     @comment.post_id = @post.id
     @post_comments = @post.comments
     if @comment.save
-      flash[:success] = "コメントしました"
-      redirect_back fallback_location: @post
+      redirect_back fallback_location: @post, notice: "コメントしました！"
     else
-      flash[:success] = "コメントできませんでした"
-      redirect_back fallback_location: @post
+      if @comment.blank?
+        redirect_back fallback_location: @post, notice:  "コメントを入力してください！"
+      else
+        redirect_to @post
+      end
     end
   end
 

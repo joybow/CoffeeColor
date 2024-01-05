@@ -69,6 +69,7 @@ gem 'image_processing', '~> 1.2'
 gem 'ruby-vips' 
 
 gem 'rails-i18n'
+gem 'active_storage_validations'
 
 gem 'faker'
 

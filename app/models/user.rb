@@ -22,6 +22,9 @@ class User < ApplicationRecord
   has_many :posts, dependent: :destroy
   has_many :posts_favorites, through: :favorites,  source: :post, dependent: :destroy 
   has_one_attached :user_image
+  validates :user_image, content_type: { in: %w[image/jpeg image/gif image/png],
+                          message: "有効なフォーマットではありません"},
+                          size: { less_than: 5.megabytes, message: "5MBを超える画像はアップロードできません"}
   has_many :comments, dependent: :destroy
 
   scope :search_information, -> (keyword) {

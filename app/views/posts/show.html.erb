@@ -3,12 +3,12 @@
 <% if @post.favorited?(current_user) %>
   <%# 一致するレコードが存在する＝すでにいいね済みの場合はdestroyアクションへ %>
   <%= link_to post_favorites_path(@post.id), method: :delete do %>
-      <span><%= image_tag "heart-rib.png",size: '30x30' %></span>
+      <span><%= image_tag "heart-roast.png",size: '30x30' %>ｲｲﾈ!!</span>
   <% end %>
 <% else %>
   <%# # 一致するレコードが存在しない＝まだいいねしていない場合はcreateアクションへ %>
   <%= link_to post_favorites_path(@post.id), method: :post do %>
-    <span><%= image_tag "heart-roast.png",size: '30x30'%>ｲｲﾈ!!</span>
+    <span><%= image_tag "heart-rib.png",size: '30x30'%></span>
   <% end %>
 <% end %>
 
@@ -28,12 +28,28 @@
   <% end %>
 <% end %>
 
+<br>
+
+<h4>カラーピッカー</h4>
+
+<br>
+
+
+<i class="fas fa-location-arrow" id="arrow-icon"></i>
+<input type="color" class="arrow-icon-color-selector" id="arrow-icon-colorーselector" value="#e66465">
+
+<br>
+<br>
 <h2>コメント一覧</h2>
 
 <%= form_with model:[@post, @comment],local: false do |f|%>
   <%= f.text_area :content, rows:'5', placeholder: "コメント追加できます！", class: "form-control mt-3"%>
     <div class="text-right">
-      <%= f.submit "投稿！", class: "btn btn-primary mt-3 mb-3"%>
+      <% if @comment.present?%>
+        <%= f.submit "投稿！", class: "btn btn-primary mt-3 mb-3"%>
+      <% else %>
+        <%= f.submit "投稿できません", class: "btn btn-secondary disabled" %>
+      <% end %>
     </div>
 <% end %>
 

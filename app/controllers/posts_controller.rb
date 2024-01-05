@@ -22,6 +22,7 @@ class PostsController < ApplicationController
 
   # GET /posts/1/edit
   def edit
+    @post = Post.find(params[:id])
   end
 
   
@@ -30,7 +31,7 @@ class PostsController < ApplicationController
     @post = Post.new(post_params)
     @post.user_id = current_user.id #誰が投稿したか指定
     if @post.save
-      redirect_to new_post_path
+      redirect_to @post
     else
       render :new
     end
@@ -50,7 +51,7 @@ class PostsController < ApplicationController
   def destroy
     @post = set_post
     @post.destroy
-    redirect_to posts_path, notice: "コメントの削除が完了しました。" 
+    redirect_to posts_path, notice: "ポストの削除が完了しました。" 
   end
   
 

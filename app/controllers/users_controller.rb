@@ -1,7 +1,15 @@
 class UsersController < ApplicationController
   before_action :set_user
   
-  
+  def create
+    @user = @user.new(user_params)
+    @user.user_image.attach(params[:user][:user_image])
+    if @user.save
+      redirect_to mypage_user_path
+    else
+      render :create
+    end
+  end
   def index
     @users = User.page(params[:page]).per(PER)
   end 
@@ -11,11 +19,21 @@ class UsersController < ApplicationController
 
   def update
     @user.update_without_current_password(user_params)
-    redirect_to mypage_users_url
+    @user.user_image.attach(params[:user][user_image]) if @user.user_image.blank?
+    if params[:user][:user_image_id]
+      @user.user_image.purge
+    end
+    if @user.update(userparams)
+      flash[:notice] = "プロフィールが変更されました！"
+      redirect_to mypage_user_path
+    else
+      render "edit", status: :unprocessable_entity
+    end
   end
 
   def mypage
     @name = current_user.name
+
   end
 
   def color_picker

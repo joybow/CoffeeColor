@@ -10,9 +10,11 @@
     </div>
     <div class="posts border ">
       <% current_user.posts.each do |f| %>
-      <%= f.post_images %><br>
-      <%= f.title %> <br>
-      <%= f.content %><br>
+        <% f.post_images.each do |img|%>
+          <%= image_tag img, size: '100x100'%>
+        <% end %><br>
+        <%= f.title %> <br>
+        <%= f.content %><br>
       <% end %>
     </div>
     <br>
@@ -57,7 +59,7 @@
           </div>
           <div class="col-9 d-flex align-items-center ml-2 mt-3">
             <div class="d-flex flex-column">
-              <label for="user-name">会員情報の編集</label>
+              <label >会員情報の編集</label>
               <p>アカウント情報の編集</p>
             </div>
           </div>
@@ -80,7 +82,7 @@
           </div>
           <div class="col-9 d-flex align-items-center ml-2 mt-3">
             <div class="d-flex flex-column">
-              <label for="user-name">注文履歴</label>
+              <label >注文履歴</label>
               <p>注文履歴を確認できます</p>
             </div>
           </div>
@@ -103,7 +105,7 @@
           </div>
           <div class="col-9 d-flex align-items-center ml-3 mt-3">
             <div class="d-flex flex-column">
-              <label for="user-name">お届け先の変更</label>
+              <label >お届け先の変更</label>
               <p>登録住所の変更</p>
             </div>
           </div>
@@ -126,7 +128,7 @@
           </div>
           <div class="col-9 d-flex align-items-center ml-2 mt-3">
             <div class="d-flex flex-column">
-              <label for="user-name">ログアウト</label>
+              <label >ログアウト</label>
               <p>ログアウトします</p>
             </div>
           </div>
