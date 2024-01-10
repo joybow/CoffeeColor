@@ -18,14 +18,14 @@ class UsersController < ApplicationController
   end
 
   def update
-    @user.update_without_current_password(user_params)
-    @user.user_image.attach(params[:user][user_image]) if @user.user_image.blank?
+    @user.update_without_password(user_params)
+    @user.user_image.attach(params[:user][:user_image]) if @user.user_image.blank?
     if params[:user][:user_image_id]
       @user.user_image.purge
     end
-    if @user.update(userparams)
+    if @user.update(user_params)
       flash[:notice] = "プロフィールが変更されました！"
-      redirect_to mypage_user_path
+      redirect_to mypage_edit_user_path
     else
       render "edit", status: :unprocessable_entity
     end
@@ -33,6 +33,7 @@ class UsersController < ApplicationController
 
   def mypage
     @name = current_user.name
+    @image = current_user.user_image
 
   end
 

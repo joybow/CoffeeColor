@@ -13,14 +13,28 @@
       
         
         <div class="form-group">
+          <div class="flex-column">
+            <%= f.label :user_image, 'プロフィール画像(5MBまで)', class: "form-label fw-bold gap-3"%>
+            <%= f.file_field :user_image, onchange: "userImage(this);", accept: "image/jpeg,image/gif,image/png", class: "mb-3 gap-3"%>
+            <div id="user_image">
+              <img id="user_image_preview" class="mb-3" width="100">
+            </div>
+            <%= f.submit "保存", class: "btn submit-button mt-3 w-25" %>
+            
+          </div>
+
+          <hr>
+
           <div class="d-flex justify-content-between">
-            <%= f.label :name, "氏名", class: "text-md-left samuraimart-edit-user-info-label" %>
+            
+            
+            <%= f.label :name, "氏名", class: "text-md-left -edit-user-info-label" %>
             <span onclick="switchEditUserInfo('.userName', '.editUserName', '.userNameEditLabel');" class="userNameEditLabel user-edit-label">
               編集
             </span>
           </div>
           <div class="collapse show userName">
-            <h1 class="samuraimart-edit-user-info-value"><%= @user.name %></h1>
+            <h1 class="-edit-user-info-value"><%= @user.name %></h1>
           </div>
           <div class="collapse editUserName">
             <%=
@@ -33,7 +47,7 @@
               placeholder: "名前を入力"
             %>
 
-            <%= f.submit "保存", class: "btn samuraimart-submit-button mt-3 w-25" %>
+            <%= f.submit "保存", class: "btn submit-button mt-3 w-25" %>
 
             <% if @user.errors.messages[:name].present? %>
             <span class="invalid-feedback" role="alert">
@@ -47,13 +61,13 @@
 
         <div class="form-group">
           <div class="d-flex justify-content-between">
-            <%= f.label :email, "メールアドレス", class: "text-md-left samuraimart-edit-user-info-label" %>
+            <%= f.label :email, "メールアドレス", class: "text-md-left -edit-user-info-label" %>
             <span onclick="switchEditUserInfo('.userMail', '.editUserMail', '.userMailEditLabel');" class="userMailEditLabel user-edit-label">
               編集
             </span>
           </div>
           <div class="collapse show userMail">
-            <h1 class="samuraimart-edit-user-info-value"><%= @user.email %></h1>
+            <h1 class="-edit-user-info-value"><%= @user.email %></h1>
           </div>
           <div class="collapse editUserMail">
             <%=
@@ -66,7 +80,7 @@
               placeholder: "メールアドレスを入力"
             %>
 
-            <%= f.submit "保存", class: "btn samuraimart-submit-button mt-3 w-25" %>
+            <%= f.submit "保存", class: "btn submit-button mt-3 w-25" %>
 
             <% if @user.errors.messages[:email].present? %>
             <span class="invalid-feedback" role="alert">
@@ -80,13 +94,13 @@
 
         <div class="form-group">
           <div class="d-flex justify-content-between">
-            <%= f.label :phone, "電話番号", class: "text-md-left samuraimart-edit-user-info-label" %>
+            <%= f.label :phone, "電話番号", class: "text-md-left -edit-user-info-label" %>
             <span onclick="switchEditUserInfo('.userPhone', '.editUserPhone', 'userPhoneEditLabel');" class="userPhoneEditLabel user-edit-label">
               編集
             </span>
           </div>
           <div class="collapse show userPhone">
-            <h1 class="samuraimart-edit-user-info-value"><%= @user.phone %></h1>
+            <h1 class="-edit-user-info-value"><%= @user.phone %></h1>
           </div>
           <div class="collapse editUserPhone">
           <%= 
@@ -97,7 +111,7 @@
             placeholder: "XXX-XXXX-XXXX"
           %>
 
-          <%= f.submit "保存", class: "btn samuraimart-submit-button mt-3 w-25" %>
+          <%= f.submit "保存", class: "btn submit-button mt-3 w-25" %>
 
           <% if @user.errors.messages[:phone].present? %>
           <span class="invalid-feedback" role="alert">
@@ -139,15 +153,22 @@
 </div>
 
 <script type="text/javascript">
-    let switchEditUserInfo = (textClass, inputClass, labelClass) => {
-        if ($(textClass).css('display') == 'block') {
-            $(labelClass).text("キャンセル");
-            $(textClass).collapse('hide');
-            $(inputClass).collapse('show');
-        } else {
-            $(labelClass).text("編集");
-            $(textClass).collapse('show');
-            $(inputClass).collapse('hide');
-        }
-    }
+  let switchEditUserInfo = (textClass, inputClass, labelClass) => {
+      if ($(textClass).css('display') == 'block') {
+          $(labelClass).text("キャンセル");
+          $(textClass).collapse('hide');
+          $(inputClass).collapse('show');
+      } else {
+          $(labelClass).text("編集");
+          $(textClass).collapse('show');
+          $(inputClass).collapse('hide');
+      }
+  }
+  function userImage(obj){
+  var fileReader = new FileReader();
+  fileReader.onload = (function(){
+    document.getElementById('user_image_preview').src = fileReader.result;
+  });
+  fileReader.readAsDataURL(obj.files[0]);
+  }
 </script>

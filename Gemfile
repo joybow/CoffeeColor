@@ -74,3 +74,5 @@ gem 'active_storage_validations'
 gem 'faker'
 
 gem 'kaminari'
+
+gem 'simple_calendar'

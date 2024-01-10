@@ -1,6 +1,9 @@
 <div class="container d-flex  mt-1">
-  <div class="w-100">
-    <h3 class="col-md-center"><%= @name %>さん</h3>
+  <div class="w-100 mt-2">
+    <h3 class="col-md-center">
+      <%= image_tag @image, size: '100x100',class: "rounded-circle mb-3"%><br>
+      <%= @name %>さん
+    </h3>
     
     <hr>
 
@@ -20,7 +23,11 @@
     <br>
     <div class="card-deck">
       <div class="card col-12" style= "width: 18rem">
-      <img class="card-img-top" src="" alt="card image cap">
+      <% current_user.posts.each do |img| %>
+        <% img.post_images.each do |img|%>
+          <%= image_tag img, size: "50x50" %>
+        <% end %>
+      <% end %>
         <div class="card-title">
           <% current_user.posts.each do |f|%>
           <%= f.title %><br>
