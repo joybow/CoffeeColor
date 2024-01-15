@@ -1,6 +1,9 @@
 class UsersController < ApplicationController
   before_action :set_user
   
+  def show
+    
+  end
   def create
     @user = @user.new(user_params)
     @user.user_image.attach(params[:user][:user_image])
@@ -34,7 +37,7 @@ class UsersController < ApplicationController
   def mypage
     @name = current_user.name
     @image = current_user.user_image
-
+    
   end
 
   def color_picker

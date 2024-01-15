@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_12_13_015533) do
+ActiveRecord::Schema.define(version: 2024_01_11_003636) do
 
   create_table "active_storage_attachments", charset: "utf8mb3", force: :cascade do |t|
     t.string "name", null: false
@@ -89,6 +89,18 @@ ActiveRecord::Schema.define(version: 2023_12_13_015533) do
     t.integer "coffee_from"
     t.integer "review"
     t.string "coffee_color"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "tasks", charset: "utf8mb3", force: :cascade do |t|
+    t.datetime "start_time"
+    t.string "title"
+    t.string "content"
+    t.text "plan"
+    t.text "place"
+    t.datetime "end_time"
+    t.integer "user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

@@ -1,7 +1,11 @@
 <div class="container d-flex  mt-1">
   <div class="w-100 mt-2">
     <h3 class="col-md-center">
-      <%= image_tag @image, size: '100x100',class: "rounded-circle mb-3"%><br>
+      <% if @user.user_image.attached?%>
+        <%= image_tag @image, size: '100x100',class: "rounded-circle mb-3"%><br>
+      <% else %>
+        <%= image_tag 'CoffeeColorDashboard.jpeg', size: '100x100',class: "rounded-circle mb-3" %><br>
+      <% end %>
       <%= @name %>さん
     </h3>
     
@@ -19,6 +23,15 @@
         <%= f.title %> <br>
         <%= f.content %><br>
       <% end %>
+      <div class="calendar">
+        <%= month_calendar task: @task do |date, task| %>
+          <%= date.day%>
+
+          <% task.each do |task| %>
+            <%= task.title %>
+          <% end %>
+        <% end %>
+      </div>
     </div>
     <br>
     <div class="card-deck">
