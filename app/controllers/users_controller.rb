@@ -64,7 +64,7 @@ class UsersController < ApplicationController
   end
 
   def user_params
-    params.required(:user).permit(:name,:postal_code,:address,:phone,
+    params.required(:user).permit(:name,:postal_code,:address,:phone,:start_time,
     :introduction,:local,:favorites,:email,:user_image).merge(is_roaster: params[:user][:is_roaster].to_i)
   end
 

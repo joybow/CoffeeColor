@@ -2,6 +2,7 @@ class CreateTasks < ActiveRecord::Migration[6.1]
   def change
     create_table :tasks do |t|
       t.datetime :start_time
+      t.datetime :start_day_time
       t.string :title
       t.string :content
       t.text :plan

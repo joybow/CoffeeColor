@@ -24,11 +24,12 @@
         <%= f.content %><br>
       <% end %>
       <div class="calendar">
-        <%= month_calendar task: @task do |date, task| %>
+        <%= month_calendar tasks: @task do |date, task| %>
           <%= date.day%>
-
           <% task.each do |task| %>
-            <%= task.title %>
+            <div>
+              <%= task.title %>
+            </div>
           <% end %>
         <% end %>
       </div>
@@ -36,11 +37,11 @@
     <br>
     <div class="card-deck">
       <div class="card col-12" style= "width: 18rem">
-      <% current_user.posts.each do |img| %>
-        <% img.post_images.each do |img|%>
-          <%= image_tag img, size: "50x50" %>
-        <% end %>
-      <% end %>
+        <p>↓イベント作成はこちら↓</p>
+        <div class="cardtitle">
+        <%= link_to "イベント作成", tasks_path %>
+        </div>
+      <br>
         <div class="card-title">
           <% current_user.posts.each do |f|%>
           <%= f.title %><br>

@@ -1,0 +1,15 @@
+<div class="container center-block">
+  <h4>イベント作成</h4>  
+  <%= form_with(model: @task, url: tasks_path, method: :post, local: true) do |form| %>
+    <%= form.date_field :start_time, class: 'w-50' %><br>
+    <%= form.label "開始時間",class: "mt-4 pd-3" %>
+    <%= form.time_field :start_day_time, class: 'w-25'%>
+    <%= form.label "終了時間",class: "p-1 pd-3" %>
+    <%= form.time_field :end_time, class: 'w-25'%><br>
+    <%= form.label "タイトル" %><br>
+    <%= form.text_field :title, class: 'w-50'%><br>
+    <%= form.label "内容", class: 'pt-2' %>
+    <%= form.text_field :content, class: 'form-control'%><br>
+    <%= form.submit "イベントを作成", class: 'btn btn-primary'%>
+  <% end %>
+</div>

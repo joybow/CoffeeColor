@@ -21,6 +21,9 @@ Rails.application.routes.draw do
     resource :comments, only: [:create, :destroy]
   end
 
+  resources :tasks 
+        
+
   devise_for :users, :controllers => {
     :registrations => 'users/registrations',
     :sessions => 'users/sessions',
