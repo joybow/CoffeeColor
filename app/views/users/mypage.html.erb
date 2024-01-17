@@ -24,9 +24,9 @@
         <%= f.content %><br>
       <% end %>
       <div class="calendar">
-        <%= month_calendar tasks: @task do |date, task| %>
+        <%= month_calendar(attribute: :start_time,attribute: :end_time,events: @tasks) do |date, tasks| %>
           <%= date.day%>
-          <% task.each do |task| %>
+          <% tasks.each do |task| %>
             <div>
               <%= task.title %>
             </div>

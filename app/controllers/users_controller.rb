@@ -37,7 +37,7 @@ class UsersController < ApplicationController
   def mypage
     @name = current_user.name
     @image = current_user.user_image
-    
+    @tasks = Task.all
   end
 
   def color_picker

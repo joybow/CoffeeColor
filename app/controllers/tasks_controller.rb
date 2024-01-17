@@ -28,6 +28,7 @@ class TasksController < ApplicationController
   private
 
   def task_params
-    params.require(:task).permit(:start_day_time,:start_time, :title, :content, :plan, :place, :end_time, :user_id)
+    params.require(:task).permit(:start_day_time,:start_time,
+    :title, :content, :plan, :place, :end_time, :user_id)
   end 
 end
