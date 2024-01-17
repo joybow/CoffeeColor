@@ -22,8 +22,11 @@ class TasksController < ApplicationController
 
   end
     
-  def index
-    @task = Task.all
+  def destroy
+    @task = Task.find(params[user_id])
+    @task.user_id = @user.id
+    Task.destroy
+    redirect_to tasks_path
   end
   private
 

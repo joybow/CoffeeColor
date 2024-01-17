@@ -12,4 +12,16 @@
     <%= form.text_field :content, class: 'form-control'%><br>
     <%= form.submit "イベントを作成", class: 'btn btn-primary'%>
   <% end %>
+  <br>
+  <h4>登録されているイベントリスト</h4>
+  <div class= "container">
+    <% @task.each do |task|%>
+    <div class="row d-flex">
+      <%= task.start_time %>
+      <%= task.title %>
+      <%= task.content %>
+    </div>
+    <% end %>
+  </div>
+
 </div>
