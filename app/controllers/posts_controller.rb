@@ -1,16 +1,21 @@
 class PostsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_post, except: [:new, :create, :index]
+  before_action :set_post, except: [:new, :create, :index,:search_result]
+  before_action :set_q, only: [:search_result]
   
   # GET /posts or /posts.json
-  def index    
-    @posts = Post.all
+  def index 
+    @posts = Post.all   
+    @q = Post.ransack(params[:q])
+    @post_name = @q.result(distinct: true).includes(:user).page(params[:page]).order("created_at desc")
   end
 
   # GET /posts/1 or /posts/1.json
   def show
     @comment = Comment.new
     @post_comments = @post.comments
+    @q = Post.ransack(params[:q])
+    @post_name = @q.result(distinct: true).includes(:user).page(params[:page]).order("created_at desc")
   end
 
 
@@ -37,6 +42,10 @@ class PostsController < ApplicationController
     end
   end
 
+  def search_result
+    @results = @q.result(distinct: true)
+  end
+  
   # PATCH/PUT /posts/1 or /posts/1.json
   def update
     @post.attach(post_params) if @post.post_images.blank?
@@ -66,4 +75,7 @@ class PostsController < ApplicationController
       params.require(:post).permit(:title, :body, :content, post_images:[])
     end
 
+    def set_q
+      @q = Post.ransack(params[:q])
+    end
 end

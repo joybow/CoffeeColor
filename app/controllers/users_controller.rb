@@ -1,9 +1,6 @@
 class UsersController < ApplicationController
   before_action :set_user
   
-  def show
-    
-  end
   def create
     @user = @user.new(user_params)
     @user.user_image.attach(params[:user][:user_image])
@@ -14,7 +11,7 @@ class UsersController < ApplicationController
     end
   end
   def index
-    @users = User.page(params[:page]).per(PER)
+    @users = User.all
   end 
 
   def edit
@@ -38,6 +35,8 @@ class UsersController < ApplicationController
     @name = current_user.name
     @image = current_user.user_image
     @tasks = Task.all
+    @q = User.ransack(params[:q])
+    @users = @q.result(distinct: true).includes(:user).order("created_at desc")
   end
 
   def color_picker

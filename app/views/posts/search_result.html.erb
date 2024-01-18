@@ -1,0 +1,10 @@
+<h5>検索結果</h5>
+<% if @results.present? %>
+  <% @results.each do |result| %>
+    <% result.title %>
+    <% result.content %>
+  <% end %>
+<% else %>
+  <h2>一致する結果がありませんでした。</h2>
+<% end %>
+

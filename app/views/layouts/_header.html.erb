@@ -15,7 +15,9 @@
             <%= link_to image_tag('CoffeeMark.jpeg',{ :size => '50x50', :alt => 'CoffeeMark'}),posts_path, class: "nav-link nav-item"%>
             <%= link_to mypage_user_path, class: "nav-link nav-item" do %>
             <i class="fas fa-coffee p-2"></i><label>マイページ</label>
-            <%= link_to "ログアウト", logout_path, method: :delete, class: "nav-link nav-item"%>
+            <% end %>
+            <%= link_to logout_path, method: :delete, class: "nav-link nav-item" do %>
+            <i class="fas fa-coffee p-2"></i><label>ログアウト</label>
             <% end %>
             
           <% else %>

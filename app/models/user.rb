@@ -36,4 +36,11 @@ class User < ApplicationRecord
     or(where("phone like ?","%#{keyword}%")).
     or(where("id ?", "%#{keyword}%"))
   }
+  def self.ransackable_attributes(auth_object = nil)
+    ["name", "local"]
+  end
+
+  def self.ransackable_associations(auth_object = nil)
+    []
+  end
 end

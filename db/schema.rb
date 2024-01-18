@@ -95,12 +95,10 @@ ActiveRecord::Schema.define(version: 2024_01_11_003636) do
 
   create_table "tasks", charset: "utf8mb3", force: :cascade do |t|
     t.datetime "start_time"
-    t.datetime "start_day_time"
     t.string "title"
     t.string "content"
     t.text "plan"
     t.text "place"
-    t.datetime "end_time"
     t.integer "user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

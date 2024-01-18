@@ -8,7 +8,13 @@
       <% end %>
       <%= @name %>さん
     </h3>
-    
+    <h3 class="text-left">
+      <%= search_form_for @q, url: mypage_user_path do |f|%>
+        <%= f.label "ユーザー検索"%>
+        <%= f.search_field :name_cont, class: 'w-10', placeholder: '検索ワード'%>
+        <%= f.submit '検索', class: 'btn btn-primary '%>
+      <% end %>
+    </h3>
     <hr>
 
     <div class="col-12 mg-5">
@@ -24,8 +30,8 @@
         <%= f.content %><br>
       <% end %>
       <div class="calendar">
-        <%= month_calendar(attribute: :start_time, end_attribute: :end_time, events: @tasks) do |date, tasks| %>
-          <%= date.day%>
+        <%= month_calendar(events: @tasks) do |date, tasks| %>
+          <%= date.day %>
           <% tasks.each do |task| %>
             <div>
               <%= task.title %>
