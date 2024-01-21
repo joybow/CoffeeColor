@@ -18,4 +18,11 @@ class ApplicationRecord < ActiveRecord::Base
     self.send(attr_name.to_s.pluralize).map { |k, _| [self.human_attribute_enum_value(attr_name, k), k] }.to_h
   end
   
+  def self.ransackable_associations(auth_object = nil)
+    if Administrator === auth_object
+      authrizable_ransackable_associations
+    else
+      raise "please implement ransackable_associations: #{self}"
+    end
+  end
 end

@@ -37,10 +37,10 @@ class User < ApplicationRecord
     or(where("id ?", "%#{keyword}%"))
   }
   def self.ransackable_attributes(auth_object = nil)
-    ["name", "local"]
+    auth_object ? super : %w(name)
   end
 
   def self.ransackable_associations(auth_object = nil)
-    []
+    auth_object ? super : %w[content title name]
   end
 end

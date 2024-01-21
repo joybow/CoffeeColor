@@ -19,7 +19,7 @@ Rails.application.routes.draw do
   resources :posts do
     resource :favorites, only: [:create, :destroy]
     resource :comments, only: [:create, :destroy]
-    
+
     collection do
       get 'search_result'
     end
@@ -50,6 +50,7 @@ Rails.application.routes.draw do
       get "mypage/edit", :to => "users#edit"
       get "mypage/address/edit", :to => "users#edit_address"
       get "mypage/color_picker", :to => "users#color_picker"
+      get "mypage/search_results", :to => "users#search_results"
       put "mypage", :to => "users#update"
       delete "mypage/delete" , :to => "users#destroy"
     end

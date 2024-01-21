@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   before_action :set_user
+  before_action :set_q, only: [:mypage, :search_results]
   
   def create
     @user = @user.new(user_params)
@@ -35,8 +36,11 @@ class UsersController < ApplicationController
     @name = current_user.name
     @image = current_user.user_image
     @tasks = Task.all
-    @q = User.ransack(params[:q])
-    @users = @q.result(distinct: true).includes(:user).order("created_at desc")
+    @user_name = @q.result(distinct: true)
+  end
+  
+  def search_results
+    @user_name = @q.result(distinct: true)
   end
 
   def color_picker
@@ -69,5 +73,9 @@ class UsersController < ApplicationController
 
   def post_params
     params.require(:post).permit(:title, :body, :content, post_images:[])
+  end
+
+  def set_q
+    @q = User.ransack(params[:q])
   end
 end

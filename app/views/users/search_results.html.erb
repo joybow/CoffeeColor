@@ -1,14 +1,12 @@
 <h2 class="container text-center">「<%= params[:q][:name_cont] if params[:q].present? %>」の検索結果</h2>
 <div class="container text-center">
-  <% if @results.present? %>
+  <% if @user_name.present? %>
     <div class=" text-center">
-      <% @results.each do |result| %>
-        <%= result.title %><br>
-        <%= result.content %>
+      <% @user_name.each do |result| %>
+        <%= result.name %><br>
       <% end %>
     </div>
   <% else %>
     <h3>一致する結果がありませんでした。</h3>
   <% end %>
 </div>
-
