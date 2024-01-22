@@ -8,6 +8,7 @@
       <% end %>
       <%= @name %>さん
     </h3>
+    <%= render 'follow_list', user: @user%>
     <h3 class="text-left">
       <%= search_form_for @q, url: mypage_search_results_user_path do |f|%>
         <%= f.label "検索"%>

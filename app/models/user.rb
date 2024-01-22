@@ -27,6 +27,12 @@ class User < ApplicationRecord
                           message: "有効なフォーマットではありません"},
                           size: { less_than: 5.megabytes, message: "5MBを超える画像はアップロードできません"}
   has_many :comments, dependent: :destroy
+  # フォロー機能
+  has_many :relationships, class_name: "Relationship", foreign_key: "follower_id", dependent: :destroy
+  has_many :reverse_of_relationships, class_name: "Relationship", foreign_key: "followed_id", dependent: :destroy
+  # 一覧で使用
+  has_many :followings, through: :relationships, source: :followed
+  has_many :followers, through: :reverse_of_relationships, source: :follower
 
   scope :search_information, -> (keyword) {
     where("name like ?","%#{keyword}%").
@@ -43,4 +49,17 @@ class User < ApplicationRecord
   def self.ransackable_associations(auth_object = nil)
     auth_object ? super : %w[content title name]
   end
+
+  def follow(user_id)
+    relationships.create(followed_id: user_id)
+  end
+
+  def unfollow(user_id)
+    relationships.find_by(followed_id: user_id).destroy
+  end
+
+  def folliwing?(user)
+    followings.include?(user)
+  end
+  
 end
