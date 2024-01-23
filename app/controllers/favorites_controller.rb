@@ -7,6 +7,9 @@ class FavoritesController < ApplicationController
     @post_favorite = Favorite.new(user_id: @user.id, post_id: params[:post_id])
     @post_favorite.save
     # redirect_to post_path(params[:post_id])
+    post = Post.find(params[:post_id])
+    post.create_notification_like!(current_user)
+    respond_to :js
   end
   
   def destroy

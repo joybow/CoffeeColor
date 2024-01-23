@@ -27,7 +27,9 @@ class User < ApplicationRecord
                           message: "有効なフォーマットではありません"},
                           size: { less_than: 5.megabytes, message: "5MBを超える画像はアップロードできません"}
   has_many :comments, dependent: :destroy
-
+  # 通知機能
+  has_many :active_notifications, class_name: 'Notification', foreign_key: 'visitor_id', dependent: :destroy
+  has_many :passive_notifications, class_name: 'Notification', foreign_key: 'visited_id', dependent: :destroy
   scope :search_information, -> (keyword) {
     where("name like ?","%#{keyword}%").
     or(where("email like ?","%#{keyword}%")).
@@ -43,4 +45,5 @@ class User < ApplicationRecord
   def self.ransackable_associations(auth_object = nil)
     auth_object ? super : %w[content title name]
   end
+
 end
