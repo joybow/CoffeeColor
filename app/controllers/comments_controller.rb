@@ -9,6 +9,8 @@ class CommentsController < ApplicationController
     @post_comments = @post.comments
     if @comment.save
       redirect_back fallback_location: @post, notice: "コメントしました！"
+      @post.create_notification_comment!(current_user, @comment.id)
+      respond_to :js
     else
       if @comment.blank?
         redirect_back fallback_location: @post, notice:  "コメントを入力してください！"
