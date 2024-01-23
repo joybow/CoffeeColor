@@ -1,0 +1,11 @@
+<% if @post.favorited?(current_user) %>
+  <%# 一致するレコードが存在する＝すでにいいね済みの場合はdestroyアクションへ %>
+  <%= link_to post_favorites_path(@post.id), method: :delete, remote: true do %>
+    <span ><%= image_tag "heart-roast.png",size: '30x30' %>ｲｲﾈ!!</span>
+  <% end %>
+<% else %>
+  <%# # 一致するレコードが存在しない＝まだいいねしていない場合はcreateアクションへ %>
+  <%= link_to post_favorites_path(@post.id), method: :post, remote: true do %>
+    <span ><%= image_tag "heart-rib.png",size: '30x30'%></span>
+  <% end %>
+<% end %>
