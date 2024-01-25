@@ -36,7 +36,7 @@ class UsersController < ApplicationController
     @name = current_user.name
     @image = current_user.user_image
     @tasks = Task.all
-    @user_follow = users.followings(user)
+    
   end
   
   def search_results
