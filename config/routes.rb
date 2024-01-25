@@ -28,7 +28,7 @@ Rails.application.routes.draw do
   end
 
   resources :tasks 
-  resources :notifications, only: index      
+  # resources :notifications, only: index      
 
   devise_for :users, :controllers => {
     :registrations => 'users/registrations',
