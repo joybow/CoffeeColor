@@ -1,8 +1,8 @@
 <p id="notice"><%= notice %></p>
 
-<td id="likes_buttons">
+<span id="likes_buttons_<%= @post.id %>">
   <%= render "favorites/like", locals: {post: @post} %>
-</td>
+</span>
 
 <p>
   <strong>Title:</strong>

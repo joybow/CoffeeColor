@@ -9,6 +9,7 @@ class Post < ApplicationRecord
   def favorited?(user)
     favorites.where(user_id: user.id).exists?
   end
+<<<<<<< HEAD
   # 通知機能（追加）
   def create_notification_like!(current_user)
     # すでに良いねしているか検索
@@ -63,6 +64,9 @@ class Post < ApplicationRecord
     end
   end
 
+=======
+  
+>>>>>>> like_ajax
   def self.ransackable_attributes(auth_object = nil)
     auth_object ? super : %w(content title)
   end
