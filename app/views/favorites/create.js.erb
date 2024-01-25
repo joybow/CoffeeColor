@@ -1,1 +1,1 @@
-$('#likes_buttons').html("<%= j(render "favorites/like", post: @post) %>");
+$('#likes_buttons<%= @post.id %>').html("<%= j(render "favorites/like", post: @post) %>");

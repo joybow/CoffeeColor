@@ -8,9 +8,7 @@ class Post < ApplicationRecord
   def favorited?(user)
     favorites.where(user_id: user.id).exists?
   end
-
-
-
+  
   def self.ransackable_attributes(auth_object = nil)
     auth_object ? super : %w(content title)
   end

@@ -40,6 +40,7 @@ class User < ApplicationRecord
     auth_object ? super : %w(name)
   end
 
+
   def self.ransackable_associations(auth_object = nil)
     auth_object ? super : %w[content title name]
   end

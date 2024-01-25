@@ -1,5 +1,6 @@
 class FavoritesController < ApplicationController
   before_action :set_user
+  before_action :set_post
   
 
 
@@ -20,4 +21,9 @@ class FavoritesController < ApplicationController
   def set_user
     @user = current_user
   end
+
+  def set_post
+    @post = Post.find(params[:post_id])
+  end
+
 end
