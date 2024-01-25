@@ -37,11 +37,12 @@ class UsersController < ApplicationController
     @image = current_user.user_image
     @tasks = Task.all
     
+    
   end
   
   def search_results
     @user_name = @q.result(distinct: true)
-    @user_follow = @user_name
+    @users = Relationship.all
   end
 
   def color_picker
