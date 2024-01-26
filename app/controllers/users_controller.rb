@@ -36,7 +36,7 @@ class UsersController < ApplicationController
     @name = current_user.name
     @image = current_user.user_image
     @tasks = Task.all
-    
+    @user_list = User.all
     
   end
   
@@ -73,9 +73,6 @@ class UsersController < ApplicationController
     :introduction,:local,:favorites,:email,:user_image,:user_id).merge(is_roaster: params[:user][:is_roaster].to_i)
   end
 
-  def post_params
-    params.require(:post).permit(:title, :body, :content, post_images:[])
-  end
 
   def set_q
     @q = User.ransack(params[:q])
