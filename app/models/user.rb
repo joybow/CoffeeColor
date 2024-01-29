@@ -62,7 +62,7 @@ class User < ApplicationRecord
     relationships.find_by(followed_id: user_id).destroy
   end
 
-  def folliwing?(user)
+  def followings?(user)
     followings.include?(user)
   end
   

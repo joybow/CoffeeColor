@@ -1,5 +1,33 @@
 <div class="container d-flex  mt-1">
   <div class="w-100 mt-2">
+    <thead>
+      <tr>
+        <h4>ユーザー一覧</h4>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+    <% @user_list.each do |list|%>
+      <table>
+        
+        <tbody>
+          <tr>
+            <td class= "pl-2 pr-2 py-2"><%= list.name %></td>
+            <td class= "pl-2 pr-2 py-2">フォロー数: <%= list.followings.count %></td>
+            <td class= "pl-2 pr-2 py-2">フォロワー数: <%= list.followers.count %></td>
+            <td class= "pl-2 pr-2 py-2">
+              <% if current_user != list %>
+                <% if current_user.followings?(list) %>
+                  <%= link_to "フォロー外す", user_relationships_path(user_id: list.id), method: :delete,class: "btn btn-info" %>
+                <% else %>
+                  <%= link_to "フォローする", user_relationships_path(user_id: list.id), method: :post,class: "btn btn-success"%>
+                <% end %>
+              <% end %>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    <% end %>
     <h3 class="col-md-center">
       <% if @user.user_image.attached?%>
         <%= image_tag @image, size: '100x100',class: "rounded-circle mb-3"%><br>
@@ -8,8 +36,8 @@
       <% end %>
       <%= @name %>さん
     </h3>
-    <%= render 'follow_list', user: @user%>
-    <h3 class="text-left">
+    <%= render 'follow_list', user: @users%>
+    <h3 class="text-left border-top pt-3">
       <%= search_form_for @q, url: mypage_search_results_user_path do |f|%>
         <%= f.label "検索"%>
         <%= f.search_field :name_cont, class: 'w-10', placeholder: '検索ワード'%>

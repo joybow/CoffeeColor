@@ -36,13 +36,13 @@ class UsersController < ApplicationController
     @name = current_user.name
     @image = current_user.user_image
     @tasks = Task.all
-    @user_name = @q.result(distinct: true)
-    @user_follow = @users
+    @user_list = User.all
+    get_follower_user_ids = Relationship.where(follower_id: @user.id).pluck(:followed_id)
+    @users = User.includes(:reverse_of_relationships).where(id: get_follower_user_ids).order("relationships.created_at DESC")
   end
   
   def search_results
     @user_name = @q.result(distinct: true)
-    @user_follow = @users
   end
 
   def color_picker
@@ -70,12 +70,9 @@ class UsersController < ApplicationController
 
   def user_params
     params.required(:user).permit(:name,:postal_code,:address,:phone,:start_time,
-    :introduction,:local,:favorites,:email,:user_image).merge(is_roaster: params[:user][:is_roaster].to_i)
+    :introduction,:local,:favorites,:email,:user_image,:user_id).merge(is_roaster: params[:user][:is_roaster].to_i)
   end
 
-  def post_params
-    params.require(:post).permit(:title, :body, :content, post_images:[])
-  end
 
   def set_q
     @q = User.ransack(params[:q])
