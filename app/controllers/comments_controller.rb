@@ -24,7 +24,7 @@ class CommentsController < ApplicationController
     @post = Post.find(params[:post_id])
     @comment = @post.comments
     Comment.find_by(id: params[:id], post_id: params[:post_id]).destroy
-    redirect_to @post
+    respond_to :js
   end
 
 

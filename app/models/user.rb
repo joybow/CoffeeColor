@@ -37,6 +37,7 @@ class User < ApplicationRecord
   # 通知機能
   has_many :active_notifications, class_name: 'Notification', foreign_key: 'visitor_id', dependent: :destroy
   has_many :passive_notifications, class_name: 'Notification', foreign_key: 'visited_id', dependent: :destroy
+  
   scope :search_information, -> (keyword) {
     where("name like ?","%#{keyword}%").
     or(where("email like ?","%#{keyword}%")).
