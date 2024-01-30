@@ -16,13 +16,9 @@
             <td class= "pl-2 pr-2 py-2">フォロー数: <%= list.followings.count %></td>
             <td class= "pl-2 pr-2 py-2">フォロワー数: <%= list.followers.count %></td>
             <td class= "pl-2 pr-2 py-2">
-              <% if current_user != list %>
-                <% if current_user.followings?(list) %>
-                  <%= link_to "フォロー外す", user_relationships_path(user_id: list.id), method: :delete,class: "btn btn-info" %>
-                <% else %>
-                  <%= link_to "フォローする", user_relationships_path(user_id: list.id), method: :post,class: "btn btn-success"%>
-                <% end %>
-              <% end %>
+              <div id="following_forms_<%= list %>">
+                <%= render "follow", list: list %>
+              </div>
             </td>
           </tr>
         </tbody>
