@@ -16,7 +16,7 @@
             <td class= "pl-2 pr-2 py-2">フォロー数: <%= list.followings.count %></td>
             <td class= "pl-2 pr-2 py-2">フォロワー数: <%= list.followers.count %></td>
             <td class= "pl-2 pr-2 py-2">
-              <div id="following_forms_<%= @user_list %>">
+              <div id="following_forms_<%= list.id %>">
                 <%= render "relationships/follow", list: list %>
               </div>
             </td>
