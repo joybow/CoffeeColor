@@ -3,11 +3,11 @@ class RelationshipsController < ApplicationController
     current_user.follow(params[:user_id])
     
     @user.create_notification_follow!(current_user)
-    
-    respond_to do |format|
-      format.html {redirct_to request.referer}
-      format.js
-    end
+    # ここもおかしい気がする
+    # respond_to do |format|
+      # format.html {redirct_to request.referer}
+      # format.js
+    # end
 
   end
 

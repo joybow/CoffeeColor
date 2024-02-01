@@ -10,7 +10,7 @@ class CommentsController < ApplicationController
     if @comment.save
       redirect_back fallback_location: @post, notice: "コメントしました！"
       @post.create_notification_comment!(current_user, @comment.id)
-      respond_to :js
+      # ここ合ってる？　respond_to :js
     else
       if @comment.blank?
         redirect_back fallback_location: @post, notice:  "コメントを入力してください！"
@@ -24,7 +24,6 @@ class CommentsController < ApplicationController
     @post = Post.find(params[:post_id])
     @comment = @post.comments
     Comment.find_by(id: params[:id], post_id: params[:post_id]).destroy
-    respond_to :js
   end
 
 
