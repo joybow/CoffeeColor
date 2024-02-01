@@ -3,6 +3,7 @@ class RelationshipsController < ApplicationController
 
   def create
     current_user.follow(params[:user_id])
+    @list = User.find(params[:user_id])
     # @user.create_notification_follow!(current_user)
     
     # respond_to do |format|
@@ -14,6 +15,7 @@ class RelationshipsController < ApplicationController
 
   def destroy
     current_user.unfollow(params[:user_id])
+    @list = User.find(params[:user_id])
   end
   # フォロー一覧
 
