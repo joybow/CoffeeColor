@@ -1,1 +1,1 @@
-$('#comments_<%= @post_comments %>').html('<%= j(render 'comments/comments', post: @post_comments)%>');
+$('#comments_<%= @comment_list.id %>').html('<%= j(render 'comments/comments', post: @post_comments )%>');
