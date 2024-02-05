@@ -1,0 +1,13 @@
+<% post.each do |comment| %>
+  <div class="col-3 text-left">
+    <div class="small mb-4">
+      <div class="fs-6">
+        <%= comment.user.name%>
+      </div><br>
+      <div class="fs-5">
+        <%= comment.content%>
+      </div>
+    </div>
+  </div>
+  <%= link_to '削除', post_comments_path(post_id: comment.post, id: comment.id), method: :delete, data: { confirm: '本当に削除しますか？' }, class: "btn btn-sm btn-outline-danger", remote: true %>
+<% end %>
