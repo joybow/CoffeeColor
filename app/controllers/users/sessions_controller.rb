@@ -23,7 +23,7 @@ class Users::SessionsController < Devise::SessionsController
   #   super
   # end
   def after_sign_in_path_for(user)
-    mypage_user_path
+    mypage_user_index_path
   end
 
   def after_sign_out_path_for(user)

@@ -2,14 +2,14 @@
   <div class="row justify-content-center">
     <div class="col-md-5">
       <span>
-        <%= link_to "マイページ", mypage_user_path %> > 会員情報の編集
+        <%= link_to "マイページ", mypage_user_index_path %> > 会員情報の編集
       </span>
 
       <h3 class="mt-3 mb-3">会員情報の編集</h3>
 
       <hr>
 
-      <%= form_with model: @user, url: mypage_user_path, local: true, method: :put do |f| %>
+      <%= form_with model: @user, url: mypage_user_index_path, local: true, method: :put do |f| %>
       
         
         <div class="form-group">
@@ -136,7 +136,7 @@
 
       <% end %>
       <div class="d-flex justify-content-end">
-        <%= form_with model: @user, url: mypage_delete_user_path, method: :delete, local: true do |f| %>
+        <%= form_with model: @user, url: mypage_delete_user_index_path, method: :delete, local: true do |f| %>
         <div class="btn dashboard-delete-link" data-bs-toggle="modal" data-bs-target="#delete-user-confirm-modal">退会する</div>
 
           <div class="modal fade" id="delete-user-confirm-modal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">

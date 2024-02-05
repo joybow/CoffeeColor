@@ -3,7 +3,7 @@
 <div class="col-md-6 mx-auto">
   <div class="form-inline">
     <span>
-      <%= link_to user_path(visitor) do |img|%>
+      <%= link_to mypage_user_index_path(visitor) do |img|%>
         <%= image_tag img, avatar_url(visitor).to_s, class: "icon_mini"%>
       <% end %>
       <strong>
