@@ -47,7 +47,7 @@ Rails.application.routes.draw do
     delete "logout", :to => "users/sessions#destroy"
   end
 
-  resource :user, only: [:edit, :update] do
+  resources :user, only: [:edit, :update] do
     collection do 
       get "mypage", :to => "users#mypage"
       get "mypage/edit", :to => "users#edit"
