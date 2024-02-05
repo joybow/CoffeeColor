@@ -10,7 +10,7 @@ class RelationshipsController < ApplicationController
       # format.html {redirct_to request.referer}
       # format.js
     # end
-
+    @list = User.find(params[:user_id])
   end
 
   def destroy
