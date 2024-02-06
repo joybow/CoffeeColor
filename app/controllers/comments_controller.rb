@@ -12,7 +12,7 @@ class CommentsController < ApplicationController
       redirect_back fallback_location: @post, notice:  "コメントを入力してください！"
     else
       if @comment.save
-        redirect_back fallback_location: @post, notice: "コメントしました！"
+        
         @post.create_notification_comment!(current_user, @comment.id) 
       else
         redirect_to @post
@@ -24,7 +24,7 @@ class CommentsController < ApplicationController
     @post = Post.find(params[:post_id])
     @post_comments = @post.comments
     Comment.find_by(id: params[:id], post_id: params[:post_id]).destroy
-    @list = Comment.find_by(id: params[:id], post_id: params[:post_id])
+    
   end
 
 

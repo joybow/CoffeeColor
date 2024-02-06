@@ -16,7 +16,6 @@ class PostsController < ApplicationController
     @post_comments = @post.comments
     @q = Post.ransack(params[:q])
     @post_name = @q.result(distinct: true).includes(:user).page(params[:page]).order("created_at desc")
-    @list = Comment.find_by(id: params[:id], post_id: params[:post_id])
   end
 
 
