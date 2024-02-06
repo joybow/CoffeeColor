@@ -16,6 +16,7 @@ class PostsController < ApplicationController
     @post_comments = @post.comments
     @q = Post.ransack(params[:q])
     @post_name = @q.result(distinct: true).includes(:user).page(params[:page]).order("created_at desc")
+    @list = Comment.find(params[:id])
   end
 
 
@@ -72,7 +73,7 @@ class PostsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def post_params
-      params.require(:post).permit(:title, :body, :content, post_images:[])
+      params.require(:post).permit(:title, :body, :content, post_images:[],)
     end
 
     def set_q

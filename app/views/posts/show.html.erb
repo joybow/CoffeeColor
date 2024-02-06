@@ -35,8 +35,8 @@
 <h2>コメント一覧</h2>
 
 <%= form_with model:[@post, @comment],local: false do |f|%>
-  <%= f.text_area :content, rows:'5', placeholder: "コメント追加できます！", class: "form-control mt-3"%>
-    <div class="text-right">
+  <%= f.text_area :content, rows:'5', placeholder: "コメント追加できます！", class: " form-control mt-3"%>
+    <div class="">
       <% if @comment.present?%>
         <%= f.submit "投稿！", class: "btn btn-primary mt-3 mb-3"%>
       <% else %>
@@ -45,8 +45,8 @@
     </div>
 <% end %>
 
-<div id="comments_<%= @comment_list %>">
-  <%= render 'comments/comments', post: @post_comments %>
+<div id="comments_list">
+  <%= render 'comments/comments', post: @post %>
 </div>
 
 
