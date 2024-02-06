@@ -1,5 +1,6 @@
 class CommentsController < ApplicationController
   before_action :authenticate_user!
+  
 
   def create
     @post = Post.find(params[:post_id])
@@ -22,8 +23,8 @@ class CommentsController < ApplicationController
   def destroy
     @post = Post.find(params[:post_id])
     @post_comments = @post.comments
-    @post_list = Comment.find_by(id: params[:id], post_id: params[:post_id]).destroy
-    @list = Comment.find(params[:post_id])
+    Comment.find_by(id: params[:id], post_id: params[:post_id]).destroy
+    @list = Comment.find_by(id: params[:id], post_id: params[:post_id])
   end
 
 
