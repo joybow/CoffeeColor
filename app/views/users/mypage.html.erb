@@ -12,7 +12,7 @@
         <div class="col-2 border">
           <% @user_list.each do |list|%>
             <% if list.user_image.attached?%>
-              <%= image_tag @image, size: '100x100',class: "rounded-circle mb-3"%><br>
+              <%= image_tag list.user_image, size: '100x100',class: "rounded-circle mb-3"%><br>
             <% else %>
               <%= image_tag 'CoffeeColorDashboard.jpeg', size: '100x100',class: "rounded-circle mb-3" %><br>
             <% end %>
@@ -36,7 +36,9 @@
       <% else %>
         <%= image_tag 'CoffeeColorDashboard.jpeg', size: '100x100',class: "rounded-circle mb-3" %><br>
       <% end %>
-      <%= @name %>さん
+      <div><%= @profile[:name] %>さん<br>
+      登録：<%= @profile[:is_roaster] %>
+      </div>
     </h3>
     <%= render 'follow_list', user: @users%>
     <h3 class="text-left border-top pt-3">

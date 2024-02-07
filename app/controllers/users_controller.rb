@@ -33,13 +33,12 @@ class UsersController < ApplicationController
   end
 
   def mypage
-    @name = current_user.name
+    @profile = User.user_name_profile(current_user)
     @image = current_user.user_image
     @tasks = Task.all
     @user_list = User.all
     get_follower_user_ids = Relationship.where(follower_id: @user.id).pluck(:followed_id)
     @users = User.includes(:reverse_of_relationships).where(id: get_follower_user_ids).order("relationships.created_at DESC")
-    
   end
   
   def search_results
