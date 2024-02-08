@@ -12,7 +12,6 @@ class CommentsController < ApplicationController
       redirect_back fallback_location: @post, notice:  "コメントを入力してください！"
     else
       if @comment.save
-        
         @post.create_notification_comment!(current_user, @comment.id) 
       else
         redirect_to @post
