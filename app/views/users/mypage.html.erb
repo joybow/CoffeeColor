@@ -7,30 +7,38 @@
         <th></th>
       </tr>
     </thead>
-    <% @user_list.each do |list|%>
-      <table>
-        
-        <tbody>
-          <tr>
-            <td class= "pl-2 pr-2 py-2"><%= list.name %></td>
-            <td class= "pl-2 pr-2 py-2">フォロー数: <%= list.followings.count %></td>
-            <td class= "pl-2 pr-2 py-2">フォロワー数: <%= list.followers.count %></td>
-            <td class= "pl-2 pr-2 py-2">
-              <div id="following_forms_<%= list.id %>">
-                <%= render "follow", list: list %>
-              </div>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    <% end %>
+    <div class="card-deck">
+      <div class="container">
+        <div class="col-2 border">
+          <% @user_list.each do |list|%>
+            <% if list.user_image.attached?%>
+              <%= image_tag list.user_image, size: '100x100',class: "rounded-circle mb-3"%><br>
+            <% else %>
+              <%= image_tag 'CoffeeColorDashboard.jpeg', size: '100x100',class: "rounded-circle mb-3" %><br>
+            <% end %>
+            <div class="card-body">
+              <tbody>
+                <tr class= "row">
+                  <td class= "card-title"><%= list.name %></td>
+                    <div id="following_forms_<%= list.id %>" class= "card-text">
+                      <%= render "relationships/follow", list: list %>
+                    </div>
+                </tr>
+              </tbody>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
     <h3 class="col-md-center">
       <% if @user.user_image.attached?%>
         <%= image_tag @image, size: '100x100',class: "rounded-circle mb-3"%><br>
       <% else %>
         <%= image_tag 'CoffeeColorDashboard.jpeg', size: '100x100',class: "rounded-circle mb-3" %><br>
       <% end %>
-      <%= @name %>さん
+      <div><%= @profile[:name] %>さん<br>
+      登録：<%= @profile[:is_roaster] %>
+      </div>
     </h3>
     <%= render 'follow_list', user: @users%>
     <h3 class="text-left border-top pt-3">

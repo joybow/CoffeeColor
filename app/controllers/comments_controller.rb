@@ -8,6 +8,7 @@ class CommentsController < ApplicationController
     @comment.user_id = current_user.id
     @comment.post_id = @post.id
     @post_comments = @post.comments
+
     if @comment.blank?
       redirect_back fallback_location: @post, notice:  "コメントを入力してください！"
     else

@@ -33,7 +33,7 @@ class UsersController < ApplicationController
   end
 
   def mypage
-    @name = current_user.name
+    @profile = User.user_name_profile(current_user)
     @image = current_user.user_image
     @tasks = Task.all
     @user_list = User.all

@@ -77,5 +77,9 @@ class User < ApplicationRecord
       notification.save if notification.valid?
     end
   end
-  
+
+  def self.user_name_profile(user)
+    { name: user.name.to_s, is_roaster: user.is_roaster.to_s}
+  end
+
 end
