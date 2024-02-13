@@ -33,11 +33,11 @@
   </table>
 </div>
 
-<script>
-  document.getElementById('month').addEventListener('change', function(){
-  let selectedMonth = this.value;
-  let selectedYear = <%= start_time.year %>;
-  let newUrl = '<%= calendar.path_for_date(Date.new(selectedYear, selectedMonth, 1)) %>';
-  window.location.href = newUrl;
-  });
-</script>
+<%# <script> %>
+   <%# document.getElementById('month').addEventListener('change', function(){ %>
+  <%# // let selectedMonth = this.value; %>
+  <%# // let selectedYear = <%= start_time.year %>; %>
+  <%# // let newUrl = '<%= calendar.path_for_date(Date.new(selectedYear, selectedMonth, 1)) %>'; %>
+  <%# // window.location.href = newUrl; %>
+  <%# // }); %>
+<%# </script> %>

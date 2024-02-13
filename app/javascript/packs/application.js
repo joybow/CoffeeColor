@@ -18,6 +18,7 @@ import "channels";
 import 'bootstrap/dist/js/bootstrap';
 import '../stylesheets/application';
 import 'jquery';
+import './codeAddress';
 
 Rails.start()
 Turbolinks.start()
