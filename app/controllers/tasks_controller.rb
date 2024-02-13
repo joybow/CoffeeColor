@@ -15,7 +15,7 @@ class TasksController < ApplicationController
     @task.user_id = @user.id
     
     if @task.save!
-      redirect_to mypage_user_path, notice: "イベントの登録に成功しました"
+      redirect_to mypage_user_index_path, notice: "イベントの登録に成功しました"
     else
       render :create
     end

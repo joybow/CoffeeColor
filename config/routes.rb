@@ -27,7 +27,10 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :tasks 
+  resources :tasks
+  
+  get 'maps/index', :to => 'maps#index'
+  resources :maps, only: [:index]
   
   resources :notifications, only: :index      
 
@@ -38,6 +41,7 @@ Rails.application.routes.draw do
     :confirmations => 'users/confirmations',
     :unlocks => 'users/unlocks',
   }
+  get '/users/:id', to: 'users#show', as: 'user'
 
   devise_scope :user do
     root :to => "users/sessions#new"

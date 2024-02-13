@@ -1,6 +1,7 @@
 <div class="simple-calendar">
   <div class="calendar-heading">
     <%= link_to t('simple_calendar.previous', default: '<<先月'), calendar.url_for_previous_view %>
+    <%= select_tag :month, options_for_select((1..12).map{ |m| [t('date.month_names')[m], m] }, start_date.month),id: 'month' %>
     <span class="calendar-title"><%= t('date.month_names')[start_date.month] %> <%= start_date.year %></span>
     <%= link_to t('simple_calendar.next', default: '来月>>'), calendar.url_for_next_view %>
   </div>
@@ -31,3 +32,12 @@
     </tbody>
   </table>
 </div>
+
+<script>
+  document.getElementById('month').addEventListener('change', function(){
+  let selectedMonth = this.value;
+  let selectedYear = <%= start_time.year %>;
+  let newUrl = '<%= calendar.path_for_date(Date.new(selectedYear, selectedMonth, 1)) %>';
+  window.location.href = newUrl;
+  });
+</script>

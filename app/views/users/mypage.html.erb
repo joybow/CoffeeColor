@@ -7,24 +7,22 @@
         <th></th>
       </tr>
     </thead>
-    <div class="card-deck">
-      <div class="container">
-        <div class="col-2 border">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-2 border">
           <% @user_list.each do |list|%>
-            <% if list.user_image.attached?%>
-              <%= image_tag list.user_image, size: '100x100',class: "rounded-circle mb-3"%><br>
-            <% else %>
-              <%= image_tag 'CoffeeColorDashboard.jpeg', size: '100x100',class: "rounded-circle mb-3" %><br>
-            <% end %>
-            <div class="card-body">
-              <tbody>
-                <tr class= "row">
-                  <td class= "card-title"><%= list.name %></td>
-                    <div id="following_forms_<%= list.id %>" class= "card-text">
-                      <%= render "relationships/follow", list: list %>
-                    </div>
-                </tr>
-              </tbody>
+            <div class="user-items">
+              <% if list.user_image.attached?%>
+                <%= image_tag list.user_image, size: '100x100',class: "rounded-circle mb-3"%><br>
+              <% else %>
+                <%= image_tag 'CoffeeColorDashboard.jpeg', size: '100x100',class: "rounded-circle mb-3" %><br>
+              <% end %>
+              <div class="card-body">
+                <h5 class= "card-title"><%= link_to list.name, user_path(list) %></h5>
+                  <div id="following_forms_<%= list.id %>" class= "card-text">
+                    <%= render "relationships/follow", list: list %>
+                  </div>
+              </div>
             </div>
           <% end %>
         </div>
@@ -133,51 +131,10 @@
     </div>
 
     <hr>
-
-    <div class="container">
-      <div class="d-flex justify-content-between">
-        <div class="row">
-          <div class="col-2 d-flex align-items-center">
-            <i class="fas fa-archive fa-3x"></i>
-          </div>
-          <div class="col-9 d-flex align-items-center ml-2 mt-3">
-            <div class="d-flex flex-column">
-              <label >注文履歴</label>
-              <p>注文履歴を確認できます</p>
-            </div>
-          </div>
-        </div>
-        <div class="d-flex align-items-center">
-          <%= link_to mypage_user_index_path do %>
-            <i class="fas fa-chevron-right fa-2x"></i>
-          <% end %>
-        </div>
-      </div>
+    <div id="map-container">
+      <%= render 'maps/index'%>
     </div>
-    
-    <hr>
-    
-    <div class="container">
-      <div class="d-flex justify-content-between">
-        <div class="row">
-          <div class="col-2 d-flex align-items-center">
-            <i class="fas fa-map-marked fa-3x"></i>
-          </div>
-          <div class="col-9 d-flex align-items-center ml-3 mt-3">
-            <div class="d-flex flex-column">
-              <label >お届け先の変更</label>
-              <p>登録住所の変更</p>
-            </div>
-          </div>
-        </div>
-        <div class="d-flex align-items-center">
-          <%= link_to mypage_address_edit_user_index_path do %>
-            <i class="fas fa-chevron-right fa-2x"></i>
-          <% end %>
-        </div>
-      </div>
-    </div>
-    
+  
     <hr>
 
     <div class="container">
@@ -205,3 +162,33 @@
 
   </div>
 </div>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBUMn8mx9RSLQ6YRr51Gg4YJ39XcsUQV5A&callback=initMap" async defer></script>
+<script>
+  let map;
+  let geocoder;
+  function initMap(){
+    geocoder = new google.maps.Geocoder();
+    map = new google.maps.Map(document.getElementById('map-container'), {
+      center: {lat: 40.7828, lng:-73.9653},
+      zoom: 12,
+    });
+    marker = new google.maps.Marker({
+      position:  {lat: 40.7828, lng:-73.9653},
+      map: map
+    });
+  }
+  function codeAddress(){
+    let inputAddress = document.getElementById('address').value;
+    geocoder.geocode( { 'address': inputAddress}, function(results, status) {
+      if (status == 'OK') {
+        map.setCenter(results[0].geometry.location);
+        var marker = new google.maps.Marker({
+          map: map,
+          position: results[0].geometry.location
+        });
+      } else {
+        alert('該当結果がありませんでした:' + status);
+      }
+    });
+  }
+</script>

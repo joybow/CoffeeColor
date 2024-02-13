@@ -1,2 +1,42 @@
-<h1>Users#show</h1>
-<p>Find me in app/views/users/show.html.erb</p>
+<div class="container d-flex  mt-1">
+  <div class="w-100 mt-2">
+    
+    <h3 class="text-center">
+      <% if @user.user_image.attached?%>
+        <%= image_tag @user, size: '100x100',class: "rounded-circle mb-3"%><br>
+      <% else %>
+        <%= image_tag 'CoffeeColorDashboard.jpeg', size: '100x100',class: "rounded-circle mb-3" %><br>
+      <% end %>
+      <div><%= @profile[:name] %>さん<br>
+      登録：<%= @profile[:is_roaster] %>
+      </div>
+      
+    </h3>
+    
+    <br>
+
+    <div class="col-12 mg-5">
+      <div class="row flex-column border-info align-items-light">最近の投稿
+      </div>
+    </div>
+    <div class="posts border ">
+      <% if @user.posts.exists?%>
+        <% @user.posts.each do |f| %>
+          <% f.post_images.each do |img|%>
+            <%= image_tag img, size: '100x100'%>
+          <% end %><br>
+          <%= f.title %> <br>
+          <%= f.content %><br>
+        <% end %>
+      <% else %>
+        <br>
+        <h4>投稿はありません</h4>
+        <br>
+      <% end %>
+    </div>
+    <br>
+
+    <hr>
+
+  </div>
+</div>
