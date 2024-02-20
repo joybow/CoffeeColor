@@ -162,34 +162,3 @@
 
   </div>
 </div>
-<div id='map' data-googlemap-api-key= "<%= @api_key %>" style= "height: 600px; width: 600px;"></div>
-<script src="codeAddress.js" async defer></script>
-<script>
-  let map;
-  let geocoder;
-  function initMap(){
-    geocoder = new google.maps.Geocoder();
-    map = new google.maps.Map(document.getElementById('map-container'), {
-      center: {lat: 40.7828, lng:-73.9653},
-      zoom: 12,
-    });
-    marker = new google.maps.Marker({
-      position:  {lat: 40.7828, lng:-73.9653},
-      map: map
-    });
-  }
-  function codeAddress(){
-    let inputAddress = document.getElementById('address').value;
-    geocoder.geocode( { 'address': inputAddress}, function(results, status) {
-      if (status == 'OK') {
-        map.setCenter(results[0].geometry.location);
-        var marker = new google.maps.Marker({
-          map: map,
-          position: results[0].geometry.location
-        });
-      } else {
-        alert('該当結果がありませんでした:' + status);
-      }
-    });
-  }
-</script>
