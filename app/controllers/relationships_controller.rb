@@ -9,7 +9,7 @@ class RelationshipsController < ApplicationController
 
   def destroy
     current_user.unfollow(params[:user_id])
-    @list = User.find(params[:user_id])
+    @user = User.find(params[:user_id])
   end
   # フォロー一覧
 
@@ -24,6 +24,6 @@ class RelationshipsController < ApplicationController
   end
 
   def set_user
-    @list = User.all
+    @users = User.all
   end
 end
