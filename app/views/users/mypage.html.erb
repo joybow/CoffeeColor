@@ -8,25 +8,30 @@
       </tr>
     </thead>
     <div class="container">
-      <div class="row">
-        <div class="col-md-2 border">
-          <% @user_list.each do |list|%>
-            <div class="user-items">
-              <% if list.user_image.attached?%>
-                <%= image_tag list.user_image, size: '100x100',class: "rounded-circle mb-3"%><br>
-              <% else %>
-                <%= image_tag 'CoffeeColorDashboard.jpeg', size: '100x100',class: "rounded-circle mb-3" %><br>
-              <% end %>
-              <div class="card-body">
-                <h5 class= "card-title"><%= link_to list.name, user_path(list) %></h5>
-                  <div id="following_forms_<%= list.id %>" class= "card-text">
-                    <%= render "relationships/follow", list: list %>
+      <% @user_list.each_slice(4) do |users|%>
+        <div class="row">
+          <% users.each do |user|%>
+            <div class="col-md-2 mx-4 mb-4">
+              <div class="user-items border">
+                <% if user.user_image.attached?%>
+                  <%= image_tag user.user_image, size: '100x100',class: "rounded-circle mb-3"%><br>
+                <% else %>
+                  <%= image_tag 'CoffeeColorDashboard.jpeg', size: '100x100',class: "rounded-circle mb-3" %><br>
+                <% end %>
+                <div class="card-body">
+                  <h5 class= "card-title"><%= link_to user.name, user_path(user) %></h5>
+                  <div id="following_forms_<%= user.id %>" class= "card-text">
+                    <%= render "relationships/follow", list: user %>
                   </div>
+                </div>
               </div>
             </div>
           <% end %>
+          <% (4 -users.size).times do %>
+            <div class= "col-md-2 mx-4 mb-4"></div>
+          <% end %>
         </div>
-      </div>
+      <% end %>
     </div>
     <h3 class="col-md-center">
       <% if @user.user_image.attached?%>

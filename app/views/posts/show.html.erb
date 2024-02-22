@@ -35,7 +35,7 @@
 <h2>コメント一覧</h2>
 
 <%= form_with model:[@post, @comment],local: false do |f|%>
-  <%= f.text_area :content, rows:'5', placeholder: "コメント追加できます！", class: " form-control mt-3"%>
+  <%= f.text_area :content, rows:'5', placeholder: "コメント追加できます！", class: "form-control mt-3", id: "comments_delete"%>
     <div class="">
       <% if @comment.present?%>
         <%= f.submit "投稿！", class: "btn btn-primary mt-3 mb-3"%>
