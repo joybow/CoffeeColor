@@ -48,7 +48,7 @@ class User < ApplicationRecord
     or(where("id ?", "%#{keyword}%"))
   }
   def self.ransackable_attributes(auth_object = nil)
-    auth_object ? super : %w(name is_roaster_eq )
+    auth_object ? super : %w(name_cont is_roaster_eq )
   end
 
 
