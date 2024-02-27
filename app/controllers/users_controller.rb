@@ -2,6 +2,7 @@ class UsersController < ApplicationController
   before_action :set_user
   before_action :set_q, only: [:mypage, :search_results]
   
+  
   def create
     @user = @user.new(user_params)
     @user.user_image.attach(params[:user][:user_image])

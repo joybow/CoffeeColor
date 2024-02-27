@@ -3,7 +3,7 @@
   <% if @user_name.present? %>
     <div class=" text-center col-12 ">
       <% @user_name.each do |result| %>
-        <%= result.name %><br>
+        <%= result.name %>(<%= result.is_roaster == 'maker' ? 'メーカー' : (result.is_roaster == 'roaster' ? '焙煎士'  : 'ユーザー')%>)<br>
       <% end %>
     </div>
   <% else %>

@@ -3,6 +3,7 @@ class User < ApplicationRecord
   extend DisplayList
 
   enum is_roaster: { customer: 0, roaster: 1, maker: 2 }
+
   enum local:{
     "---":0,
     北海道:1,青森県:2,岩手県:3,宮城県:4,秋田県:5,山形県:6,福島県:7,
@@ -47,12 +48,12 @@ class User < ApplicationRecord
     or(where("id ?", "%#{keyword}%"))
   }
   def self.ransackable_attributes(auth_object = nil)
-    auth_object ? super : %w(name)
+    auth_object ? super : %w(name is_roaster_eq )
   end
 
 
   def self.ransackable_associations(auth_object = nil)
-    auth_object ? super : %w[content title name]
+    auth_object ? super : %w[name is_roaster content title ]
   end
 
   def follow(user_id)

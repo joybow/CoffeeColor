@@ -32,7 +32,7 @@ Rails.application.routes.draw do
   get 'maps/index', :to => 'maps#index'
   resources :maps, only: [:index]
 
-
+  
   
   resources :notifications, only: :index      
 

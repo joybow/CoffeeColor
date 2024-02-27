@@ -7,16 +7,16 @@
         <th></th>
       </tr>
     </thead>
-    <div class="container">
-      <% @user_list.each_slice(4) do |users|%>
+    <div class="container mt-4">
+      <% @user_list.each_slice(2) do |users|%>
         <div class="row">
           <% users.each do |user|%>
-            <div class="col-md-2 mx-4 mb-4">
+            <div class="col-md-4 mx-4 mb-4">
               <div class="user-items border">
                 <% if user.user_image.attached?%>
-                  <%= image_tag user.user_image, size: '100x100',class: "rounded-circle mb-3"%><br>
+                  <%= image_tag user.user_image, size: '100x100',class: "rounded-circle mb-3 img-responsive"%><br>
                 <% else %>
-                  <%= image_tag 'CoffeeColorDashboard.jpeg', size: '100x100',class: "rounded-circle mb-3" %><br>
+                  <%= image_tag 'CoffeeColorDashboard.jpeg', size: '100x100',class: "rounded-circle mb-3 img-responsive" %><br>
                 <% end %>
                 <div class="card-body">
                   <h5 class= "card-title"><%= link_to user.name, user_path(user) %></h5>
@@ -27,27 +27,33 @@
               </div>
             </div>
           <% end %>
-          <% (4 -users.size).times do %>
+          <% (2 -users.size).times do %>
             <div class= "col-md-2 mx-4 mb-4"></div>
           <% end %>
         </div>
       <% end %>
     </div>
-    <h3 class="col-md-center">
-      <% if @user.user_image.attached?%>
-        <%= image_tag @image, size: '100x100',class: "rounded-circle mb-3"%><br>
-      <% else %>
-        <%= image_tag 'CoffeeColorDashboard.jpeg', size: '100x100',class: "rounded-circle mb-3" %><br>
-      <% end %>
-      <div><%= @profile[:name] %>さん<br>
-      登録：<%= @profile[:is_roaster] %>
+    <div class="container">
+      <div class="row">  
+        <h3 class="col-md-center">
+          <% if @user.user_image.attached?%>
+            <%= image_tag @image, size: '100x100',class: "rounded-circle mb-3"%><br>
+          <% else %>
+            <%= image_tag 'CoffeeColorDashboard.jpeg', size: '100x100',class: "rounded-circle mb-3" %><br>
+          <% end %>
+          <div><%= @profile[:name] %>さん<br>
+          登録：<%= @profile[:is_roaster] %>
+          </div>
+        </h3>
       </div>
-    </h3>
+    </div>
+
     <%= render 'follow_list', user: @users%>
     <h3 class="text-left border-top pt-3">
       <%= search_form_for @q, url: mypage_search_results_user_index_path do |f|%>
         <%= f.label "検索"%>
         <%= f.search_field :name_cont, class: 'w-10', placeholder: '検索ワード'%>
+        <%= f.select :is_roaster_eq, @user_list.distinct.pluck(:is_roaster), {include_blank: '指定なし'}, class: 'w-10' %>
         <%= f.submit '検索', class: 'btn btn-primary '%>
       <% end %>
     </h3>

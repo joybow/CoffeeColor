@@ -131,4 +131,7 @@
 .user-items {
   text-align: center;
   margin: 0 auto;
+  border: 1px solid #000000;
+  box-sizing: border-box;
+  max-width: 100%;
 }
