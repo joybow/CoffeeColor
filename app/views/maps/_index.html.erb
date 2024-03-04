@@ -4,7 +4,7 @@
 <input id="address" type="textbox" placeholder="GeekSalon">
 <input type="button" value="Encode" onclick="codeAddress()">
 
-<div id='map' data-googlemap-api-key= <%= ENV['GOOGLE_MAP_API_KEY']%>  style= "height: 600px; width: 600px;"></div>
+<div id='map' data-googlemap-api-key= <%= Rails.application.credentials.aws[:google_map_api_key]%>  style= "height: 600px; width: 600px;"></div>
 
 
 <script>

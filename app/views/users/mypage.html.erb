@@ -52,8 +52,12 @@
     <h3 class="text-left border-top pt-3">
       <%= search_form_for @q, url: mypage_search_results_user_index_path do |f|%>
         <%= f.label "検索"%>
-        <%= f.search_field :name_cont, class: 'w-10', placeholder: '検索ワード'%>
-        <%= f.select :is_roaster_eq, @user_list.distinct.pluck(:is_roaster), {include_blank: '指定なし'}, class: 'w-10' %>
+        <%= f.search_field :name_cont, class: 'w-10', placeholder: '名前で検索できます'%>
+        <%= f.label "役割" %>
+        <%= f.select :is_roaster_eq,
+                      @user_list.is_roasters.keys.uniq.map{|key|[I18n.t("activerecord.enums.is_roaster.#{key}"),@user_list.is_roasters[key]]},
+                      {include_blank: '指定なし'},
+                      class: 'w-10' %>
         <%= f.submit '検索', class: 'btn btn-primary '%>
       <% end %>
     </h3>

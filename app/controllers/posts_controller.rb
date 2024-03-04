@@ -1,7 +1,8 @@
 class PostsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_post, except: [:new, :create, :index,:search_result]
+  before_action :set_post, except: [:new, :create, :index,:search_result, :confirm, :save, :back]
   before_action :set_q, only: [:search_result]
+  before_action :permit_params, only: [:confirm]
   
   # GET /posts or /posts.json
   def index 
@@ -21,6 +22,7 @@ class PostsController < ApplicationController
 
   # GET /posts/new
   def new
+    session.delete(:post_data)
     @post = Post.new
     @posts = Post.all
   end
@@ -35,12 +37,33 @@ class PostsController < ApplicationController
   def create
     @post = Post.new(post_params)
     @post.user_id = current_user.id #誰が投稿したか指定
-    if @post.save
-      redirect_to @post
+    session[:post_data] = @post.attributes
+    session[:post_images] = params[:post][:post_images] if params[:post][:post_images]
+    if params[:confirm_button].present?
+      render 'posts/confirm', post: @post
     else
-      render :new
+      session[:confirm_button] = nil
+      redirect_to posts_path
     end
   end
+
+  def confirm  
+    @post = Post.new(@attr) 
+    @post.post_images = session[:post_images] if session[:post_images]
+  end
+
+  def back
+    @post = Post.new(session[:post_data])
+    @post.post_images = session[:post_images] if session[:post_images]
+    render :new 
+  end
+
+  def save
+    @post = Post.new(session[:post_data])
+    @post.post_images = session[:post_images] if session[:post_images]
+    @post.save notice: "投稿されました！"
+    redirect_to posts_path
+  end 
 
   def search_result
     @results = @q.result(distinct: true)
@@ -72,10 +95,14 @@ class PostsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def post_params
-      params.require(:post).permit(:title, :body, :content, post_images:[],)
+      params.require(:post).permit(:title, :content,  post_images:[])
     end
 
     def set_q
       @q = Post.ransack(params[:q])
     end
-end
+
+    def permit_params
+      @attr = params.require('post').permit( :content, :title, post_images:[])
+    end
+  end

@@ -27,6 +27,11 @@ Rails.application.routes.draw do
     end
   end
 
+  post 'posts/confirm'
+  post 'posts/back'
+  post 'posts/save'
+
+
   resources :tasks
   
   get 'maps/index', :to => 'maps#index'

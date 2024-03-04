@@ -1,0 +1,9 @@
+<h2>確認画面</h2>
+<h4>Title: <%= @post.title %></h4>
+<h3>Content: <%= @post.content %></h3>
+<%= form_with model: @post, url: posts_back_path do |form| %>
+  <%= form.submit '投稿画面に戻る', class: "btn btn-primary"%>
+<% end %>
+<%= form_with model: @post, url: posts_save_path do |form| %>
+  <%= form.submit '投稿する', class: "btn btn-danger" %>
+<% end %>
