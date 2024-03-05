@@ -8,10 +8,10 @@
       </tr>
     </thead>
     <div class="container mt-4">
-      <% @user_list.each_slice(2) do |users|%>
+      <% @user_list.each_slice(3) do |users|%>
         <div class="row">
           <% users.each do |user|%>
-            <div class="col-md-4 mx-4 mb-4">
+            <div class="col-md-3 mx-3 mb-3">
               <div class="user-items border">
                 <% if user.user_image.attached?%>
                   <%= image_tag user.user_image, size: '100x100',class: "rounded-circle mb-3 img-responsive"%><br>
@@ -27,7 +27,7 @@
               </div>
             </div>
           <% end %>
-          <% (2 -users.size).times do %>
+          <% (3 -users.size).times do %>
             <div class= "col-md-2 mx-4 mb-4"></div>
           <% end %>
         </div>

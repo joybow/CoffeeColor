@@ -3,8 +3,8 @@
   <% if @results.present? %>
     <div class=" text-center">
       <% @results.each do |result| %>
-        <%= result.title %><br>
-        <%= result.content %>
+        <%= link_to result.title, post_path(result) %><br>
+        <%= link_to result.content, post_path(result) %>
       <% end %>
     </div>
   <% else %>

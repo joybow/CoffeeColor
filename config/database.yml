@@ -7,10 +7,10 @@
 default: &default
   adapter: mysql2
   encoding: utf8
-  database: <%= Rails.application.credentials.aws[:app_name] %>
+  database: <%= ENV['DATABASE_DEV_NAME'] %>
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   username: root
-  password: <%= Rails.application.credentials.aws[:database_dev_password] %>
+  password: <%= ENV['DATABASE_DEV_PASSWORD'] %>
   host: localhost
 
 development:
@@ -19,7 +19,7 @@ development:
   database: <%= ENV['DATABASE_DEV_NAME'] %>
   pool: 5
   username: <%= ENV['DATABASE_DEV_USER'] %>
-  password: <%= Rails.application.credentials.aws[:database_dev_password] %>
+  password: <%= ENV['DATABASE_DEV_PASSWORD'] %>
   host: <%= ENV['DATABASE_DEV_HOST'] %>
 
 # Warning: The database defined as "test" will be erased and
@@ -33,4 +33,4 @@ production:
   <<: *default
   database: CoffeeColor_production
   username: CoffeeColor
-  password: <%= Rails.application.credentials.aws[:database_dev_password] %>
+  password: <%= ENV['CoffeeColor_DATABASE_PASSWORD'] %>

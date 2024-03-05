@@ -1,4 +1,4 @@
-<div class= "card-text follow-info">フォロー数: <%= list.followings.count %></div>
+<div class= "card-text follow-info">フォロー数: <%= list.followings.count %></div><br>
 <div class= "card-text follow-info">フォロワー数: <%= list.followers.count %></div>
 <% if current_user != list %>
   <% if current_user.followings?(list) %>
