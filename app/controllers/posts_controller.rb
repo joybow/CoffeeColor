@@ -2,7 +2,7 @@ class PostsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_post, except: [:new, :create, :index,:search_result, :confirm, :save, :back]
   before_action :set_q, only: [:search_result]
-  before_action :permit_params, only: [:confirm]
+  before_action :permit_params, only: [:confirm,:back]
   
   # GET /posts or /posts.json
   def index 
@@ -49,6 +49,7 @@ class PostsController < ApplicationController
 
   def confirm  
     @post = Post.new(@attr) 
+    byebug
     @post.post_images = session[:post_images] if session[:post_images]
   end
 

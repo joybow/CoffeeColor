@@ -13,12 +13,12 @@
 
   <div class="field form-group">
     <%= form.label :title %>
-    <%= form.text_field :title, class:"form-control" %>
+    <%= form.text_field :title, class:"form-control ",id: "post_title" %>
   </div>
 
   <div class="field form-group">
     <%= form.label :content %>
-    <%= form.text_area :content, class:"form-control" %>
+    <%= form.text_area :content, class:"form-control auto-resize-textarea" %>
   </div>
   <br>
   <div class="form-group gap-2 ">
@@ -29,6 +29,44 @@
 <% end %>
 
 <script>
-  document
+  $(document).ready(function() {
+    // テキストエリアの高さを自動調節する関数
+    function adjustTextFieldHeight() {
+      $('.auto-resize-textarea').each(function() {
+        // 最初に高さを自動調節するために初期値に戻す
+        $(this).css('height', 'auto');
+        $(this).css('height', $(this)[0].scrollHeight + 'px'); // スクロール領域の高さを設定
+      });
+    }
+
+    //テキスト入力フィールドの高さを自動調節
+    adjustTextFieldHeight();
+
+    document.querySelectorAll(".auto-resize-textarea").forEach(function(textField){
+      textField.addEventListener("input", adjustTextFieldHeight);
+    });
+
+    //enterキーを押した時に確認になってしまうことをキャンセルしてます。
+    // テキスト入力があるたびに高さを自動調節
+    $('.auto-resize-textarea').on('input', adjustTextFieldHeight);
+
+    // Enterキーを押したときの処理
+    $('#post_title').keydown(function(event) {
+      // Enterキーが押されたら
+      if (event.key === 'Enter') {
+        event.preventDefault(); // デフォルトの動作をキャンセル
+      }
+    });
+    $('input[type="submit"]').click(function(event) {
+      // 内容が空の場合
+      if ($('#post_content').val().trim() === '') {
+        event.preventDefault(); // デフォルトのsubmit動作を無効にする
+        alert('内容を入力してください'); // ユーザーに通知
+      }
+    });
+  });
+  //内容が空だった場合submitが押せない
+  
 </script>
+
 
