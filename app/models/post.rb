@@ -6,7 +6,8 @@ class Post < ApplicationRecord
   # 通知機能
   has_many :notifications, dependent: :destroy
   validates :title, :content, presence: true
-
+  attr_accessor :image_blob_id
+  
   def favorited?(user)
     favorites.where(user_id: user.id).exists?
   end

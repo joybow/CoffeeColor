@@ -30,6 +30,7 @@ Rails.application.routes.draw do
   post 'posts/confirm'
   post 'posts/back'
   post 'posts/save'
+  post 'posts/image_delete', to: 'posts#image_delete'
 
 
   resources :tasks

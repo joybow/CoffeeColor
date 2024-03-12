@@ -1,6 +1,6 @@
 class PostsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_post, except: [:new, :create, :index,:search_result, :confirm, :save, :back]
+  before_action :set_post, except: [:new, :create, :index,:search_result, :confirm, :save, :back ]
   before_action :set_q, only: [:search_result]
   before_action :permit_params, only: [:confirm,:back]
   
@@ -22,7 +22,6 @@ class PostsController < ApplicationController
 
   # GET /posts/new
   def new
-    session.delete(:post_data)
     @post = Post.new
     @posts = Post.all
   end
@@ -37,42 +36,46 @@ class PostsController < ApplicationController
   def create
     @post = Post.new(post_params)
     @post.user_id = current_user.id #誰が投稿したか指定
-    session[:post_data] = @post.attributes
-    session[:post_images] = params[:post][:post_images] if params[:post][:post_images]
-    if params[:confirm_button].present?
-      render 'posts/confirm', post: @post
-    else
-      session[:confirm_button] = nil
-      redirect_to posts_path
+    if params[:back].present? || !@post.save
+      render :new
+    else params[:save].present?
+      @post.save
+      redirect_to posts_path, notice: "投稿されました！"
+    
     end
   end
 
   def confirm  
-    @post = Post.new(@attr) 
-    byebug
-    @post.post_images = session[:post_images] if session[:post_images]
+    @post = Post.new(post_params)
+    if params[:confirm_button].present?
+      render 'posts/confirm'
+    else
+      session[:confirm_button] = nil
+      redirect_to new_post_path(@post)
+    end
+    
   end
 
-  def back
-    @post = Post.new(session[:post_data])
-    @post.post_images = session[:post_images] if session[:post_images]
-    render :new 
+  def image_delete
+    if params[:delete_button].present? && params[:post_images].present?
+      params[:post_images].each do |id|
+        image = ActiveStorage::Attachment.find(id)
+        image.purge
+      end
+    end
   end
-
-  def save
-    @post = Post.new(session[:post_data])
-    @post.post_images = session[:post_images] if session[:post_images]
-    @post.save notice: "投稿されました！"
-    redirect_to posts_path
-  end 
-
+  
   def search_result
     @results = @q.result(distinct: true)
   end
   
   # PATCH/PUT /posts/1 or /posts/1.json
   def update
-    @post.attach(post_params) if @post.post_images.blank?
+    if @post.post_images.present?
+      @post.post_images  
+      .attach(post_params[:post_images])
+    end
+    # post_images = post_imageで回す？
     if @post.update!(post_params) 
       redirect_to post_url(@post), notice: "投稿はアップデートされました！"
     else
@@ -96,7 +99,7 @@ class PostsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def post_params
-      params.require(:post).permit(:title, :content,  post_images:[])
+      params.require(:post).permit( :title, :content, post_images:[], image_blob_id:[])
     end
 
     def set_q
@@ -104,6 +107,6 @@ class PostsController < ApplicationController
     end
 
     def permit_params
-      @attr = params.require('post').permit( :content, :title, post_images:[])
+      @attr = params.require(:post).permit( :content, :title, post_images:[])
     end
   end
