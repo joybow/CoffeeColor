@@ -7,11 +7,29 @@ class Post < ApplicationRecord
   has_many :notifications, dependent: :destroy
   validates :title, :content, presence: true
   attr_accessor :image_blob_id
-  
+
   def favorited?(user)
     favorites.where(user_id: user.id).exists?
   end
-  
+
+  def self.looks(search, word, *columns)
+    if search == "forward_match"
+      conditions = columns.map{|column| "#{column} LIKE ?"}.join(" OR ")
+      conditions_params = Array.new(columns.size, "#{word}%")
+      @posts = Post.where(conditions, *conditions_params)
+    elsif search == "backward_match"
+      conditions = columns.map{|column| "#{column} LIKE ?"}.join(" OR ")
+      conditions_params = Array.new(columns.size, "%#{word}")
+      @posts = Post.where(conditions, *conditions_params)
+    elsif search == "partial_match"
+      conditions = columns.map{|column| "#{column} LIKE ?"}.join(" OR ")
+      conditions_params = Array.new(columns.size, "%#{word}%")
+      @posts = Post.where(conditions, *conditions_params)
+    else
+      @posts = Post.all
+    end
+  end
+
   def self.ransackable_attributes(auth_object = nil)
     auth_object ? super : %w(content title)
   end

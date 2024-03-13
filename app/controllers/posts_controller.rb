@@ -66,7 +66,15 @@ class PostsController < ApplicationController
   end
   
   def search_result
-    @results = @q.result(distinct: true)
+    @range = params[:range]
+    @posts = Post.looks(params[:search],params[:word])
+    if @range == 'タイトル'
+      @posts = Post.looks(params[:search],params[:word], :title)
+    elsif @range == '内容'
+      @posts = Post.looks(params[:search],params[:word], :content)
+    elsif @range == '両方'
+      @posts = Post.looks(params[:search],params[:word], :title, :content)
+    end
   end
   
   # PATCH/PUT /posts/1 or /posts/1.json

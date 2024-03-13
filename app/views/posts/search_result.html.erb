@@ -1,10 +1,22 @@
-<h2 class="container text-center">「<%= params[:q][:name_cont] if params[:q].present? %>」の検索結果</h2>
+<h2 class="container text-center">「<%= params[:word] %>」の検索結果</h2>
+<%= debug @posts%>
 <div class="container text-center">
-  <% if @results.present? %>
+  <% if @posts.present? %>
     <div class=" text-center">
-      <% @results.each do |result| %>
-        <%= link_to result.title, post_path(result) %><br>
-        <%= link_to result.content, post_path(result) %>
+      <% @posts.each do |result| %>
+        <% if result.title.include?(params[:word]) && result.content.include?(params[:word])%>
+          <p><strong><%= params[:title]%>と<%= params[:content] %></strong></p>
+          <p>タイトル: <%= result.title %></p>
+          <p>コンテンツ: <%= link_to result.content, post_path(result) %>
+        <% elsif result.title.include?(params[:word]) %>
+          <p><strong><%= params[:title] %></strong></p>
+          <p>タイトル: <%= result.title%></p>
+          <p>コンテンツ: <%= link_to result.content, post_path(result)%>
+        <% elsif result.conent.include?(params[:word])%>
+          <p><strong><%= params[:title] %></strong></p>
+          <p>タイトル: <%= result.title%></p>
+          <p>コンテンツ: <%= link_to result.content, post_path(result)%>
+        <% end %>    
       <% end %>
     </div>
   <% else %>
