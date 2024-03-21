@@ -1,139 +1,104 @@
-<%= form_with(model: post,url: posts_confirm_path(@post), local: true,id: "new-post") do |form| %>
-  <% if post.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(post.errors.count, "error") %> prohibited this post from being saved:</h2>
+<% if @post.new_record? %>  
+  <%= form_with(model: @post,url: posts_confirm_path(@post), local: true,id: "new-post") do |form| %>
+    <% if post.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(post.errors.count, "error") %> prohibited this post from being saved:</h2>
 
-      <ul>
-        <% post.errors.full_message.each do |message| %>
-          <li><%= message %></li>
+        <ul>
+          <% post.errors.full_message.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="field form-group">
+      <%= form.label :title %>
+      <%= form.text_field :title, class:"form-control ",id: "post_title" %>
+    </div>
+
+    <div class="field form-group">
+      <%= form.label :content %>
+      <%= form.text_area :content, class:"form-control auto-resize-textarea",id: "post_content" %>
+    </div>
+    <br>
+    <div class="form-group gap-2 ">
+      <%= form.file_field :post_images,
+        accept: "image/jpeg,image/gif,image/png",
+        multiple: true, class: "btn btn-primary",id: "post_images" %>
+      <div id="post_images_preview_container">
+        <% if @post.post_images.attached? %>
+          <p class="text-danger font09">※削除する場合は削除ボタンを押してください</p><br>
+          <div class="form-check">  
+            <% @post.post_images.each do |img|%>
+              <label class="form-check-label" >
+                <%= image_tag rails_blob_path(img, only_path: true), width: 200, class: "mb-2"%>
+                <%= link_to "削除", posts_image_delete_path(img.blob.id),method: :delete,
+                class: "btn btn-primary delete-button",remote: true %>
+              </label>
+            <% end %>
+          </div>
+        <% else %>
+          <p class="circle"> 画像を登録する際は↑で！！</p>
         <% end %>
-      </ul>
+      </div>
+
+      <br>
+
+      <%= form.submit '確認する', name: "confirm_button", class: "btn btn-primary" %>
     </div>
   <% end %>
+<% else %>
+  <%= form_with(model: post,url: post_path(@post), method: :patch,local: true,id: "new-post") do |form| %>
+    <% if post.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(post.errors.count, "error") %> prohibited this post from being saved:</h2>
 
-  <div class="field form-group">
-    <%= form.label :title %>
-    <%= form.text_field :title, class:"form-control ",id: "post_title" %>
-  </div>
+        <ul>
+          <% post.errors.full_message.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
 
-  <div class="field form-group">
-    <%= form.label :content %>
-    <%= form.text_area :content, class:"form-control auto-resize-textarea",id: "post_content" %>
-  </div>
-  <br>
-  <div class="form-group gap-2 ">
-    <%= form.file_field :post_images, onchange: "postImages(this)",
-      accept: "image/jpeg,image/gif,image/png",
-      multiple: true, class: "btn btn-primary",id: "post_images" %>
-    <div id="post_images_preview_container">
-      <% if @post.post_images.attached? %>
-        <p class="text-danger font09">※削除する場合は削除ボタンを押してください</p><br>
-        <div class="form-check">
-        <% @post.post_images.each do |img|%>
-          <label class="form-check-label" for="post_images-image-check_<%= img.blob.id%>">
-            <%= image_tag rails_blob_path(img, only_path: true), width: 200, class: "mb-2"%>
-            <%= img.check_box :image_blob_id[], {multipe: true}, img.blob.id%> 
-            <%= link_to "削除", posts_image_delete_path(img.blob.id),method: :delete,
-            class: "btn btn-primary delete-button",remote: true %>
-          </label>
-        <% end %>
-        </div>
-      <% else %>
-        <p class="circle"> 画像を登録する際は↑で！！</p>
-      <% end %>
+    <div class="field form-group">
+      <%= form.label :title %>
+      <%= form.text_field :title, class:"form-control ",id: "post_title" %>
     </div>
-      
+
+    <div class="field form-group">
+      <%= form.label :content %>
+      <%= form.text_area :content, class:"form-control auto-resize-textarea",id: "post_content" %>
+    </div>
     <br>
-    
-    <%= form.hidden_field :image_blob_id, id: "image_blob_ids", value: @post.post_images.blob_ids.join(',') if @post.post_images.attached? %>
-    <%= form.submit '確認する', name: "confirm_button", class: "btn btn-primary" %>
-  </div>
+    <div class="form-group gap-2 ">
+      <%= form.file_field :post_images,
+        accept: "image/jpeg,image/gif,image/png",
+        multiple: true, class: "btn btn-primary",id: "post_images" %>
+      <div id="post_images_preview_container">
+        <% if @post.post_images.attached? %>
+          <p class="text-danger font09">※削除する場合は削除ボタンを押してください</p><br>
+          <div class="form-check">
+          <% @post.post_images.each do |img|%>
+            <label class="form-check-label" >
+              <%= image_tag rails_blob_path(img.blob.id, only_path: true), width: 200, class: "mb-2"%>
+              <%= link_to "削除", posts_image_delete_path(img.blob.id),method: :delete,
+              class: "btn btn-primary delete-button",remote: true %>
+            </label>
+          <% end %>
+          </div>
+        <% else %>
+          <p class="circle"> 画像を登録する際は↑で！！</p>
+        <% end %>
+      </div>
+      <br>
+
+      <%= form.submit '確認する', name: "confirm_button", class: "btn btn-primary" %>
+    </div>
+  <% end %>
 <% end %>
 
-<script>
-  $(document).ready(function() {
-    // テキストエリアの高さを自動調節する関数
-    function adjustTextFieldHeight() {
-      $('.auto-resize-textarea').each(function() {
-        // 最初に高さを自動調節するために初期値に戻す
-        $(this).css('height', 'auto');
-        $(this).css('height', $(this)[0].scrollHeight + 'px'); // スクロール領域の高さを設定
-      });
-    }
-    $('#post_images').change(function() {
-      // 画像が選択された場合は、タイトルとコンテンツのバリデーションを無効にする
-      if ($(this).prop('files').length > 0) {
-        $('#post_title').prop('required', false);
-        $('#post_content').prop('required', false);
-      }
-    });
 
-    //テキスト入力フィールドの高さを自動調節
-    adjustTextFieldHeight();
-
-    document.querySelectorAll(".auto-resize-textarea").forEach(function(textField){
-      textField.addEventListener("input", adjustTextFieldHeight);
-    });
-
-    //enterキーを押した時に確認になってしまうことをキャンセルしてます。
-    // テキスト入力があるたびに高さを自動調節
-    $('.auto-resize-textarea').on('input', adjustTextFieldHeight);
-
-    // Enterキーを押したときの処理
-    $('#post_title').keydown(function(event) {
-      // Enterキーが押されたら
-      if (event.key === 'Enter') {
-        event.preventDefault(); // デフォルトの動作をキャンセル
-      }
-    });
-    $('input[type="submit"]').click(function(event) {
-      // 内容が空の場合
-      if ($('#post_content').val() === '') {
-        event.preventDefault(); // デフォルトのsubmit動作を無効にする
-        alert('内容を入力してください'); // ユーザーに通知
-      }
-    });
-  });
-  
-  function postImages(input) {
-    let files = input.files;
-    let container = $('#post_images_preview_container');
-    let hiddenField = $('#image_blob_ids');
-    hiddenField.val('');
-    
-
-    for (let i = 0; i < files.length; i++) {
-      let file = files[i];
-      let reader = new FileReader();
-
-      reader.onload = function(e) {
-        let img = $('<img>').attr('src', e.target.result).addClass('mb-3 mt-3 mr-3 ml-3').attr('width', '100');
-        container.append(img);
-        let deleteButton = $('<button>').text('削除').addClass('btn btn-primary delete-button');
-        container.append(deleteButton);
-        
-        deleteButton.click(function(){
-          img.remove();
-          deleteButton.remove();
-          let blobId = $(this).data('blob_id')
-          let value = hiddenField.val();
-          let newValue = value.replace(blobId + ',', '');
-          hiddenField.val(newValue);
-        });
-      };
-
-      reader.readAsDataURL(file);
-    }
-    input.addEventListener('change', function(){
-      let value = hiddenField.val();
-      let newValue = '';
-      for (let i = 0; i < this.files.length; i++){
-        newValue += this.files[i],name + ',';
-      }
-      hiddenField.val(newValue);
-    })
-  }
-  
-</script>
 
 

@@ -19,6 +19,7 @@ import 'bootstrap/dist/js/bootstrap';
 import '../stylesheets/application';
 import 'jquery';
 import './codeAddress';
+import './_form.js';
 
 Rails.start()
 Turbolinks.start()

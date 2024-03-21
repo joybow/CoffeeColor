@@ -29,7 +29,8 @@ class Post < ApplicationRecord
       @posts = Post.all
     end
   end
-
+  
+  
   def self.ransackable_attributes(auth_object = nil)
     auth_object ? super : %w(content title)
   end

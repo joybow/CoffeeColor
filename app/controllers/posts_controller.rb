@@ -36,24 +36,35 @@ class PostsController < ApplicationController
   def create
     @post = Post.new(post_params)
     @post.user_id = current_user.id #誰が投稿したか指定
+    
     if params[:back].present? || !@post.save
       render :new
     else params[:save].present?
-      @post.save
+      blob_ids = params[:image_blob_ids].values
+      blobs = ActiveStorage::Blob.where(id: blob_ids)
+      @post.post_images.attach(blobs)
       redirect_to posts_path, notice: "投稿されました！"
-    
     end
   end
 
   def confirm  
     @post = Post.new(post_params)
+    @image_blobs = []
+
+    if params[:post][:post_images].present?
+      params[:post][:post_images].each do |img|
+        blob = create_blob(img)
+        @image_blobs << blob
+      end
+      @post.post_images.attach(@image_blobs)
+    end
+
     if params[:confirm_button].present?
       render 'posts/confirm'
     else
       session[:confirm_button] = nil
       redirect_to new_post_path(@post)
     end
-    
   end
 
   def image_delete
@@ -80,8 +91,9 @@ class PostsController < ApplicationController
   # PATCH/PUT /posts/1 or /posts/1.json
   def update
     if @post.post_images.present?
-      @post.post_images  
-      .attach(post_params[:post_images])
+      @post.post_images.each do |attc|
+        @blob = attc.blob
+      end
     end
     # post_images = post_imageで回す？
     if @post.update!(post_params) 
@@ -107,14 +119,21 @@ class PostsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def post_params
-      params.require(:post).permit( :title, :content, post_images:[], image_blob_id:[])
+      params.require(:post).permit( :title, :content, post_images:[])
     end
 
     def set_q
       @q = Post.ransack(params[:q])
     end
-
+    
+    def create_blob(file)
+      ActiveStorage::Blob.create_and_upload!(
+        io: file.open,
+        filename: file.original_filename,
+        content_type: file.content_type
+      )
+    end
     def permit_params
-      @attr = params.require(:post).permit( :content, :title, post_images:[])
+      @attr = params.require(:post).permit( :content, :title, :post_images)
     end
   end
