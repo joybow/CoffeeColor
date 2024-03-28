@@ -1,0 +1,18 @@
+<p>チャットルームへようこそ<p>
+
+<p><%= @chat_room_user.name%></p>
+<% @chat_messages.each do |message|%>
+  <hr>
+  <div>
+    <li>内容：<%= message.content %></li>
+    <li><%= message.updated_at%>に送信済み</li>
+    <li><%= message.user.name%>さんのメッセージ</li>
+  </div>
+  <hr>
+<% end %>
+
+<%= form_with model: @chat_message do |f| %>
+  <%= f.hidden_field :chat_room_id, value: @chat_room.id %>
+  <%= f.text_area :content %>
+  <%= f.submit %>
+<% end %>

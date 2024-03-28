@@ -1,0 +1,15 @@
+.image-container {
+  display: flex;
+  align-items: center;
+}
+
+.image-container img {
+  display: inline-block;
+  width: 200px; /* 画像の幅を指定 */
+  height: auto; /* 高さを自動調整 */
+  margin-right: 10px; /* 画像と削除ボタンの間隔を調整 */
+}
+
+.image-container .delete-button {
+  flex-shrink: 0; /* 削除ボタンが画像の幅を超えて縮むのを防ぐ */
+}

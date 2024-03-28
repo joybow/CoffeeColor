@@ -30,14 +30,15 @@ Rails.application.routes.draw do
   post 'posts/confirm'
   post 'posts/back'
   post 'posts/save'
-  post 'posts/image_delete', to: 'posts#image_delete'
-
-
+  delete 'posts/image_delete/:id', to: 'posts#image_delete', as: 'posts_image_delete'
+  delete 'posts/confirm/:id', to: 'posts#delete_confirm', as: 'confirm_delete'
+  post 'posts/edit_confirm', to: 'posts#edit_confirm', as: 'edit_confirm'
   resources :tasks
   
   get 'maps/index', :to => 'maps#index'
   resources :maps, only: [:index]
-
+  resources :chat_rooms, only: [:create, :show]
+  resources :chat_messages, only: [:create]
   
   
   resources :notifications, only: :index      

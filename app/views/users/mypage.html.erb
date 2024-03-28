@@ -49,6 +49,15 @@
     </div>
 
     <%= render 'follow_list', user: @users%>
+    <h3>チャット機能
+      <% if @chat.present?%>
+        <% @chat.each do |chat_user|%>
+          <%= link_to "#{chat_user.name}さんとチャット", chat_rooms_path(user_id: chat_user.id),method: :post%>
+        <% end %>
+      <% else %>
+        <h4>チャット可能なユーザーはいません</h4>
+      <% end %>
+    </h3>
     <h3 class="text-left border-top pt-3">
       <%= search_form_for @q, url: mypage_search_results_user_index_path do |f|%>
         <%= f.label "検索"%>

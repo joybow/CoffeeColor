@@ -49,54 +49,8 @@
     </div>
   <% end %>
 <% else %>
-  <%= form_with(model: post,url: post_path(@post), method: :patch,local: true,id: "new-post") do |form| %>
-    <% if post.errors.any? %>
-      <div id="error_explanation">
-        <h2><%= pluralize(post.errors.count, "error") %> prohibited this post from being saved:</h2>
-
-        <ul>
-          <% post.errors.full_message.each do |message| %>
-            <li><%= message %></li>
-          <% end %>
-        </ul>
-      </div>
-    <% end %>
-
-    <div class="field form-group">
-      <%= form.label :title %>
-      <%= form.text_field :title, class:"form-control ",id: "post_title" %>
-    </div>
-
-    <div class="field form-group">
-      <%= form.label :content %>
-      <%= form.text_area :content, class:"form-control auto-resize-textarea",id: "post_content" %>
-    </div>
-    <br>
-    <div class="form-group gap-2 ">
-      <%= form.file_field :post_images,
-        accept: "image/jpeg,image/gif,image/png",
-        multiple: true, class: "btn btn-primary",id: "post_images" %>
-      <div id="post_images_preview_container">
-        <% if @post.post_images.attached? %>
-          <p class="text-danger font09">※削除する場合は削除ボタンを押してください</p><br>
-          <div class="form-check">
-          <% @post.post_images.each do |img|%>
-            <label class="form-check-label" >
-              <%= image_tag rails_blob_path(img.blob.id, only_path: true), width: 200, class: "mb-2"%>
-              <%= link_to "削除", posts_image_delete_path(img.blob.id),method: :delete,
-              class: "btn btn-primary delete-button",remote: true %>
-            </label>
-          <% end %>
-          </div>
-        <% else %>
-          <p class="circle"> 画像を登録する際は↑で！！</p>
-        <% end %>
-      </div>
-      <br>
-
-      <%= form.submit '確認する', name: "confirm_button", class: "btn btn-primary" %>
-    </div>
-  <% end %>
+  <%= render 'posts/edit_confirm', post: @post%>
+  
 <% end %>
 
 

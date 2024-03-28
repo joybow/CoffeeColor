@@ -1,8 +1,8 @@
 class PostsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_post, except: [:new, :create, :index,:search_result, :confirm, :save, :back ]
+  before_action :set_post, except: [:delete_confirm,:new,:image_delete, :create, :index,:search_result, :confirm, :save, :back ]
   before_action :set_q, only: [:search_result]
-  before_action :permit_params, only: [:confirm,:back]
+  before_action :permit_params, only: [:confirm,:back,:edit_confirm]
   
   # GET /posts or /posts.json
   def index 
@@ -37,20 +37,23 @@ class PostsController < ApplicationController
     @post = Post.new(post_params)
     @post.user_id = current_user.id #誰が投稿したか指定
     
-    if params[:back].present? || !@post.save
-      render :new
-    else params[:save].present?
-      blob_ids = params[:image_blob_ids].values
+    if params[:back].present?
+      render 'new'
+    elsif params[:save].present?
+      blob_ids = params[:image_blob_ids]&.values
       blobs = ActiveStorage::Blob.where(id: blob_ids)
       @post.post_images.attach(blobs)
-      redirect_to posts_path, notice: "投稿されました！"
+      if @post.save
+        redirect_to posts_path, notice: "投稿されました！"
+      else
+        redirect_to new_post_path
+      end
     end
   end
 
   def confirm  
     @post = Post.new(post_params)
     @image_blobs = []
-
     if params[:post][:post_images].present?
       params[:post][:post_images].each do |img|
         blob = create_blob(img)
@@ -58,7 +61,7 @@ class PostsController < ApplicationController
       end
       @post.post_images.attach(@image_blobs)
     end
-
+    
     if params[:confirm_button].present?
       render 'posts/confirm'
     else
@@ -67,15 +70,30 @@ class PostsController < ApplicationController
     end
   end
 
-  def image_delete
-    if params[:delete_button].present? && params[:post_images].present?
-      params[:post_images].each do |id|
-        image = ActiveStorage::Attachment.find(id)
-        image.purge
+  def edit_confirm
+    @post = Post.new(post_params)
+    @image_blobs = []
+    if params[:confirm_button].present?
+      params[:post][:post_images].each do |img|
+        blob = create_blob(img)
+        @image_blobs << blob
       end
+      @post.post_images.attach(@image_blobs)
     end
   end
-  
+
+  def image_delete
+    if params[:delete_button].present? && params[:signed_id].present?
+      signed_id = params[:signed_id]
+      image = ActiveStorage::Blob.find_signed(singed_id)
+      image.purge
+      render json: {message: "画像削除完了！"}
+    end
+  end
+  def delete_confirm
+    @image_blob_id = ActiveStorage::Blob.find(params[:id])
+    @image_blob_id.purge
+  end
   def search_result
     @range = params[:range]
     @posts = Post.looks(params[:search],params[:word])
@@ -119,7 +137,7 @@ class PostsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def post_params
-      params.require(:post).permit( :title, :content, post_images:[])
+      params.require(:post).permit( :title, :content,image_blob_ids:[], post_images:[])
     end
 
     def set_q
@@ -134,6 +152,6 @@ class PostsController < ApplicationController
       )
     end
     def permit_params
-      @attr = params.require(:post).permit( :content, :title, :post_images)
+      @attr = params.require(:post).permit( :content, :title, :post_images[])
     end
   end

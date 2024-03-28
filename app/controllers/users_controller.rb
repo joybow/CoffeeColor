@@ -38,8 +38,15 @@ class UsersController < ApplicationController
     @image = current_user.user_image
     @tasks = Task.all
     @user_list = User.where.not(id: current_user.id)
-    get_follower_user_ids = Relationship.where(follower_id: @user.id).pluck(:followed_id)
+    get_follower_user_ids = Relationship.where(follower_id: @user.id)
+                                        .where.not(followed_id: @user.id)
+                                        .pluck(:followed_id)
+    get_followed_user_ids = Relationship.where(followed_id: @user.id)
+                                        .where.not(follower_id: @user.id)
+                                        .pluck(:follower_id)
     @users = User.includes(:reverse_of_relationships).where(id: get_follower_user_ids).order("relationships.created_at DESC")
+    can_chat = get_follower_user_ids & get_followed_user_ids 
+    @chat = User.where(id: can_chat)
   end
   
   def search_results

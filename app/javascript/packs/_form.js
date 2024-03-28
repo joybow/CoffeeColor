@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(document).on('turbolinks:load',function() {
   // テキストエリアの高さを自動調節する関数
   function adjustTextFieldHeight() {
     $('.auto-resize-textarea').each(function() {
@@ -31,27 +31,55 @@ $(document).ready(function() {
     let files = this.files;
     let container = $('#post_images_preview_container');
 
-    
     for (let i = 0; i < files.length; i++) {
     let file = files[i];
     let reader = new FileReader();
     reader.onload = function(e) {
       let img = $('<img>').attr('src', e.target.result).addClass('mb-3 mt-3 mr-3 ml-3').attr('width', '100');
-      container.append(img);
+      container.append(img.hide().fadeIn(1000));
       let deleteButton = $('<button>').text('削除').addClass('btn btn-primary delete-button');
-      container.append(deleteButton);
+      container.append(deleteButton.hide().fadeIn(1000));
       
       deleteButton.click(function(){
         img.remove();
         deleteButton.remove();
-
         files = Array.from(files).filter(function(f){
           return f !== file;
         });
+        let newFileList = new DataTransfer();
+        files.forEach(function(file){
+          newFileList.items.add(file);
+        })
+
+        $('#post_images')[0].files = newFileList.files;
+        console.log('file_fieldが更新されました');
       });
     };
     reader.readAsDataURL(file);
   } 
+  });
+  
+  $('#delete_image').on('click', function(){
+    var jsonResponse = {
+      "message": "画像削除完了"
+    };
+  location.reload();
+  })
+  $('#edit_confirm').on('click', function(){
+    event.preventDefault();
+    let formData = $('#data_field').serialize();
+
+    $.ajax({
+      url: '/posts/confirm',
+      method: 'POST',
+      data: formData,
+      success: function(response){
+        window.location.href = '/posts/confirm';
+      },
+      error: function(xhr, status, error){
+        console.error('エラー:', error)
+      }
+    });
   });
 });
 
