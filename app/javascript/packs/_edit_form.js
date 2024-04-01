@@ -27,22 +27,67 @@ $(document).on('turbolinks:load',function() {
     }
     
   });
+  let existsCount = $('.existing-image').length;
+  let existingBlobIds = [];
+  for(let i= 0; i < existsCount; i++){
+    let signedId = $('.existing-image').eq(i).data('blob-id')
+    existingBlobIds.push(signedId);
+  }
+  existingBlobIds.forEach(function(signedId){
+    let hiddenField = $('<input>').attr({
+      type: 'hidden',
+      name: 'post[exists_images][]',
+      value: signedId
+    });
+    $('#new-post').append(hiddenField);
+    $('.delete-button').click(function(e){
+      e.preventDefault();
+      let deleteButton = $(this);
+      let signedId = deleteButton.closest('.existing-image').data('blob-id');
+
+      $.ajax({
+        url: '/posts/image_delete/' + signedId,
+        type: 'DELETE',
+        dataType: 'json',
+        success: function(data){
+          $('.message-text').text(data.message);
+          $('.message-box').addClass('success');
+          var deletedImageParent = $('.existing-image[data-blob-id="' + signedId + '"]');
+          $('.message-box').fadeIn().delay(3000).fadeOut();
+        },
+        error: function(jqXHR, textStatus, errorThrown){
+          $('.message-text').text("画像削除失敗");
+          $('.message-box').fadeIn().delay(3000).fadeOut();
+        }
+      })
+    });
+  });
   $('#post_images').on('change', function(){
     let files = this.files;
-    let container = $('#post_images_preview_container');
-
+    let container = $('.existing-image');
     for (let i = 0; i < files.length; i++) {
     let file = files[i];
     let reader = new FileReader();
     reader.onload = function(e) {
+      let imgPreview = $('<div>').addClass('img-preview');
       let img = $('<img>').attr('src', e.target.result).addClass('mb-3 mt-3 mr-3 ml-3').attr('width', '100');
-      container.append(img.hide().fadeIn(1000));
+      imgPreview.append(img);
+      container.append(imgPreview.hide().fadeIn(1000));
+
       let deleteButton = $('<button>').text('削除').addClass('btn btn-primary delete-button');
       container.append(deleteButton.hide().fadeIn(1000));
+
+      let hiddenField = $('<input>').attr({
+        type: 'hidden',
+        name: 'post[post_images][]',
+        value: file.name
+      });
+      container.append(hiddenField.hide().fadeIn(1000));
       
       deleteButton.click(function(){
         img.remove();
         deleteButton.remove();
+        hiddenField.remove();
         files = Array.from(files).filter(function(f){
           return f !== file;
         });

@@ -30,7 +30,7 @@ Rails.application.routes.draw do
   post 'posts/confirm'
   post 'posts/back'
   post 'posts/save'
-  delete 'posts/image_delete/:id', to: 'posts#image_delete', as: 'posts_image_delete'
+  delete 'posts/image_delete/:signed_id', to: 'posts#image_delete', as: 'posts_image_delete'
   delete 'posts/confirm/:id', to: 'posts#delete_confirm', as: 'confirm_delete'
   post 'posts/edit_confirm', to: 'posts#edit_confirm', as: 'edit_confirm'
   resources :tasks

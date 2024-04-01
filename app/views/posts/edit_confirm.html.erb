@@ -1,0 +1,28 @@
+<%= stylesheet_pack_tag "confirm" %>
+<h2>確認画面</h2>
+<h4>Title: <%= @post.title %></h4>
+<h3>Content: <%= @post.content %></h3>
+<h3>画像だぜぇ</h3>
+
+<% @image_blobs.each do |img|%>
+  <div class="image-container  ">
+    <%= image_tag rails_blob_path(img, only_path: true), id: "image_tag_#{img.id}",  width: 200, class: "mb-2"%>
+    <br>
+    <button id= "del_btn_#{img.id}" class= "btn btn-primary delete-button mb-3" data-image-id= "<%= img.id %>">削除</button>
+  </div>
+<% end %>
+<%= form_with model: @post do |form| %>
+  <%= form.hidden_field :title%>
+  <%= form.hidden_field :content%>
+  <%= form.submit '投稿画面に戻る',  name: 'back',class: "btn btn-primary", id: "back_button"%>
+<% end %>
+<%= form_with model: @post, method: :post, url: posts_path(@post) do |form| %>
+  <%= form.hidden_field :title%>
+  <%= form.hidden_field :content%>
+  <% @post.post_images.each_with_index do |img,index|%>
+    <%= hidden_field_tag "image_blob_ids[#{index}]", img.blob_id %>
+  <% end %>
+  <%= form.submit '投稿する', name: 'save',class: "btn btn-danger" %>
+<% end %>
+
+

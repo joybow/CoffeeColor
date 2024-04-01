@@ -44,6 +44,7 @@ class UsersController < ApplicationController
     get_followed_user_ids = Relationship.where(followed_id: @user.id)
                                         .where.not(follower_id: @user.id)
                                         .pluck(:follower_id)
+                                        # もっと絞れる whereメソッドで
     @users = User.includes(:reverse_of_relationships).where(id: get_follower_user_ids).order("relationships.created_at DESC")
     can_chat = get_follower_user_ids & get_followed_user_ids 
     @chat = User.where(id: can_chat)

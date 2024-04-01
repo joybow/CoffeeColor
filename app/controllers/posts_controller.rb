@@ -1,8 +1,8 @@
 class PostsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_post, except: [:delete_confirm,:new,:image_delete, :create, :index,:search_result, :confirm, :save, :back ]
+  before_action :set_post, except: [:delete_confirm,:new,:image_delete, :create, :index,:search_result, :confirm, :save, :back,:edit_confirm ]
   before_action :set_q, only: [:search_result]
-  before_action :permit_params, only: [:confirm,:back,:edit_confirm]
+  # before_action :permit_params, only: [:confirm,:back,:edit_confirm]
   
   # GET /posts or /posts.json
   def index 
@@ -51,7 +51,7 @@ class PostsController < ApplicationController
     end
   end
 
-  def confirm  
+  def confirm
     @post = Post.new(post_params)
     @image_blobs = []
     if params[:post][:post_images].present?
@@ -73,6 +73,14 @@ class PostsController < ApplicationController
   def edit_confirm
     @post = Post.new(post_params)
     @image_blobs = []
+    if params[:image_inside].present?
+      params[:post][:image_inside].each do |img|
+        blob = create_blob(img)
+        @image_blobs << blob
+      end
+      @post.post_images.attach(@image_blobs)
+    end
+
     if params[:confirm_button].present?
       params[:post][:post_images].each do |img|
         blob = create_blob(img)
@@ -83,11 +91,19 @@ class PostsController < ApplicationController
   end
 
   def image_delete
-    if params[:delete_button].present? && params[:signed_id].present?
-      signed_id = params[:signed_id]
-      image = ActiveStorage::Blob.find_signed(singed_id)
-      image.purge
-      render json: {message: "画像削除完了！"}
+    if params[:signed_id].present?
+      blob_id = params[:signed_id]
+      image = ActiveStorage::Blob.find_signed(blob_id)
+      if image.present?
+        image.purge
+        render json: {message: "画像削除完了！"}
+      else
+        logger.error "画像が見つかりませんでした。Blob ID #{blob_id}"
+        render json: {message: "画像がないよ！"}, status: :not_found
+      end
+    else
+      logger.error "削除する画像が指定されていません。"
+      render json: {message: "削除する画像が指定されていません"}, status: :bad_request
     end
   end
   def delete_confirm
@@ -137,7 +153,7 @@ class PostsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def post_params
-      params.require(:post).permit( :title, :content,image_blob_ids:[], post_images:[])
+      params.require(:post).permit( :title, :content,:post_inside,image_blob_ids:[], post_images:[])
     end
 
     def set_q

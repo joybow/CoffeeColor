@@ -1,5 +1,5 @@
 <p>チャットルームへようこそ<p>
-
+<%# 最新のメッセージが最初に来るようにする 改行　%>
 <p><%= @chat_room_user.name%></p>
 <% @chat_messages.each do |message|%>
   <hr>

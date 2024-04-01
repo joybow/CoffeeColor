@@ -1,0 +1,47 @@
+<%= form_with(model: @post,url: edit_confirm_path(@post),method: :post, local: true,id: "new-post") do |form| %>
+  <% if post.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(post.errors.count, "error") %> prohibited this post from being saved:</h2>
+
+      <ul>
+        <% post.errors.full_message.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="field form-group">
+    <%= form.label :title %>
+    <%= form.text_field :title, class:"form-control ",id: "post_title" %>
+  </div>
+
+  <div class="field form-group">
+    <%= form.label :content %>
+    <%= form.text_area :content, class:"form-control auto-resize-textarea",id: "post_content" %>
+  </div>
+  <br>
+  <div class="form-group gap-2 ">
+    <div id="post_images_preview_container">
+      <p class="text-danger font09">※削除する場合は削除ボタンを押してください</p><br>
+      <div class="message-box">
+        <p class="message-text"></p>
+      </div>
+      <% @post.post_images.each do |img|%>
+        <div class="existing-image" data-blob-id="<%= img.signed_id%>">  
+          <%= image_tag rails_blob_path(img, only_path: true), width: 200, class: "mb-2"%>
+          <%= link_to "削除", posts_image_delete_path(signed_id: img.blob.signed_id),method: :delete,
+          class: "btn btn-primary delete-button",remote: true %>
+        </div>
+      <% end %>
+      <p class="circle"> 画像を登録する際は↓です</p>
+      <%= form.file_field :post_images,
+      accept: "image/jpeg,image/gif,image/png",
+      multiple: true, class: "btn btn-primary",id: "post_images" %>
+      <br>
+    </div>
+  </div>
+  
+    <br>
+
+    <%= form.submit '確認する', name: "confirm_button", class: "btn btn-primary" %>
+<% end %>
