@@ -24,12 +24,12 @@
     <div id="post_images_preview_container">
       <p class="text-danger font09">※削除する場合は削除ボタンを押してください</p><br>
       <div class="message-box">
-        <p class="message-text"></p>
+        <p class="message-text">画像削除完了</p>
       </div>
       <% @post.post_images.each do |img|%>
-        <div class="existing-image" data-blob-id="<%= img.signed_id%>">  
+        <div class="existing-image" data-blob-id="<%= img.blob_id%>">  
           <%= image_tag rails_blob_path(img, only_path: true), width: 200, class: "mb-2"%>
-          <%= link_to "削除", posts_image_delete_path(signed_id: img.blob.signed_id),method: :delete,
+          <%= link_to "削除", posts_image_delete_path(blob_id: img.blob_id),method: :delete,
           class: "btn btn-primary delete-button",remote: true %>
         </div>
       <% end %>
@@ -40,8 +40,19 @@
       <br>
     </div>
   </div>
+  <div class="check_box">
+    <span>タグ追加</span>
+    <%= form.collection_check_boxes(:tag_ids, Tag.all, :id, :name)do |tg|%>
+      <div>
+        <%= tg.label do%>
+          <%= tg.check_box %>
+          <%= tg.text %>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
   
-    <br>
+  <br>
 
     <%= form.submit '確認する', name: "confirm_button", class: "btn btn-primary" %>
 <% end %>

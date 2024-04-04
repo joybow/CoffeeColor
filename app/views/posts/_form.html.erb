@@ -41,6 +41,17 @@
       <% end %>
   </div>
   <br>
+  <div class="check_box">
+    <span>タグ追加</span>
+    <%= form.collection_check_boxes(:tag_ids, Tag.all, :id, :name)do |tg|%>
+      <div>
+        <%= tg.label do%>
+          <%= tg.check_box %>
+          <%= tg.text %>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
 
   <%= form.submit '確認する', name: "confirm_button", class: "btn btn-primary" %>
     </div>

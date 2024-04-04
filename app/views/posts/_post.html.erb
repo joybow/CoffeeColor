@@ -12,5 +12,11 @@
     <%= link_to '表示', post, class: "btn btn-outline-primary" %>
     <%= link_to '編集', edit_post_path(post), class: "btn btn-outline-primary" %>
     <%= link_to '削除', post, method: :delete, data: { confirm: '本当に削除しますか？' }, class: "btn btn-outline-danger" %>
+    <div>
+      <strong class= "tag-label">タグ</strong>
+      <% post.tags.each do |tg|%>
+        <span class= "tag-name"><%= tg.name%></span>
+      <% end %>
+    </div>
   </div>
 </div>

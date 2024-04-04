@@ -9,6 +9,11 @@
   
   </div>
   <%= render @posts %>
+  <% @posts.each do |post| %>
+    <% post.tags.each do |tg|%>
+      <%= tg.name %>
+    <% end %>
+  <% end %>   
   
   <%= link_to 'New Post', new_post_path %>
   

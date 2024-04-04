@@ -19,7 +19,12 @@
   <%= image_tag img, size: '300x300', class: "img-fluid rounded"%>
   <% end %>
 <% end %>
-
+<div>
+  <span class="tag-label">タグ:</span>
+  <% @post.tags.each do |tg|%>
+    <span class="tag-name"> <%= tg.name %></span>
+  <% end %>
+</div>
 <br>
 
 <h4>カラーピッカー</h4>

@@ -14,13 +14,16 @@
 <%= form_with model: @post do |form| %>
   <%= form.hidden_field :title%>
   <%= form.hidden_field :content%>
-  <%= form.submit '投稿画面に戻る',  name: 'back',class: "btn btn-primary", id: "back_button"%>
+  <%= form.submit '投稿編集画面に戻る',  name: 'back',class: "btn btn-primary", id: "back_button"%>
 <% end %>
-<%= form_with model: @post, method: :post, url: posts_path(@post) do |form| %>
+<%= form_with model: @post, url: post_path(@post),method: :patch  do |form| %>
   <%= form.hidden_field :title%>
   <%= form.hidden_field :content%>
   <% @post.post_images.each_with_index do |img,index|%>
     <%= hidden_field_tag "image_blob_ids[#{index}]", img.blob_id %>
+  <% end %>
+  <% @post.tag_ids.each do |tg|%>
+    <%= hidden_field_tag "post[tag_ids][]", tg %>
   <% end %>
   <%= form.submit '投稿する', name: 'save',class: "btn btn-danger" %>
 <% end %>

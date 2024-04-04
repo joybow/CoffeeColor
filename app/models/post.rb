@@ -7,28 +7,40 @@ class Post < ApplicationRecord
   has_many :notifications, dependent: :destroy
   validates :title, :content, presence: true
   attr_accessor :image_blob_id
-
+  # タグ機能
+  has_many :post_tags, dependent: :destroy
+  has_many :tags, through: :post_tags
+  
   def favorited?(user)
     favorites.where(user_id: user.id).exists?
   end
 
-  def self.looks(search, word, *columns)
+  def self.looks(search, word, tag, *columns)
     if search == "forward_match"
       conditions = columns.map{|column| "#{column} LIKE ?"}.join(" OR ")
       conditions_params = Array.new(columns.size, "#{word}%")
-      @posts = Post.where(conditions, *conditions_params)
     elsif search == "backward_match"
       conditions = columns.map{|column| "#{column} LIKE ?"}.join(" OR ")
       conditions_params = Array.new(columns.size, "%#{word}")
-      @posts = Post.where(conditions, *conditions_params)
     elsif search == "partial_match"
       conditions = columns.map{|column| "#{column} LIKE ?"}.join(" OR ")
       conditions_params = Array.new(columns.size, "%#{word}%")
-      @posts = Post.where(conditions, *conditions_params)
     else
       @posts = Post.all
+      return @posts
     end
+
+    if @tag.present? && tag_name != 'タグで検索しない'
+      tag_record = Tag.find_by(name: @word)
+      if tag_record.present?
+        conditions += " AND tag_ids = ? "
+        conditions_params << tag_record.id
+      end
+    end
+
+    Post.where(conditions, *conditions_params)
   end
+
   
   
   def self.ransackable_attributes(auth_object = nil)

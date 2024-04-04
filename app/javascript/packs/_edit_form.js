@@ -27,42 +27,58 @@ $(document).on('turbolinks:load',function() {
     }
     
   });
-  let existsCount = $('.existing-image').length;
-  let existingBlobIds = [];
-  for(let i= 0; i < existsCount; i++){
-    let signedId = $('.existing-image').eq(i).data('blob-id')
-    existingBlobIds.push(signedId);
-  }
-  existingBlobIds.forEach(function(signedId){
-    let hiddenField = $('<input>').attr({
-      type: 'hidden',
-      name: 'post[exists_images][]',
-      value: signedId
-    });
-    $('#new-post').append(hiddenField);
+
+  
     $('.delete-button').click(function(e){
       e.preventDefault();
       let deleteButton = $(this);
-      let signedId = deleteButton.closest('.existing-image').data('blob-id');
-
+      let blobId = deleteButton.closest('.existing-image').data('blob-id');
       $.ajax({
-        url: '/posts/image_delete/' + signedId,
+        url: '/posts/image_delete/' + blobId,
         type: 'DELETE',
         dataType: 'json',
+        data: { blob_id: blobId },
         success: function(data){
-          $('.message-text').text(data.message);
-          $('.message-box').addClass('success');
-          var deletedImageParent = $('.existing-image[data-blob-id="' + signedId + '"]');
-          $('.message-box').fadeIn().delay(3000).fadeOut();
+          console.log(data);
+          let messageBox = $('.message-box');
+          let messageText = $('.message-text');
+          messageText.text(data.message);
+          messageBox.addClass('success');
+          let deletedImageParent = $('.existing-image[data-blob-id="' + blobId + '"]');
+          let deletedImageContainer = deletedImageParent.parent();
+          
+          deletedImageParent.remove();
+          if (deletedImageContainer.children().length == 0){
+            deletedImageContainer.remove();
+          }
+          messageBox.fadeIn(function(){
+            setTimeout(function(){
+              messageBox.fadeOut(function(){
+                messageText.text('');
+                messageBox.removeClass('success');
+              });
+            }, 3000);
+          });
         },
         error: function(jqXHR, textStatus, errorThrown){
-          $('.message-text').text("画像削除失敗");
-          $('.message-box').fadeIn().delay(3000).fadeOut();
+          let messageText = $('.message-text');
+          let messageBox = $('.message-box');
+          messageText.text("画像削除失敗");
+          messageBox.addClass('error');
+
+          messageBox.fadeIn(function(){
+            setTimeout(function(){
+              messageBox.fadeOut(function(){
+                messageText.text('');
+                messageBox.removeClass('error');
+              });
+            }, 3000);
+          });
         }
-      })
+      });
     });
-  });
   $('#post_images').on('change', function(){
+    console.log('file_filedが変更されました。')
     let files = this.files;
     let container = $('.existing-image');
     for (let i = 0; i < files.length; i++) {
@@ -83,8 +99,8 @@ $(document).on('turbolinks:load',function() {
         value: file.name
       });
       container.append(hiddenField.hide().fadeIn(1000));
-      
       deleteButton.click(function(){
+        console.log('削除ボタンがクリックされました。');
         img.remove();
         deleteButton.remove();
         hiddenField.remove();
@@ -103,5 +119,26 @@ $(document).on('turbolinks:load',function() {
       reader.readAsDataURL(file);
     } 
   });
+  $('#new-post').on('submit',function(){
+    $('input[name="post[exists_images][]"]').remove();
+
+    let existsCount = $('.existing-image').length;
+    let existingBlobIds = [];
+
+    for(let i= 0; i < existsCount; i++){
+    let blobId = $('.existing-image').eq(i).data('blob-id')
+    existingBlobIds.push(blobId);
+    }
+
+    existingBlobIds.forEach(function(blobId){
+      let hiddenField = $('<input>').attr({
+      type: 'hidden',
+      name: 'post[exists_images][]',
+      value: blobId
+    });
+    $('#new-post').append(hiddenField);
+    console.log("hidden_fieldを作りました。")
+  });
+  })
 });
 

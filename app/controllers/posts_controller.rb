@@ -36,7 +36,6 @@ class PostsController < ApplicationController
   def create
     @post = Post.new(post_params)
     @post.user_id = current_user.id #誰が投稿したか指定
-    
     if params[:back].present?
       render 'new'
     elsif params[:save].present?
@@ -71,65 +70,85 @@ class PostsController < ApplicationController
   end
 
   def edit_confirm
-    @post = Post.new(post_params)
+    @post = Post.find(params[:id])
+    @post.assign_attributes(post_params)
     @image_blobs = []
-    if params[:image_inside].present?
-      params[:post][:image_inside].each do |img|
-        blob = create_blob(img)
+    if params[:exists_images].present?
+      params[:exists_images].each do |img|
+        blob = ActiveStorage::Blob.find(img)
         @image_blobs << blob
       end
+      
       @post.post_images.attach(@image_blobs)
     end
-
-    if params[:confirm_button].present?
+    if params[:confirm_button].present? && params[:post][:post_images].present?
       params[:post][:post_images].each do |img|
         blob = create_blob(img)
         @image_blobs << blob
       end
+    end
+    
+    unless @image_blobs.empty?
       @post.post_images.attach(@image_blobs)
     end
+
   end
 
   def image_delete
-    if params[:signed_id].present?
-      blob_id = params[:signed_id]
-      image = ActiveStorage::Blob.find_signed(blob_id)
+    if params[:blob_id].present?
+      blob_id = params[:blob_id]
+      image = ActiveStorage::Blob.find_by(id: blob_id)
       if image.present?
+        image.attachments.each do |at|
+          at.purge
+        end
         image.purge
-        render json: {message: "画像削除完了！"}
+        redirect_back(fallback_location: root_path)
       else
-        logger.error "画像が見つかりませんでした。Blob ID #{blob_id}"
-        render json: {message: "画像がないよ！"}, status: :not_found
+        render json: { message: "画像がないよ！" }, status: :not_found
       end
     else
-      logger.error "削除する画像が指定されていません。"
-      render json: {message: "削除する画像が指定されていません"}, status: :bad_request
+      render json: { message: "削除する画像が指定されていません" }, status: :bad_request
     end
   end
+
   def delete_confirm
     @image_blob_id = ActiveStorage::Blob.find(params[:id])
     @image_blob_id.purge
   end
   def search_result
     @range = params[:range]
-    @posts = Post.looks(params[:search],params[:word])
-    if @range == 'タイトル'
-      @posts = Post.looks(params[:search],params[:word], :title)
-    elsif @range == '内容'
-      @posts = Post.looks(params[:search],params[:word], :content)
-    elsif @range == '両方'
-      @posts = Post.looks(params[:search],params[:word], :title, :content)
+    @word = params[:word]
+    @search = params[:search]
+    @tag = params[:tag]
+  
+    if @tag == 'タグで検索しない'
+      if @range == 'タイトル'
+        @posts = Post.looks(@search, @word, :title)
+      elsif @range == '内容'
+        @posts = Post.looks(@search, @word, :content)
+      else
+        @posts = Post.looks(@search, @word, :title, :content)
+      end
+    else
+      if @range == 'タイトル'
+        @posts = Post.looks(@search, @word, @tag, :title)
+      elsif @range == '内容'
+        @posts = Post.looks(@search, @word, @tag, :content)
+      else
+        @posts = Post.looks(@search, @word, @tag, :title, :content)
+      end
     end
   end
   
   # PATCH/PUT /posts/1 or /posts/1.json
   def update
+
     if @post.post_images.present?
       @post.post_images.each do |attc|
         @blob = attc.blob
       end
     end
-    # post_images = post_imageで回す？
     if @post.update!(post_params) 
       redirect_to post_url(@post), notice: "投稿はアップデートされました！"
     else
@@ -153,7 +172,7 @@ class PostsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def post_params
-      params.require(:post).permit( :title, :content,:post_inside,image_blob_ids:[], post_images:[])
+      params.require(:post).permit( :title, :content,:post_inside,image_blob_ids:[], post_images:[],exists_images:[], tag_ids: [])
     end
 
     def set_q
