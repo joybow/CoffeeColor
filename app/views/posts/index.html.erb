@@ -8,12 +8,7 @@
   <%= render 'search', post: @posts, url: search_result_posts_path %>
   
   </div>
-  <%= render @posts %>
-  <% @posts.each do |post| %>
-    <% post.tags.each do |tg|%>
-      <%= tg.name %>
-    <% end %>
-  <% end %>   
+  <%= render @posts %>  
   
   <%= link_to 'New Post', new_post_path %>
   

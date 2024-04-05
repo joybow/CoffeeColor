@@ -40,17 +40,6 @@ ActiveRecord::Schema.define(version: 2024_04_03_233937) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
-  create_table "admin", charset: "utf8mb3", force: :cascade do |t|
-    t.string "name", null: false
-    t.string "email", default: "", null: false
-    t.string "encrypted_password", default: "", null: false
-    t.string "reset_password_token"
-    t.datetime "reset_password_sent_at"
-    t.datetime "remember_created_at"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
   create_table "admins", charset: "utf8mb3", force: :cascade do |t|
     t.string "name", null: false
     t.string "email", default: "", null: false
@@ -70,17 +59,13 @@ ActiveRecord::Schema.define(version: 2024_04_03_233937) do
     t.text "content"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["chat_room_id"], name: "index_chat_messages_on_chat_room_id"
-    t.index ["user_id"], name: "index_chat_messages_on_user_id"
   end
 
   create_table "chat_room_users", charset: "utf8mb3", force: :cascade do |t|
-    t.bigint "chat_room_id", null: false
-    t.bigint "user_id", null: false
+    t.integer "chat_room_id", null: false
+    t.integer "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["chat_room_id"], name: "index_chat_room_users_on_chat_room_id"
-    t.index ["user_id"], name: "index_chat_room_users_on_user_id"
   end
 
   create_table "chat_rooms", charset: "utf8mb3", force: :cascade do |t|
@@ -121,12 +106,10 @@ ActiveRecord::Schema.define(version: 2024_04_03_233937) do
   end
 
   create_table "post_tags", charset: "utf8mb3", force: :cascade do |t|
-    t.bigint "post_id", null: false
-    t.bigint "tag_id", null: false
+    t.integer "post_id", null: false
+    t.integer "tag_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["post_id"], name: "index_post_tags_on_post_id"
-    t.index ["tag_id"], name: "index_post_tags_on_tag_id"
   end
 
   create_table "posts", charset: "utf8mb3", force: :cascade do |t|
@@ -191,10 +174,6 @@ ActiveRecord::Schema.define(version: 2024_04_03_233937) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "chat_room_users", "chat_rooms"
-  add_foreign_key "chat_room_users", "users"
   add_foreign_key "favorites", "posts"
   add_foreign_key "favorites", "users"
-  add_foreign_key "post_tags", "posts"
-  add_foreign_key "post_tags", "tags"
 end

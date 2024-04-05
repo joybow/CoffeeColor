@@ -119,9 +119,10 @@ $(document).on('turbolinks:load',function() {
       reader.readAsDataURL(file);
     } 
   });
-  $('#new-post').on('submit',function(){
+  $('#edit_form').on('submit',function(){
+    console.log("ボタンが押されました。")
     $('input[name="post[exists_images][]"]').remove();
-
+    
     let existsCount = $('.existing-image').length;
     let existingBlobIds = [];
 
@@ -138,7 +139,7 @@ $(document).on('turbolinks:load',function() {
     });
     $('#new-post').append(hiddenField);
     console.log("hidden_fieldを作りました。")
+    });
   });
-  })
 });
 
