@@ -14,6 +14,7 @@ Rails.application.routes.draw do
 
   namespace :dashboard do
     resources :users, only: [:index,:update,:destroy]
+    resources :tags
   end
 
   get "dashboard", :to => "dashboard#index"
@@ -39,7 +40,7 @@ Rails.application.routes.draw do
   get 'maps/index', :to => 'maps#index'
   resources :maps, only: [:index]
   resources :chat_rooms, only: [:create, :show]
-  resources :chat_messages, only: [:create]
+  resources :chat_messages, only: [:create, :destroy]
   
   
   resources :notifications, only: :index      

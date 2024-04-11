@@ -1,18 +1,45 @@
 <p>チャットルームへようこそ<p>
 <%# 最新のメッセージが最初に来るようにする 改行　%>
-<p><%= @chat_room_user.name%></p>
-<% @chat_messages.each do |message|%>
-  <hr>
-  <div>
-    <li>内容：<%= message.content %></li>
-    <li><%= message.updated_at%>に送信済み</li>
-    <li><%= message.user.name%>さんのメッセージ</li>
-  </div>
-  <hr>
-<% end %>
+<p><%= @chat_room_user.name%>さんとのチャット</p>
+<div class="container outer-border", id="chat_message_<%= @chat_room.id%>">
+  <% @chat_messages.each do |message|%>
+    <div class="">
+      <% if message.user_id == current_user.id %>
+        <div class= "text-left">
+          <h6 ><%= message.user.name%></h6>
+          <% if current_user.user_image.present?%>
+            <%= image_tag @image, size: "100x100", class: "rounded-circle"%>
+          <% else %>
+            <%= image_tag 'CoffeeColorDashboard.jpeg', size: '100x100',class: "rounded-circle mb-3" %>
+          <% end %>
+          <h6 class="balloon" ><%= message.content %></h6>
+          <%= link_to "削除", chat_message_path(message.id), method: :delete, class: "btn btn-outline-danger del"%>
+          <br>
+          <small><%= message.updated_at%>に送信済み</small>
+          
+        </div>
+      <% else %>
+        <div class= "text-right">
+          <small ><%= message.user.name%></h6>
+          <small>
+            <% if @chat_room_user.user_image.present?%>
+              <%= image_tag @other_image, size: "100x100",class: " rounded-circle"%>
+            <% else %>
+              <%= image_tag 'CoffeeColorDashboard.jpeg', size: '100x100',class: "rounded-circle mb-3" %>
+            <% end %>
+          </small>
+          <h6 class="balloon-customer" ><%= message.content %></h6><br>
+          <small><%= message.updated_at%></small>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+  <%= form_with model: @chat_message, class: "chat-form" do |f| %>
+    <%= f.hidden_field :chat_room_id, value: @chat_room.id %>
+    <div class="textarea-container">
+      <%= f.text_area :content, placeholder: "メッセージを入力", class: 'bold-textarea' %>
+      <%= f.submit "送信", class: "submit-button" %>
+    </div>
+  <% end %>
+</div>
 
-<%= form_with model: @chat_message do |f| %>
-  <%= f.hidden_field :chat_room_id, value: @chat_room.id %>
-  <%= f.text_area :content %>
-  <%= f.submit %>
-<% end %>

@@ -42,7 +42,14 @@ class PostsController < ApplicationController
       blob_ids = params[:image_blob_ids]&.values
       blobs = ActiveStorage::Blob.where(id: blob_ids)
       @post.post_images.attach(blobs)
-      if @post.save
+      
+      if params[:post][:tag_ids].present?
+        @post.tag_ids.each do |tag|
+          @post.tags << Tag.find(tag.to_i)
+        end
+      end
+
+      if @post.save!
         redirect_to posts_path, notice: "投稿されました！"
       else
         redirect_to new_post_path

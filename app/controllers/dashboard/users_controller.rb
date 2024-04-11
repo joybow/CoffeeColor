@@ -17,13 +17,15 @@ class Dashboard::UsersController < ApplicationController
   end
 
   def update
-    @user = set_user
+    @user = User.find(params[:id])
     @user.deleted_flg = User.switch_flg(@user.deleted_flg)
     @user.update(deleted_flg: @user.deleted_flg)
-    redirect_to dashboard_users_path, notice: 'ユーザー情報を更新しました。'
   end
 
   def destroy
+    @user = User.find(params[:id])
+    @user.destroy
+    redirect_back(fallback_location: dashboard_users_path, notice: 'ユーザーを完全に削除しました。')
   end
 
   private

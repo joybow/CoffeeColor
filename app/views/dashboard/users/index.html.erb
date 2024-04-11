@@ -1,7 +1,7 @@
 <div class="w-75">
 
   <h1>顧客一覧</h1>
-
+  
   <div class="w-75">
     <%= form_with url: dashboard_users_path, method: :get, local: true do |f| %>
       <div class="d-flex flex-inline form-group">
@@ -14,27 +14,33 @@
     <% end %>
   </div>
 
-  <table class="table mt-5">
+  <table class="table-fixed mt-5">
     <thead>
-      <tr>
-        <th scope="col" class="w-25">ID</th>
-        <th scope="col">名前</th>
-        <th scope="col">メールアドレス</th>
-        <th scope="col">電話番号</th>
-        <th scope="col">ステータス</th>
+      <tr class="">
+        <th scope="col" class="w-10">ID</th>
+        <th scope="col" class="w-10">名前</th>
+        <th scope="col" class="w-25">メールアドレス</th>
+        <th scope="col" class= "w-20">電話番号</th>
+        <th scope="col" class = "w-30">ステータス</th>
       </tr>
     </thead>
     <tbody>
       <% @users.each do |user| %>
       <tr>
         <th scope="row"><%= user.id %></td>
-        <td><%= user.name %></td>
+        <td class= ><%= user.name %></td>
         <td><%= user.email %></td>
         <td><%= user.phone %></td>
-        <td>
-          <%= button_to "復旧", dashboard_user_path(current_user), method: :patch %>
+        <td class="td-deleted_flg">
+          <%= button_to "復旧", dashboard_user_path(user), method: :patch,remote: true, class: "deleted_flg", data: {user_id: user.id}%>
+          <div class="flash-messages" >
+
+          </div>
         </td>
-        <td class="btn pt-2 btn-danger">削除</td>
+        <td class="btn pt-2 td-deleted_flg ">
+          <%= button_to "削除", dashboard_user_path(user), method: :delete, data:{confirm: '本当に削除しますか？'}, class: "deleted"%>
+          <div class="flash-messages2" ></div>
+        </td>
       </tr>
       <% end %>
     </tbody>

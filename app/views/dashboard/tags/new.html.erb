@@ -1,0 +1,24 @@
+<div class="w-75">
+
+  <h1>タグ作成</h1>
+  
+  <div class="w-75">
+    <%= form_with model: @tag, url: dashboard_tags_path,  local: true do |f| %>
+      <div class="d-flex flex-inline form-group">
+        <div class="d-flex align-items-center">
+          タグ付け
+        </div>
+        <%= f.text_field :name, class: "form-controll ml-2 w-50" %>
+      </div>
+      <%= f.submit "タグ作成", class: "btn submit-button" %>
+    <% end %>
+  </div>
+  <p>現在あるタグ</p>
+  <% @tags.each do |tg|%>
+    <span class="tag-name">#<%= tg.name %></span>
+  <% end %>
+  <br>
+  <button class= "btn btn-light">
+    <%= link_to "戻る", dashboard_path%>
+  </button>
+</div>

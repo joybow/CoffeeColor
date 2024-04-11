@@ -40,3 +40,56 @@
   color: #007bff;
   margin-right: 5px;
 }
+.td-deleted_flg {
+  position: relative;
+}
+
+.flash-messages {
+  position: absolute;
+  z-index: 1000;
+  background-color: #FFF;
+  padding: 5px 10px;
+  border-radius: 5px;
+  border: 1px solid #000;
+  white-space: nowrap;
+  display: none;
+}
+
+.flash-messages::before {
+  content: "";
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  margin-left: -10px;
+  border-width: 0 10px 10px;
+  border-style: solid;
+  border-color: transparent transparent #FFF;
+  display: block;
+  width: 0;
+}
+
+.flash-messages::after {
+  content: "";
+  position: absolute;
+  top: -11px;
+  left: 50%;
+  margin-left: -10px;
+  border-width: 0 10px 10px;
+  border-style: solid;
+  border-color: transparent transparent #000;
+  display: block;
+  width: 0;
+}
+
+.CoffeeColor-sidebar-category-label {
+  width: 156px;
+  height: 20px;
+  font-family: "m-plus-rounded-2c", sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #191919;
+}
