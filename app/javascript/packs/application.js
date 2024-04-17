@@ -22,6 +22,7 @@ import './codeAddress';
 import './_form.js';
 import './confirm.js';
 import './index.js';
+import './chat_rooms.js';
 Rails.start()
 Turbolinks.start()
 ActiveStorage.start()

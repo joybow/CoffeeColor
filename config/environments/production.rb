@@ -25,7 +25,7 @@ Rails.application.configure do
   config.public_file_server.enabled = ENV['RAILS_SERVE_STATIC_FILES'].present?
 
   # Compress CSS using a preprocessor.
-  # config.assets.css_compressor = :sass
+  config.assets.js_compressor = :terser
 
   # Do not fallback to assets pipeline if a precompiled asset is missed.
   config.assets.compile = false
@@ -38,7 +38,7 @@ Rails.application.configure do
   # config.action_dispatch.x_sendfile_header = 'X-Accel-Redirect' # for NGINX
 
   # Store uploaded files on the local file system (see config/storage.yml for options).
-  config.active_storage.service = :local
+  config.active_storage.service = :amazon
 
   # Mount Action Cable outside main process or domain.
   # config.action_cable.mount_path = nil
@@ -117,4 +117,22 @@ Rails.application.configure do
   # config.active_record.database_selector = { delay: 2.seconds }
   # config.active_record.database_resolver = ActiveRecord::Middleware::DatabaseSelector::Resolver
   # config.active_record.database_resolver_context = ActiveRecord::Middleware::DatabaseSelector::Resolver::Session
+  Rails.application.configure do
+    # default url
+    config.action_mailer.default_url_options = {
+    protocol: 'https',
+    host: ENV["COFFEECOLOR_ROOT_URL"]
+    }
+    # mail setting
+    config.action_mailer.raise_delivery_errors = true
+    config.action_mailer.delivery_method = :smtp
+    config.action_mailer.smtp_settings = {
+      :address => "smtp.gmail.com",
+      :port => 587,
+      :user_name => ENV["GMAIL_ADDRESS"],
+      :password => ENV["GMAIL_2FACTOR_PASSWORD"],
+      :authentication => :plain,
+      :enable_starttls_auto => true
+    }
+  end
 end

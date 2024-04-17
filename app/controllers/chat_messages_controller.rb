@@ -13,12 +13,12 @@ class ChatMessagesController < ApplicationController
       redirect_to chat_room_path(@chat_room)
     end
   end
+
+  def destroy
+    @chat_message = ChatMessage.find(params[:id])
+    @chat_room = @chat_message.chat_room
+    @chat_message.destroy
+    redirect_back(fallback_location: root_path)
+  end
 end
 
-def destroy
-  @chat_message = ChatMessage.find(params[:id])
-  byebug
-  @chat_room = @chat_message.chat_room
-  @chat_message.destroy
-  redirect_back(fallback_location: root_path)
-end

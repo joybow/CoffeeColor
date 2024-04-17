@@ -34,7 +34,14 @@
     <label class="CoffeeColor-sidebar-category-label">タグ管理</label>
       <div class="CoffeeColor-sidebar-category-label">
         メニュー
-        <%= link_to "タグ作成", new_dashboard_tag_path %>
+        <div class="d-flex flex-column">
+          <%= link_to "タグ作成", new_dashboard_tag_path, class: "mb-2"%>
+          <%= link_to "タグ編集", dashboard_tags_path,class: "mb-2"%>
+        </div>
       </div>
   </div>
+  
+
+  
+  
 </div>

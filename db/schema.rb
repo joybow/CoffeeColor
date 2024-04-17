@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_04_10_001959) do
+ActiveRecord::Schema.define(version: 2024_04_09_080758) do
 
   create_table "active_storage_attachments", charset: "utf8mb3", force: :cascade do |t|
     t.string "name", null: false
@@ -83,13 +83,6 @@ ActiveRecord::Schema.define(version: 2024_04_10_001959) do
     t.integer "user_id", null: false
     t.integer "post_id", null: false
     t.text "content", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "dashboard_admin_tags", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.integer "admin_id", null: false
-    t.integer "admin_tag_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

@@ -1,0 +1,15 @@
+<h3>タグ編集機能</h3>
+
+  <h5>タグ一覧</h5>
+    <div class="tags_all">
+      <% if @tag.present?%>
+        <%= @tag.each do |tag|%>
+          <%= tag.name %>
+        <% end %>
+      <% else %>
+        <h6>タグはありません</h6>
+      <% end %>
+
+      
+        
+    </div>

@@ -22,7 +22,7 @@ class Dashboard::TagsController < ApplicationController
   end
 
   def edit
-
+    @tag = Tag.all
   end
 
   def show

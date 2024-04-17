@@ -2,7 +2,7 @@ require "active_support/core_ext/integer/time"
 
 Rails.application.configure do
   config.action_mailer.default_url_options = {
-    protocol: 'https',
+    protocol: 'http',
     host: ENV["COFFEECOLOR_APP_ROOT_URL"]
   }
   config.action_mailer.raise_delivery_errors = true

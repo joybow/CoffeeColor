@@ -1,5 +1,4 @@
 <p>チャットルームへようこそ<p>
-<%# 最新のメッセージが最初に来るようにする 改行　%>
 <p><%= @chat_room_user.name%>さんとのチャット</p>
 <div class="container outer-border", id="chat_message_<%= @chat_room.id%>">
   <% @chat_messages.each do |message|%>
@@ -12,15 +11,21 @@
           <% else %>
             <%= image_tag 'CoffeeColorDashboard.jpeg', size: '100x100',class: "rounded-circle mb-3" %>
           <% end %>
-          <h6 class="balloon" ><%= message.content %></h6>
-          <%= link_to "削除", chat_message_path(message.id), method: :delete, class: "btn btn-outline-danger del"%>
+          <h6 class="balloon chat-message" id= "message-<%= message.id%>" >
+            <%= message.content %>
+            <button class="del" style="display:none;" data-message-id="<%= message.id%>">削除</button>
+          </h6>
+          
           <br>
-          <small><%= message.updated_at%>に送信済み</small>
+          <% if message.created_at == @last_message %>
+            <small><%= message.created_at %>に送信済み</small>
+          <% end %>
           
         </div>
       <% else %>
         <div class= "text-right">
           <small ><%= message.user.name%></h6>
+          <br>
           <small>
             <% if @chat_room_user.user_image.present?%>
               <%= image_tag @other_image, size: "100x100",class: " rounded-circle"%>
@@ -28,8 +33,11 @@
               <%= image_tag 'CoffeeColorDashboard.jpeg', size: '100x100',class: "rounded-circle mb-3" %>
             <% end %>
           </small>
+          <br>
           <h6 class="balloon-customer" ><%= message.content %></h6><br>
-          <small><%= message.updated_at%></small>
+          <% if message.created_at == @last_other_message %>
+            <small><%= message.created_at %>に送信済み</small>
+          <% end %>
         </div>
       <% end %>
     </div>

@@ -21,7 +21,8 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
       :recoverable, :rememberable, :validatable, :confirmable
   has_many :posts, dependent: :destroy
-  has_many :posts_favorites, through: :favorites,  source: :post, dependent: :destroy 
+  has_many :posts_favorites, through: :favorites,  source: :post, dependent: :destroy
+
   has_one_attached :user_image
   has_many :tasks, dependent: :destroy
   validates :user_image, content_type: { in: %w[image/jpeg image/gif image/png],
@@ -43,6 +44,7 @@ class User < ApplicationRecord
   has_many :chat_rooms, through: :chat_room_users
   # チャットメッセージ機能
   has_many :chat_messages
+  
   scope :search_information, -> (keyword) {
     where("name like ?","%#{keyword}%").
     or(where("email like ?","%#{keyword}%")).

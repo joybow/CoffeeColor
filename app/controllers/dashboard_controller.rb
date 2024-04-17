@@ -5,5 +5,6 @@ class DashboardController < ApplicationController
   def index
     @q = User.ransack(params[:q], auth_object: current_admin)
     @users = @q.result.order(:id).page(params[:page])
+    @tag = Tag.all
   end
 end

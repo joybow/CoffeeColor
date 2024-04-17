@@ -24,11 +24,12 @@ class ChatRoomsController < ApplicationController
   def show
     @chat_message = ChatMessage.new
     @chat_room = ChatRoom.find(params[:id])
-    @chat_messages = ChatMessage.where(chat_room: @chat_room).order(created_at: :desc)
+    @chat_messages = ChatMessage.where(chat_room: @chat_room).order(created_at: :asc)
+    @last_message = @chat_messages.last.created_at
     @image = current_user.user_image
-    @other_image = User.find(params[:id])
-    # チャットユーザーにいるユーザーを検索（自分以外)
-    # @user = CharRoomUser.where.not(id: current_user.id)
     @chat_room_user = @chat_room.chat_room_users.where.not(user_id: current_user.id)[0].user
+    @other_image = @chat_room_user.user_image
+    @other_message = @chat_room.chat_messages.where.not(user_id: current_user.id).order(created_at: :asc)
+    @last_other_message = @other_message.last.created_at
   end
 end
