@@ -30,7 +30,7 @@ test:
   database: CoffeeColor_test
 
 production:
-  <<: *default
-  database: CoffeeColor_production
-  username: CoffeeColor
-  password: <%= ENV['CoffeeColor_DATABASE_PASSWORD'] %>
+  adapter: mysql2
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS"){5} %>
+  timeout: 5000
+  url: <%= ENV['DATABASE_URL']%>

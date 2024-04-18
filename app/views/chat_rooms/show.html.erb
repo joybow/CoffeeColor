@@ -11,6 +11,7 @@
           <% else %>
             <%= image_tag 'CoffeeColorDashboard.jpeg', size: '100x100',class: "rounded-circle mb-3" %>
           <% end %>
+          <br>
           <h6 class="balloon chat-message" id= "message-<%= message.id%>" >
             <%= message.content %>
             <button class="del" style="display:none;" data-message-id="<%= message.id%>">削除</button>
@@ -34,7 +35,8 @@
             <% end %>
           </small>
           <br>
-          <h6 class="balloon-customer" ><%= message.content %></h6><br>
+          <h6 class="balloon-customer" ><%= message.content %></h6>
+          <br>
           <% if message.created_at == @last_other_message %>
             <small><%= message.created_at %>に送信済み</small>
           <% end %>

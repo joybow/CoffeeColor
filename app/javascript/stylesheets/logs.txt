@@ -41,18 +41,3 @@
 2024-04-18T00:15:11.000000+00:00 app[api]: Build started by user juntwolead2@gmail.com
 2024-04-18T00:17:58.000000+00:00 app[api]: Build failed -- check your build output: https://dashboard.heroku.com/apps/9028bfd1-2930-4388-ac97-d00c8593ad0e/activity/builds/b71d7e75-01e4-4819-b8af-2adf98265633
 2024-04-18T00:29:54.000000+00:00 app[api]: Build started by user juntwolead2@gmail.com
-2024-04-18T00:32:46.000000+00:00 app[api]: Build failed -- check your build output: https://dashboard.heroku.com/apps/9028bfd1-2930-4388-ac97-d00c8593ad0e/activity/builds/f0ea8a5c-9651-48f6-9481-4d4f13258967
-2024-04-18T00:40:58.225424+00:00 app[api]: Starting process with command `rails db:schema:load` by user juntwolead2@gmail.com
-2024-04-18T00:40:58.860196+00:00 heroku[run.8880]: State changed from starting to up
-2024-04-18T00:41:02.453262+00:00 heroku[run.8880]: Process exited with status 127
-2024-04-18T00:41:02.480535+00:00 heroku[run.8880]: State changed from up to complete
-2024-04-18T00:42:40.040375+00:00 app[api]: Starting process with command `rails db:migrate` by user juntwolead2@gmail.com
-2024-04-18T00:42:40.694314+00:00 heroku[run.5614]: State changed from starting to up
-2024-04-18T00:42:44.112416+00:00 heroku[run.5614]: Process exited with status 127
-2024-04-18T00:42:44.139455+00:00 heroku[run.5614]: State changed from up to complete
-2024-04-18T00:43:03.399038+00:00 app[api]: Starting process with command `rails db:seed` by user juntwolead2@gmail.com
-2024-04-18T00:43:04.131437+00:00 heroku[run.6442]: State changed from starting to up
-2024-04-18T00:43:07.396362+00:00 heroku[run.6442]: Process exited with status 127
-2024-04-18T00:43:07.426499+00:00 heroku[run.6442]: State changed from up to complete
-2024-04-18T00:46:07.041717+00:00 app[api]: Set APP_NAME config vars by user juntwolead2@gmail.com
-2024-04-18T00:46:07.041717+00:00 app[api]: Release v6 created by user juntwolead2@gmail.com
