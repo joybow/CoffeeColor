@@ -5,32 +5,24 @@
 #   gem 'sqlite3'
 #
 default: &default
-  adapter: mysql2
-  encoding: utf8
-  database: <%= ENV['DATABASE_DEV_NAME'] %>
+  adapter: sqlite3
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  username: root
-  password: <%= ENV['DATABASE_DEV_PASSWORD'] %>
-  host: localhost
+  timeout: 5000
 
 development:
-  adapter: mysql2
-  encoding: utf8
-  database: <%= ENV['DATABASE_DEV_NAME'] %>
-  pool: 5
-  username: <%= ENV['DATABASE_DEV_USER'] %>
-  password: <%= ENV['DATABASE_DEV_PASSWORD'] %>
-  host: <%= ENV['DATABASE_DEV_HOST'] %>
+  <<: *default
+  database: db/development.sqlite3
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  database: CoffeeColor_test
+  database: db/test.sqlite3
 
 production:
   adapter: mysql2
-  pool: <%= ENV.fetch("RAILS_MAX_THREADS"){5} %>
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   timeout: 5000
-  url: <%= ENV['DATABASE_URL']%>
+  url: <%= ENV['DATABASE_URL'] %>
+

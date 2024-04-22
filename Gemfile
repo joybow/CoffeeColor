@@ -6,7 +6,7 @@ ruby '3.2.2'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails', branch: 'main'
 gem 'rails', '~> 6.1.7', '>= 6.1.7.6'
 # Use sqlite3 as the database for Active Record
-gem 'mysql2', '>= 0.5.3'
+# gem 'mysql2', '>= 0.5.3'
 gem 'dotenv-rails'
 # Use Puma as the app server
 gem 'puma', '~> 5.0'
@@ -32,6 +32,7 @@ gem 'bootsnap', '>= 1.4.4', require: false
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+  gem 'sqlite3', '~> 1.4'
 end
 
 group :development do
@@ -82,3 +83,8 @@ gem 'ransack'
 gem 'aws-sdk-s3'
 
 gem 'terser'
+
+group :production do
+  # MySQL
+  gem 'mysql2'
+end
