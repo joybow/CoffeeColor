@@ -117,22 +117,18 @@ Rails.application.configure do
   # config.active_record.database_selector = { delay: 2.seconds }
   # config.active_record.database_resolver = ActiveRecord::Middleware::DatabaseSelector::Resolver
   # config.active_record.database_resolver_context = ActiveRecord::Middleware::DatabaseSelector::Resolver::Session
-  Rails.application.configure do
-    # default url
-    config.action_mailer.default_url_options = {
+  config.action_mailer.default_url_options = {
     protocol: 'https',
     host: ENV["COFFEECOLOR_ROOT_URL"]
     }
-    # mail setting
-    config.action_mailer.raise_delivery_errors = true
-    config.action_mailer.delivery_method = :smtp
-    config.action_mailer.smtp_settings = {
-      :address => "smtp.gmail.com",
-      :port => 587,
-      :user_name => ENV["GMAIL_ADDRESS"],
-      :password => ENV["GMAIL_2FACTOR_PASSWORD"],
-      :authentication => :plain,
-      :enable_starttls_auto => true
-    }
-  end
+  config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    :address => "smtp.gmail.com",
+    :port => 587,
+    :user_name => ENV["GMAIL_ADDRESS"],
+    :password => ENV["GMAIL_2FACTOR_PASSWORD"],
+    :authentication => :plain,
+    :enable_starttls_auto => true
+  }
 end
