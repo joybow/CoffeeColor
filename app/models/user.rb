@@ -23,7 +23,7 @@ class User < ApplicationRecord
   has_many :posts, dependent: :destroy
   has_many :posts_favorites, through: :favorites,  source: :post, dependent: :destroy
 
-  has_one_attached :user_image
+  has_one_attached :user_image, service: :amazon
   has_many :tasks, dependent: :destroy
   validates :user_image, content_type: { in: %w[image/jpeg image/gif image/png],
                           message: "有効なフォーマットではありません"},

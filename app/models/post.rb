@@ -1,7 +1,7 @@
 class Post < ApplicationRecord
   belongs_to :user 
   has_many :favorites, dependent: :destroy
-  has_many_attached :post_images
+  has_many_attached :post_images, service: :amazon
   has_many :comments, dependent: :destroy
   # 通知機能
   has_many :notifications, dependent: :destroy
