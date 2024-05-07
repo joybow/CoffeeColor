@@ -21,6 +21,8 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
       :recoverable, :rememberable, :validatable, :confirmable
   has_many :posts, dependent: :destroy
+  
+  has_many :faovirtes, dependent: :destroy
   has_many :posts_favorites, through: :favorites,  source: :post, dependent: :destroy
 
   has_one_attached :user_image, service: :amazon
