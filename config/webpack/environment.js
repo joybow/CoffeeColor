@@ -3,7 +3,7 @@ const webpack = require('webpack')
 
 
 environment.config.set('entry', {
-  application: './app/javascript/packs/application.js'  
+  application: './app/assets/javascripts/application.js'  
 })
 
 module.exports = environment
