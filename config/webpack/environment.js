@@ -17,20 +17,20 @@ environment.plugins.prepend('Provide',
   })
 )
 
-if (process.env.NODE_ENV === 'production') {
-  environment.config.merge({
-    plugins: [
-      new webpack.NormalModuleReplacementPlugin(/bootstrap/,(result) =>{
-        result.request = undefined
-      })
-    ]
-  })
-} else {
-  const bootstrapEntries = ['bootstrap']
-  environment.entries.get('package').entries.forEach((entry)=> {
-    bootstrapEntries.forEach((path)=>{
-      entry.import(path).catch(console.error)
-    })
-  })
-}
+// if (process.env.NODE_ENV === 'production') {
+//   environment.config.merge({
+//     plugins: [
+//       new webpack.NormalModuleReplacementPlugin(/bootstrap/,(result) =>{
+//         result.request = undefined
+//       })
+//     ]
+//   })
+// } else {
+//   const bootstrapEntries = ['bootstrap']
+//   environment.entries.get('package').entries.forEach((entry)=> {
+//     bootstrapEntries.forEach((path)=>{
+//       entry.import(path).catch(console.error)
+//     })
+//   })
+// }
 
