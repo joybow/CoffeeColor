@@ -25,11 +25,11 @@ class ChatRoomsController < ApplicationController
     @chat_message = ChatMessage.new
     @chat_room = ChatRoom.find(params[:id])
     @chat_messages = ChatMessage.where(chat_room: @chat_room).order(created_at: :asc)
-    @last_message = @chat_messages.last.created_at
+    @last_message = @chat_messages.present? ? @chat_messages.last.created_at : nil
     @image = current_user.user_image
     @chat_room_user = @chat_room.chat_room_users.where.not(user_id: current_user.id)[0].user
     @other_image = @chat_room_user.user_image
     @other_message = @chat_room.chat_messages.where.not(user_id: current_user.id).order(created_at: :asc)
-    @last_other_message = @other_message.last.created_at
+    @last_other_message = @other_message.present? ? @other_message.last.created_at : nil
   end
 end

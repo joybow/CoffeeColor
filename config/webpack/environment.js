@@ -1,7 +1,12 @@
 const { environment } = require('@rails/webpacker')
 const webpack = require('webpack')
-const fileLoader = environment.loaders.get('file')
-fileLoader.exclude = /node_modules/
+
+
+environment.config.set('entry', {
+  application: './app/javascript/packs/application.js'  
+})
+
+module.exports = environment
 
 environment.plugins.prepend('Provide',
   new webpack.ProvidePlugin({
@@ -22,11 +27,10 @@ if (process.env.NODE_ENV === 'production') {
   })
 } else {
   const bootstrapEntries = ['bootstrap']
-  environment.entries.forEach((entry, name)=> {
+  environment.entries.get('package').entries.forEach((entry)=> {
     bootstrapEntries.forEach((path)=>{
       entry.import(path).catch(console.error)
     })
   })
 }
 
-module.exports = environment
