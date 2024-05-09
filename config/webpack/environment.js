@@ -2,9 +2,6 @@ const { environment } = require('@rails/webpacker')
 const webpack = require('webpack')
 
 
-environment.config.set('entry', {
-  application: './app/assets/javascripts/application.js'  
-})
 
 module.exports = environment
 
