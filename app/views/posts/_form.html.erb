@@ -1,4 +1,3 @@
-<%= javascript_pack_tag '_form' %>
 <%= form_with(model: @post,url: posts_confirm_path(@post), local: true,id: "new-post") do |form| %>
   <% if post.errors.any? %>
     <div id="error_explanation">
