@@ -76,6 +76,17 @@ class UsersController < ApplicationController
     redirect_to mypage_user_path
   end
 
+  def confirmations
+    @user = User.find_by(email: params[:email])
+    if @user.present? && !@user.confirmed?
+      @user.send_confirmation_instructions
+      flash[:notice] = "確認メールを再送しました。"
+    else
+      flash[:alert] = "有効なメールアドレスではありません。"
+    end
+    redirect_to new_user_session_path
+  end
+
   private
   def set_user
     @user = current_user

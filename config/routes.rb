@@ -43,6 +43,7 @@ Rails.application.routes.draw do
   resources :chat_messages, only: [:create, :destroy]
   
   
+  
   resources :notifications, only: :index      
 
   devise_for :users, :controllers => {
