@@ -3,7 +3,7 @@ const webpack = require('webpack')
 
 
 
-module.exports = environment
+
 
 environment.plugins.prepend('Provide',
   new webpack.ProvidePlugin({
@@ -13,6 +13,7 @@ environment.plugins.prepend('Provide',
     Popper: ['popper.js', 'default']
   })
 )
+module.exports = environment
 
 // if (process.env.NODE_ENV === 'production') {
 //   environment.config.merge({
