@@ -21,5 +21,7 @@ import '../javascripts/chat_rooms.js';
 Rails.start()
 Turbolinks.start()
 ActiveStorage.start()
-
+$(document).on('turbolinks:load', function(){
+  console.log('jQuery is working!');
+});
 
