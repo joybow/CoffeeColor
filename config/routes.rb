@@ -2,7 +2,9 @@ Rails.application.routes.draw do
   get 'relationships/followings'
   get 'relationships/followers'
   devise_for :admins, :controllers => {
-    :sessions => 'admins/sessions'
+    :sessions => 'admins/sessions',
+    :passwords => 'admins/passwords',
+    :confirmations => 'admins/confirmations',
   }
 
   devise_scope :admin do
