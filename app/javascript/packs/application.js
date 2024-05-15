@@ -9,8 +9,7 @@ import Rails from "@rails/ujs";
 import Turbolinks from "turbolinks";
 import * as ActiveStorage from "@rails/activestorage";
 import "../channels";
-import $ from 'jquery';
-import 'bootstrap';
+
 import '../stylesheets/application';
 import '../javascripts/codeAddress.js';
 import '../javascripts/_form.js';
@@ -21,7 +20,13 @@ import '../javascripts/chat_rooms.js';
 Rails.start()
 Turbolinks.start()
 ActiveStorage.start()
-$(document).on('turbolinks:load', function(){
-  console.log('jQuery is working!');
-});
+
+// mypageでのフォロー、アンフォローのajax
+// $(document).ready(function(){
+//   let userId = $("#following_forms").data("user-id");
+//   let followArea = $('#follow_area').html();
+//   $("#following_forms" + userId ).html(followArea);
+
+// })
+
 

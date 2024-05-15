@@ -22,7 +22,6 @@ $(document).ready(function(){
       type: 'DELETE',
       success: function(result){
         $(`#message-${messageId}`).remove();
-        console.log('削除に成功しました。')
       },
       error: function(xhr, status, error){
         console.error("削除に失敗しました：",status, error);
