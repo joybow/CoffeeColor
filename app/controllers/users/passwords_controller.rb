@@ -8,7 +8,7 @@ class Users::PasswordsController < Devise::PasswordsController
 
   # POST /resource/password
   def create
-    self.resource = resource_class.sending_reset_password_instructions(resource_params)
+    self.resource = resource_class.send_reset_password_instructions(resource_params)
     yield resource if block_given?
 
     if successfully_sent?(resource)
@@ -19,9 +19,12 @@ class Users::PasswordsController < Devise::PasswordsController
   end
 
   # GET /resource/password/edit?reset_password_token=abcdef
-  # def edit
-  #   super
-  # end
+  def edit
+    self.resource = resource_class.new
+    set_minimum_password_length
+    resource.reset_password_token = params[:reset_password_token]
+    render :edit
+  end
 
   # PUT /resource/password
   def update
@@ -33,7 +36,7 @@ class Users::PasswordsController < Devise::PasswordsController
       flash_message = resource.active_for_authentication? ? :updated : :updated_not_active
       set_flash_message!(:notice, flash_message)
       sign_in(resource_name, resource)
-      respond_with resource, location: after_sign_in_path_for(resource)
+      respond_with resource, location: mypage_user_index_path(resource)
     else
       set_minimum_password_length
       respond_with resource
@@ -48,7 +51,7 @@ class Users::PasswordsController < Devise::PasswordsController
 
   # The path used after sending reset password instructions
   def after_sending_reset_password_instructions_path_for(resource_name)
-    new_session_path(resource_name) if is_navigational_format?
+    root_path(resource_name) if is_navigational_format?
   end
 
   def set_minimum_password_length

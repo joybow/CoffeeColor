@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
   def after_sign_in_path_for(resource_or_scope)
     if current_user
       flash[:notice] = "ログインに成功しました"
-      get "mypage", :to => "users#mypage"
+      redirect_to root_path
     else
       flash[:notice] = "新規会員登録完了しました。マイページにて情報を更新して下さい。"
       coffee_color_users_path
