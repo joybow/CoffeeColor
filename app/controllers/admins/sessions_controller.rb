@@ -33,6 +33,10 @@ class Admins::SessionsController < Devise::SessionsController
     devise_parameter_sanitizer.permit(
       :sign_in, keys: [ :name, :email, :password, :password_confirmation ] )
   end
-
   
+  
+
+  def forget_me
+    request.env['devise.skip_trackable'] = true
+  end
 end

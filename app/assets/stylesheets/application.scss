@@ -134,3 +134,206 @@ h3, .h3 {
   letter-spacing: normal;
   color: #191919;
 }
+//@import '@fortawesome/fontawesome-free/scss/fontawesome';
+//@import 'bootstrap/scss/bootstrap';
+
+
+.CoffeeColor-footer {
+  width: 20%;
+}
+
+.img-css{
+  width: 30%;
+  height: 30%;
+}
+
+
+.posts {
+  margin-bottom: 15px;
+  margin-top: 15px;
+  margin-left: 15px;
+  text-align: center;
+}
+.CoffeeColor-login-input {
+  border-radius: 2px;
+  border: solid 1px #b2b2b2;
+  background-color: #ffffff;
+}
+
+.CoffeeColor-check-label {
+  font-family: YuGo;
+  font-size: 12px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #000000;
+}
+
+.CoffeeColor-require-input-label {
+  border-radius: 1px;
+  background-color: #e2001b;
+}
+
+.CoffeeColor-require-input-label-text {
+  font-family: YuGo;
+  font-size: 14px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #ffffff;
+}
+
+.submit-button {
+  font-family: YuGo;
+  font-size: 14px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #b2b2b2;
+  color: #ffffff;
+  background-color: #0fbe9f;
+}
+
+.CoffeeColor-login-text {
+  font-family: YuGo;
+  font-size: 14px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #0fbe9f;
+}
+
+.CoffeeColor-error-message {
+  width: 100%;
+  margin-top: .25rem;
+  font-size: 80%;
+  color: #e3342f
+}
+
+.user-edit-label {
+  cursor: pointer;
+  cursor: hand;
+}
+
+.user-item {
+  display: inline-block;
+  width: 200px; /* 任意の幅 */
+  margin-right: 20px; /* 適宜調整 */
+}
+
+#map {
+  height: 600px;
+  width: 600px;
+}
+
+.card-text {
+  display: inline-block;
+  font-size: 18px;
+  margin: 2px;
+}
+
+.card-title {
+  display: inline-block;
+  font-size: 18px;
+  margin: 2px;
+}
+
+.follow-info {
+  display: inline-block;
+  font-size: 18px;
+  margin: 2px;
+}
+
+.user-items {
+  text-align: center;
+  margin: 0 auto;
+  border: 1px solid #000000;
+  box-sizing: border-box;
+  max-width: 100%;
+}
+
+/* 吹き出し本体 */
+.balloon{
+  font-family: "m-plus-rounded-2c", sans-serif;
+  position: relative;
+  padding: 8px;
+  background-color: #b1fff3;
+  display: inline-block;     /* 横幅を自動で変更 */
+}
+
+/* beforeで三角を表現 */
+.balloon::before{
+  content: '';
+  position: absolute;
+  left: 10px;
+  top: -10px;
+  display: block;
+  width: 0;
+  height: 0;
+  border-right: 5px solid transparent;
+  border-bottom: 15px solid #b1fff3;
+  border-left: 5px solid transparent;
+}
+.balloon-customer{
+  position: relative;
+  padding: 10px;
+  background-color: #E1D81C;
+  display: inline-block; 
+}
+.balloon-customer::before{
+  content: '';
+  position: absolute;
+  right: 10px;
+  top: -10px;
+  display: block;
+  width: 0;
+  height: 0;
+  border-right: 5px solid transparent;
+  border-bottom: 15px solid #E1D81C;
+  border-left: 4px solid transparent;
+}
+// チャットメッセージの位置調節
+.chat-form{
+  position: relative;
+}
+
+.textarea-container{
+  position: relative;
+}
+
+.bold-textarea{
+  background-color: transparent;
+  width: 100%;
+  height: 150px;
+  color: #111112;
+  padding-right: 70px;
+}
+
+.bold-textarea:focus{
+  border: 2px solid #0000ff;
+  outline: 0;
+}
+
+.submit-button {
+  bottom: 10px;
+  right: 10px;
+  padding: 5px 10px;
+}
+// ボタンの大きさ
+.del{
+  font-size: 16px;
+}
+
+.my-image{
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+}
