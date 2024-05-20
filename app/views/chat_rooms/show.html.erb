@@ -52,4 +52,6 @@
     </div>
   <% end %>
 </div>
-
+<% content_for :javascript do %>
+  <%= javascript_include_tag 'user/chat_rooms'%>
+<% end %>

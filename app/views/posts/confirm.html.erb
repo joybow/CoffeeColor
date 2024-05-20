@@ -26,5 +26,7 @@
   <% end %>
   <%= form.submit '投稿する', name: 'save',class: "btn btn-danger" %>
 <% end %>
-
+<% content_for :javascript do %>
+  <%= javascript_include_tag 'user/confirm'%>
+<% end %>
 

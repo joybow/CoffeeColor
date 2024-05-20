@@ -1,3 +1,9 @@
 //= link_tree ../images
 //= link_directory ../stylesheets .css
 //= link application.js
+//= link user/form.js
+//= link user/chat_rooms.js
+//= link user/confirm.js
+//= link user/edit_confirm.js
+//= link user/edit_form.js
+//= link admin/index.js

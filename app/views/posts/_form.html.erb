@@ -4,7 +4,7 @@
       <h2><%= pluralize(post.errors.count, "error") %> prohibited this post from being saved:</h2>
 
       <ul>
-        <% post.errors.full_message.each do |message| %>
+        <% post.errors.full_messages.each do |message| %>
           <li><%= message %></li>
         <% end %>
       </ul>
@@ -56,7 +56,9 @@
   <%= form.submit '確認する', name: "confirm_button", class: "btn btn-primary" %>
     </div>
 <% end %>
-
+<% content_for :javascript do %>
+  <%= javascript_include_tag 'user/form'%>
+<% end %>
 
 
 
