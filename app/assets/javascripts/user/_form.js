@@ -52,7 +52,6 @@ $(document).on('turbolinks:load',function() {
         })
 
         $('#post_images')[0].files = newFileList.files;
-        console.log('file_fieldが更新されました');
         });
       };
       reader.readAsDataURL(file);
