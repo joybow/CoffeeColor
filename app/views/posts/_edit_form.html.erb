@@ -56,6 +56,6 @@
 
     <%= form.submit '確認する', name: "confirm_button", id: "edit_form", class: "btn btn-primary" %>
 <% end %>
-<% content_for :javascript %>
-  <%= javascript_include_tag 'edit_confirm'%>
+<% content_for :javascript do %>
+  <%= javascript_include_tag 'user/edit_form'%>
 <% end %>
