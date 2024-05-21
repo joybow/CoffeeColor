@@ -40,6 +40,9 @@
       <br>
     </div>
   </div>
+    <% @post.post_images.each do |exist_img|%>
+      <%= form.hidden_field :existing_image_ids, multiple: true, value: exist_img.blob.id%>
+    <% end %>
   <div class="check_box">
     <span>タグ追加</span>
     <%= form.collection_check_boxes(:tag_ids, Tag.all, :id, :name)do |tg|%>

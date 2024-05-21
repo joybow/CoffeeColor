@@ -29,6 +29,7 @@ class PostsController < ApplicationController
   # GET /posts/1/edit
   def edit
     @post = Post.find(params[:id])
+    @existing_images = @post.post_images
   end
 
   
@@ -53,6 +54,7 @@ class PostsController < ApplicationController
 
   def confirm
     @post = Post.new(post_params)
+    
     @image_blobs = []
     if params[:post][:post_images].present?
       params[:post][:post_images].each do |img|
@@ -72,27 +74,21 @@ class PostsController < ApplicationController
 
   def edit_confirm
     @post = Post.find(params[:id])
-    @post.assign_attributes(post_params)
-    @image_blobs = []
-    if params[:exists_images].present?
-      params[:exists_images].each do |img|
-        blob = ActiveStorage::Blob.find(img)
-        @image_blobs << blob
-      end
-      
-      @post.post_images.attach(@image_blobs)
-    end
-    if params[:confirm_button].present? && params[:post][:post_images].present?
-      params[:post][:post_images].each do |img|
-        blob = create_blob(img)
-        @image_blobs << blob
-      end
-    end
-    
-    unless @image_blobs.empty?
-      @post.post_images.attach(@image_blobs)
-    end
+    @existing_blobs = if params[:post][:existing_image_ids].present?
+                        params[:post][:existing_image_ids].map{|blob_id| ActiveStorage::Blob.find(blob_id)}
+                      else
+                        []
+                      end
+    @new_image_blobs =  if params[:post][:post_images].present?
+                          params[:post][:post_images].map do |file|
+                            create_blob(file)
+                          end
+                        else
+                          []
+                        end
+    @image_blobs = @existing_blobs + @new_image_blobs
 
+    @post.post_images.attach(@new_image_blobs) if @new_image_blobs.any?
   end
 
   def image_delete
@@ -144,16 +140,18 @@ class PostsController < ApplicationController
   
   # PATCH/PUT /posts/1 or /posts/1.json
   def update
-
-    if @post.post_images.present?
-      @post.post_images.each do |attc|
-        @blob = attc.blob
+    
+    if params[:back].present?
+      render 'edit'
+    elsif @post.update(post_params)
+      if @post.post_images.present?
+        @post.post_images.each do |attc|
+          @blob = attc.blob
+        end
       end
-    end
-    if @post.update!(post_params) 
-      redirect_to post_url(@post), notice: "投稿はアップデートされました！"
+      redirect_to post_url(@post), notice: "投稿はアップデートされました"
     else
-      render :edit, alert: "アップデートされませんでした。" 
+      render :edit, alert: "アップデートされませんでした。"
     end
   end
 
@@ -184,9 +182,11 @@ class PostsController < ApplicationController
       ActiveStorage::Blob.create_and_upload!(
         io: file.open,
         filename: file.original_filename,
-        content_type: file.content_type
+        content_type: file.content_type,
+        service_name: 'local'
       )
     end
+
     def permit_params
       @attr = params.require(:post).permit( :content, :title, :post_images[])
     end
