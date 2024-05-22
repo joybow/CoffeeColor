@@ -87,6 +87,7 @@ class PostsController < ApplicationController
                         else
                           []
                         end
+    # ここを繋げる必要はない
     @image_blobs = @existing_blobs + @new_image_blobs
 
     @post.post_images.attach(@new_image_blobs) if @new_image_blobs.any?

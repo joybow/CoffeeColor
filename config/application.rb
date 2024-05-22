@@ -23,5 +23,6 @@ module CoffeeColor
     config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.{rb,yml}').to_s]
     config.beginning_of_week = :sunday
     config.active_job.queue_adapter = :inline
+    config.encoding = "utf-8"
   end
 end
