@@ -183,3 +183,6 @@
   fileReader.readAsDataURL(obj.files[0]);
   }
 </script>
+<% content_for :javascript do %>
+  <%= javascript_include_tag 'user/edit'%>
+<% end %>

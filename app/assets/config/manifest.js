@@ -7,3 +7,4 @@
 //= link user/edit_confirm.js
 //= link user/edit_form.js
 //= link admin/index.js
+//= link user/edit.js

@@ -1,7 +1,7 @@
 class TasksController < ApplicationController
   
   def index
-    @task = Task.all
+    @task = Task.where(user_id: current_user.id)
   end
 
 

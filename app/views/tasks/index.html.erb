@@ -13,7 +13,7 @@
   <div class= "container">
     <% @task.each do |task|%>
     <div class="row d-flex">
-      <%= task.event_day %>
+      <%= I18n.l(task.start_time.to_date, format: :long) %>
       <%= task.title %>
       <%= task.content %>
     </div>
