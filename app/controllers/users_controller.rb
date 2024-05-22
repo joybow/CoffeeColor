@@ -72,8 +72,14 @@ class UsersController < ApplicationController
 
   def destroy
     @user.deleted_flg = User.switch_flg(@user.deleted_flg)
-    @user.update(deleted_flg: @user.deleted_flg)
-    redirect_to mypage_user_path
+    if @user.update(deleted_flg: @user.deleted_flg)
+      sign_out @user
+      notice_message ='退会処理が完了しました。また、どこかでお会いしましょう'.html_safe
+      redirect_to new_user_session_path, notice: notice_message
+    else
+      redirect_to mypage_user_index_path, alert: '退会処理に失敗しました'
+    end
+
   end
 
   def confirmations
