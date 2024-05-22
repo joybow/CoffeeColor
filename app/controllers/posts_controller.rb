@@ -74,6 +74,7 @@ class PostsController < ApplicationController
 
   def edit_confirm
     @post = Post.find(params[:id])
+    @post.assign_attributes(post_params)
     @existing_blobs = if params[:post][:existing_image_ids].present?
                         params[:post][:existing_image_ids].map{|blob_id| ActiveStorage::Blob.find(blob_id)}
                       else
