@@ -1,3 +1,4 @@
+// if (document.URL.match(/sign_up/)){
 $(document).ready(function(){
   let timeoutId = 0;
   let hideTimeoutId;

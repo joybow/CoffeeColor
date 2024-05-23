@@ -3,9 +3,16 @@
 <h3>Content: <%= @post.content %></h3>
 <h3>画像</h3>
 
-<% @image_blobs.each do |img|%>
+<% @existing_blobs.each do |img|%>
   <div class="image-container  ">
     <%= image_tag rails_blob_path(img, only_path: true), id: "image_tag_#{img.id}",  width: 200, class: "mb-2"%>
+    <br>
+    <button id= "del_btn_#{img.id}" class= "btn btn-primary delete-button mb-3" data-image-id= "<%= img.id %>">削除</button>
+  </div>
+<% end %>
+<% @new_image_blobs.each do |img|%>
+  <div class="image-container">
+    <%= image_tag rails_blob_path(img, only_path: true), id: "image_tag_#{img.id}", width: 200, class: "mb-2"%>
     <br>
     <button id= "del_btn_#{img.id}" class= "btn btn-primary delete-button mb-3" data-image-id= "<%= img.id %>">削除</button>
   </div>

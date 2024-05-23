@@ -1,9 +1,10 @@
 class PostsController < ApplicationController
+  require 'image_processing/mini_magick'
+
   before_action :authenticate_user!
   before_action :set_post, except: [:delete_confirm,:new,:image_delete, :create, :index,:search_result, :confirm, :save, :back,:edit_confirm ]
   before_action :set_q, only: [:search_result]
   # before_action :permit_params, only: [:confirm,:back,:edit_confirm]
-  
   # GET /posts or /posts.json
   def index 
     @posts = Post.all   
@@ -74,7 +75,7 @@ class PostsController < ApplicationController
 
   def edit_confirm
     @post = Post.find(params[:id])
-    @post.assign_attributes(post_params)
+    @post.assign_attributes(post_params.except(:post_images, :existing_image_ids))
     @existing_blobs = if params[:post][:existing_image_ids].present?
                         params[:post][:existing_image_ids].map{|blob_id| ActiveStorage::Blob.find(blob_id)}
                       else
@@ -88,7 +89,8 @@ class PostsController < ApplicationController
                           []
                         end
     # ここを繋げる必要はない
-    @image_blobs = @existing_blobs + @new_image_blobs
+    
+    
 
     @post.post_images.attach(@new_image_blobs) if @new_image_blobs.any?
   end
@@ -181,14 +183,39 @@ class PostsController < ApplicationController
     end
     
     def create_blob(file)
+
+      if file.size > 5.megabytes
+        file = resize_image(file)
+      end
+
       ActiveStorage::Blob.create_and_upload!(
         io: file.open,
-        filename: file.original_filename,
-        content_type: file.content_type,
+        filename: file.original_filename || "resized_image.jpg",
+        content_type: file.content_type || "image/jpeg",
         service_name: 'local'
       )
     end
 
+    def resize_image(file)
+      original_filename = file.respond_to?(:original_filename) ? file.original_filename : "resized_image.jpg"
+      content_type = file.respond_to?(:content_type) ? file.content_type : "image/jpeg"
+      resized_image = ImageProcessing::MiniMagick
+      .source(file)
+      .resize_to_limit(2000,2000)
+      .convert("jpeg")
+      .call
+      
+      tempfile = Tempfile.new(["resized", ".jpg"])
+      tempfile.binmode
+      tempfile.write(resized_image.read)
+      tempfile.rewind
+
+      tempfile.define_singleton_method(:original_filename) { original_filename }
+      tempfile.define_singleton_method(:content_type) { content_type }
+
+      tempfile
+    end
+    
     def permit_params
       @attr = params.require(:post).permit( :content, :title, :post_images[])
     end
