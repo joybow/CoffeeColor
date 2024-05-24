@@ -33,6 +33,18 @@ class UsersController < ApplicationController
     end
   end
 
+  def update_without_passoword(params, *options)
+    params.delete(:current_password)
+    if params[:possword].blank?
+      params.delete(:password)
+      params.delete(:password_confirmation) if params[:password_confirmation].blank?
+    end
+
+    result = update(params, *options)
+    clean_up_passwords
+    result
+  end
+  
   def mypage
     @profile = User.user_name_profile(current_user)
     @image = current_user.user_image
