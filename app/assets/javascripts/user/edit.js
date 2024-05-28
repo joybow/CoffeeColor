@@ -1,4 +1,5 @@
 $(document).on('turbolinks:load',function() {
+  console.log("javascriptの準備ができました。")
   const editSections = [
     { textSelector: '.userName', inputSelector: '.editUserName', labelClass: 'userNameEditLabel' },
     { textSelector: '.userMail', inputSelector: '.editUserMail', labelClass: 'userMailEditLabel' },
