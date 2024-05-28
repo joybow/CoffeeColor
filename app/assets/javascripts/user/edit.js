@@ -1,4 +1,11 @@
+$(document).ready(function(){
+  initialize();
+})
 $(document).on('turbolinks:load',function() {
+  initialize();
+})
+
+function initialize() {
   console.log("javascriptの準備ができました。")
   const editSections = [
     { textSelector: '.userName', inputSelector: '.editUserName', labelClass: 'userNameEditLabel' },
@@ -45,4 +52,4 @@ $(document).on('turbolinks:load',function() {
   });
   fileReader.readAsDataURL(obj.files[0]);
   }
-})
+}

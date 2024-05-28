@@ -1,4 +1,12 @@
 $(document).ready(function(){
+  initialize();
+})
+$(document).on('turbolinks:load',function() {
+  initialize();
+})
+
+
+function initialize(){
   let timeoutId = 0;
   let hideTimeoutId;
   $(".chat-message").on('mousedown touchstart', function(){
@@ -28,4 +36,4 @@ $(document).ready(function(){
       }
     });
   });
-});
+};

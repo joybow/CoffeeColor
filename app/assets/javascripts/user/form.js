@@ -1,4 +1,12 @@
+$(document).ready(function(){
+  initialize();
+})
 $(document).on('turbolinks:load',function() {
+  initialize();
+})
+
+
+function initialize() {
   // テキストエリアの高さを自動調節する関数
   function adjustTextFieldHeight() {
     $('.auto-resize-textarea').each(function() {
@@ -57,5 +65,5 @@ $(document).on('turbolinks:load',function() {
       reader.readAsDataURL(file);
     } 
   });
-});
+};
 

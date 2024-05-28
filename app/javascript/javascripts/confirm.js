@@ -1,4 +1,12 @@
-$(document).on('turbolinks:load', function(){
+$(document).ready(function(){
+  initialize();
+})
+$(document).on('turbolinks:load',function() {
+  initialize();
+})
+
+
+function initialize(){
   $('[id^="del_btn_"]').on('click', function(){
     let imageContainer = $(this).closest('.image-container');
     let imageId = $(this).attr('data-image-id')
@@ -18,4 +26,4 @@ $(document).on('turbolinks:load', function(){
       });
     
   })
-})
+};
