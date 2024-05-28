@@ -20,31 +20,22 @@ class UsersController < ApplicationController
   end
 
   def update
-    @user.update_without_password(user_params)
-    @user.user_image.attach(params[:user][:user_image]) if @user.user_image.blank?
-    if params[:user][:user_image_id]
-      @user.user_image.purge
-    end
-    if @user.update(user_params)
+    if @user.update_without_password(user_params)
+      if params[:user][:user_image_id]
+        @user.user_image.purge
+      elsif params[:user][:user_image].present?
+        @user.user_image.attach(params[:user][:user_image])
+      end
+      bypass_sign_in(@user) if params[:user][:password].present?
+      Rails.logger.debug "User updated: #{@user.inspect}"
       flash[:notice] = "プロフィールが変更されました！"
       redirect_to mypage_edit_user_index_path
     else
+      Rails.logger.debug "User update failed: #{@user.errors.full_messages.join(', ')}"
       render "edit", status: :unprocessable_entity
     end
   end
 
-  def update_without_passoword(params, *options)
-    params.delete(:current_password)
-    if params[:possword].blank?
-      params.delete(:password)
-      params.delete(:password_confirmation) if params[:password_confirmation].blank?
-    end
-
-    result = update(params, *options)
-    clean_up_passwords
-    result
-  end
-  
   def mypage
     @profile = User.user_name_profile(current_user)
     @image = current_user.user_image
@@ -111,8 +102,10 @@ class UsersController < ApplicationController
   end
 
   def user_params
-    params.required(:user).permit(:name,:postal_code,:address,:phone,:start_time,
-    :introduction,:local,:favorites,:email,:user_image,:user_id).merge(is_roaster: params[:user][:is_roaster].to_i)
+    allowed_params = [:name,:postal_code,:address,:phone,:start_time,:introduction,:local,:favorites,:email,:user_id]
+    allowed_params += [:password, :password_confirmation] if params[:user][:password].present?
+    allowed_params += [:user_image] if params[:user_image].present?
+    params.required(:user).permit(allowed_params).merge(is_roaster: params[:user][:is_roaster].to_i)
   end
 
 

@@ -58,7 +58,27 @@ class User < ApplicationRecord
   def self.ransackable_attributes(auth_object = nil)
     auth_object ? super : %w(name is_roaster )
   end
+  validates :password, presence: true, length: { minimum: 6 }, if: :password_required?
+  validates :password_confirmation, presence: true, if: :password_required?
+  validate :password_match, if: :password_required?
 
+  def update_without_password(params, *options)
+    if params[:password].blank?
+      params.delete(:password)
+      params.delete(:password_confirmation)
+    end
+    if params[:email].present? && params[:email] != self.email
+      self.unconfirmed_email = params[:email]
+      self.skip_reconfirmation!
+      params.delete(:email) if params[:user].present?
+    end
+    result = update(params, *options)
+    unless result
+      Rails.logger.debug "Update failed: #{errors.full_messages.join(',')}"
+    end
+    clean_up_passwords
+    result
+  end
 
   def self.ransackable_associations(auth_object = nil)
     auth_object ? super : %w[ ]
@@ -89,6 +109,16 @@ class User < ApplicationRecord
 
   def self.user_name_profile(user)
     { name: user.name.to_s, is_roaster: user.is_roaster.to_s}
+  end
+  
+  private
+
+  def password_required?
+    new_record? || !password.nil?
+  end
+
+  def password_match
+    errors.add(:password_confirmation, "とパスワードの入力が一致しません") if password != password_confirmation
   end
 
 end

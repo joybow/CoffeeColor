@@ -11,7 +11,7 @@
           <p><strong><%= params[:title] %></strong></p>
           <p>タイトル: <%= result.title%></p>
           <p>コンテンツ: <%= link_to result.content, post_path(result)%>
-        <% elsif result.conent.include?(params[:word])%>
+        <% elsif result.content.include?(params[:word])%>
           <p><strong><%= params[:title] %></strong></p>
           <p>タイトル: <%= result.title%></p>
           <p>コンテンツ: <%= link_to result.content, post_path(result)%>
