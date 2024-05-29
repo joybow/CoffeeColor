@@ -9,13 +9,14 @@
     <%= form.submit "イベントを作成", class: 'btn btn-primary'%>
   <% end %>
   <br>
-  <h4>登録されているイベントリスト</h4>
-  <div class= "container">
-    <% @task.each do |task|%>
-    <div class="row d-flex">
+  <h4>登録イベントリスト</h4>
+  <div class= "row d-flex align-items-center">
+    <% @user_task.each do |task|%>
+    <div class="col-8 md-4 mb-3">
       <%= I18n.l(task.start_time.to_date, format: :long) %>
       <%= task.title %>
       <%= task.content %>
+      <%= link_to "削除", task_path(task), method: :delete, class: "btn btn-outline-primary btn-sm ml-3 "%>
     </div>
     <% end %>
   </div>
