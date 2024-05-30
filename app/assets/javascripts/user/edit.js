@@ -1,12 +1,23 @@
-$(document).ready(function(){
+$(document).ready(function() {
   initialize();
-})
+});
+
+
 $(document).on('turbolinks:load',function() {
-  initialize();
-})
+  if (typeof Turbolinks !== 'undefined') {
+    initialize();
+  }
+});
+
+// $(document).on('turbolinks:before-visit', function(event){
+//   if (event.data.url.includes('mypage/edit')){
+//     Turbolinks.clearCache();
+//     Turbolinks.visit(event.data.url, {action: 'replace'});
+//     console.log("置き換わったよ。");
+//   }
+// })
 
 function initialize() {
-  console.log("javascriptの準備ができました。")
   const editSections = [
     { textSelector: '.userName', inputSelector: '.editUserName', labelClass: 'userNameEditLabel' },
     { textSelector: '.userMail', inputSelector: '.editUserMail', labelClass: 'userMailEditLabel' },
@@ -24,7 +35,7 @@ function initialize() {
   function switchEditUserInfo(textSelector, inputSelector, $labelElement, formId) {
     const $textElement = $(textSelector);
     const $inputElement = $(inputSelector);
-    const $form = $(formId);
+    const $form = $(formId) ? $(formId) : null;
 
     if ($textElement.is(':visible')) {
       $labelElement.text('キャンセル');
@@ -33,6 +44,9 @@ function initialize() {
       if (formId === '#editPasswordForm'){
         $form.find('.password-field').attr('required', true);
       }
+      $labelElement.off('click').on('click', function() {
+        switchEditUserInfo(textSelector, inputSelector, $(this), formId);
+      });
     } else {
       $labelElement.text('編集');
       $textElement.collapse('show');
@@ -52,4 +66,4 @@ function initialize() {
   });
   fileReader.readAsDataURL(obj.files[0]);
   }
-}
+};

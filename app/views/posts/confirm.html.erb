@@ -7,7 +7,7 @@
   <div class="image-container  ">
     <%= image_tag rails_blob_path(img, only_path: true), id: "image_tag_#{img.id}",  width: 200, class: "mb-2"%>
     <br>
-    <button id= "del_btn_#{img.id}" class= "btn btn-primary delete-button mb-3" data-image-id= "<%= img.id %>">削除</button>
+    <%# <button id= "del_btn_#{img.id}" class= "btn btn-primary delete-button mb-3" data-image-id= "<%= img.id ">削除</button> %>
   </div>
 <% end %>
 <%= form_with model: @post do |form| %>

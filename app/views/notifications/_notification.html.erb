@@ -5,7 +5,7 @@
     <div class="form-inline">
       <span>
           <strong>
-            <%= visitor.name %>
+            <%= link_to "#{visitor.name}", user_path(visitor.id), method: :get, class: "" %>
           </strong>
           
         さんが

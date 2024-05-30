@@ -16,6 +16,7 @@ class Admins::SessionsController < Devise::SessionsController
   # DELETE /resource/sign_out
   def destroy
     super
+    Turbolinks.visit("/")
   end
 
   def after_sign_in_path_for(user)
@@ -39,4 +40,5 @@ class Admins::SessionsController < Devise::SessionsController
   def forget_me
     request.env['devise.skip_trackable'] = true
   end
+  
 end

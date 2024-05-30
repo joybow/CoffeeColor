@@ -27,7 +27,6 @@ class UsersController < ApplicationController
         @user.user_image.attach(params[:user][:user_image])
       end
       bypass_sign_in(@user) if params[:user][:password].present?
-      Rails.logger.debug "User updated: #{@user.inspect}"
       flash[:notice] = "プロフィールが変更されました！"
       redirect_to mypage_edit_user_index_path
     else
