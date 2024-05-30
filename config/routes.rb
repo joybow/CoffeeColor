@@ -63,6 +63,7 @@ Rails.application.routes.draw do
     get "verify", :to => "users/registrations#verify"
     get "login", :to => "users/sessions#new"
     delete "logout", :to => "users/sessions#destroy"
+    post "users/guest_sign_in", :to => "users/sessions#guest_sign_in"
   end
 
   resources :user, only: [:edit, :update] do
@@ -76,6 +77,8 @@ Rails.application.routes.draw do
       delete "mypage/delete" , :to => "users#destroy"
     end
   end
+
+  
   
 
   resources :users do

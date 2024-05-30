@@ -111,6 +111,20 @@ class User < ApplicationRecord
     { name: user.name.to_s, is_roaster: user.is_roaster.to_s}
   end
   
+  def self.guest
+    find_or_create_by!(email: 'guest@example.com') do |user|
+      password = SecureRandom.urlsafe_base64
+      user.password = password
+      user.password_confirmation = password
+      user.name = "ゲスト"
+      user.postal_code = "1234567"  
+      user.address = "ゲストアドレス"  
+      user.phone = "1234567890"  
+      user.is_roaster = 0  
+      user.local = 0 
+    end
+  end
+
   private
 
   def password_required?

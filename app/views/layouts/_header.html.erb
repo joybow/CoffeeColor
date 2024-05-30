@@ -26,7 +26,6 @@
             <%= link_to notifications_path, class: "nav-link nav-item" do %>
             <i class="fas fa-bell p-2"></i><label>通知</label></i>
             <% end %>
-            
           <% else %>
             <li class="nav-item">
               <%= link_to "ログイン", new_user_session_path, class: "nav-link" %>
@@ -34,6 +33,7 @@
             <li class="nav-item">
               <%= link_to "登録", new_user_registration_path, class: "nav-link" %>
             </li>
+            
           <% end %>
         </ul>
       </div>
