@@ -3,11 +3,11 @@ $(document).ready(function() {
 });
 
 
-$(document).on('turbolinks:load',function() {
-  if (typeof Turbolinks !== 'undefined') {
-    initialize();
-  }
-});
+// $(document).on('turbolinks:load',function() {
+//   if (typeof Turbolinks !== 'undefined') {
+//     initialize();
+//   }
+// });
 
 // $(document).on('turbolinks:before-visit', function(event){
 //   if (event.data.url.includes('mypage/edit')){

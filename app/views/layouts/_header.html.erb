@@ -3,6 +3,10 @@
     <div class="container">
       <% if user_signed_in? %>
         <a class="navbar-brand" ><%= ENV["APP_NAME"] %></a>
+        <%= link_to posts_path, class: "nav-link nav-item link-color" do %>
+          <%= image_tag('CoffeeMark.jpeg',{ :size => '50x50', :alt => 'CoffeeMark'}) %>
+          <label>Post投稿</label>
+        <% end %>
       <% else %>
         <a class="navbar-brand" href="<%= root_path %>"><%= ENV["APP_NAME"] %></a>
       <% end %>
@@ -16,7 +20,7 @@
           <!-- user_signed_in? はユーザがログインしているか調べるdeviseのHelperメソッド -->
           <% if user_signed_in? %>
             <!-- current_user は現在ログインしているUserオブジェクトを返すdeviseのHelperメソッド -->
-            <%= link_to image_tag('CoffeeMark.jpeg',{ :size => '50x50', :alt => 'CoffeeMark'}),posts_path, class: "nav-link nav-item"%>
+            
             <%= link_to mypage_user_index_path, class: "nav-link nav-item" do %>
             <i class="fas fa-coffee p-2"></i><label>マイページ</label>
             <% end %>
