@@ -1,15 +1,18 @@
 <h3>タグ編集機能</h3>
 
-  <h5>タグ一覧</h5>
-    <div class="tags_all">
-      <% if @tag.present?%>
-        <%= @tag.each do |tag|%>
-          <%= tag.name %>
-        <% end %>
-      <% else %>
-        <h6>タグはありません</h6>
+  <h5>タグの編集</h5>
+    <div class="w-75">
+      <%= form_with model: @tag, url: dashboard_tag_path(@tag), local:true do |f|%>
+        <div class="d-flex flex-inline form-group">
+          <div class="d-flex align-items-center">
+            タグ名
+          </div>
+          <%= f.text_field :name, class: "form_control ml-2 w-50"%>
+        </div>
+        <%= f.submit "更新", class: "btn btn-primary"%>
       <% end %>
-
+    </div>
+      
       
         
     </div>

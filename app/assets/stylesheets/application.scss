@@ -256,7 +256,7 @@ h3, .h3 {
   text-align: center;
   margin: 0 auto;
   border: 1px solid #000000;
-  box-sizing: border-box;
+  box-sizing: content-box;
   max-width: 100%;
 }
 
@@ -349,4 +349,8 @@ h3, .h3 {
 
 .link-color{
  color: red;
+}
+
+.tags_all {
+  color: rgb(59, 89, 238);
 }

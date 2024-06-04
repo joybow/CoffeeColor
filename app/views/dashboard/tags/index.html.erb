@@ -1,0 +1,17 @@
+<h3>タグ編集機能</h3>
+
+  <h5>タグ一覧</h5>
+    <div class="tags_all">
+      <% if @tags.present?%>
+        <% @tags.each do |tag|%>
+          <p>#<%= tag.name %></p><br>
+          <%= link_to '編集', edit_dashboard_tag_path(tag), class: "btn btn-secondary btn-sm" %>
+          <%= link_to '削除', dashboard_tag_path(tag), method: :delete, data: { confirm: '本当に削除しますか？' }, class: 'btn btn-danger btn-sm' %>
+        <% end %>
+      <% else %>
+        <h6>タグはありません</h6>
+      <% end %>
+    </div>
+    
+    
+    </div>

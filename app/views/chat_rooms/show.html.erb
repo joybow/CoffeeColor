@@ -1,5 +1,6 @@
-<p>チャットルームへようこそ<p>
-<p><%= @chat_room_user.name%>さんとのチャット</p>
+<p class= "container">チャットルームへようこそ<p>
+<p class= "container"><%= @chat_room_user.name%>さんとのチャット</p>
+<p class= "container " style= "color: red;">※もしチャットを間違えて送信してしまったら->文字を長押し[削除]で消してください！</p>
 <div class="container outer-border", id="chat_message_<%= @chat_room.id%>">
   <% @chat_messages.each do |message|%>
     <div class="">
