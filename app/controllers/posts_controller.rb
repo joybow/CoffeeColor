@@ -31,6 +31,11 @@ class PostsController < ApplicationController
   def edit
     @post = Post.find(params[:id])
     @existing_images = @post.post_images
+    if @post.user_id != current_user.id
+      redirect_to posts_path
+      flash[:notice] = "他人の投稿は編集できません"
+    end
+
   end
 
   
@@ -162,8 +167,13 @@ class PostsController < ApplicationController
   # DELETE /posts/1 or /posts/1.json
   def destroy
     @post = set_post
-    @post.destroy
-    redirect_to posts_path, notice: "ポストの削除が完了しました。" 
+    if @post.user_id == current_user.id
+      @post.destroy
+      redirect_to posts_path, notice: "ポストの削除が完了しました。" 
+    else  
+      redirect_to posts_path
+      flash[:notice] = "他人の投稿は削除できません"
+    end 
   end
   
 
@@ -218,5 +228,12 @@ class PostsController < ApplicationController
     
     def permit_params
       @attr = params.require(:post).permit( :content, :title, :post_images[])
+    end
+
+    def correct_post
+      @post = Post.find(params[:id])
+      unless @post.user_id.id == current_user.id
+        redirect_to post_path, alert: 'このページへの推移はできません'
+      end
     end
   end
