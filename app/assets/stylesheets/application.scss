@@ -354,3 +354,29 @@ h3, .h3 {
 .tags_all {
   color: rgb(59, 89, 238);
 }
+
+#user_list_header {
+  display: flex;
+  align-items: center;
+  
+  position: relative;
+  padding-right: 30px;
+}
+
+#user_list_text {
+  margin: 0;
+}
+
+#toggle_icon {
+  font-size: 23px;
+  color: #0fbe9f;
+  position: relative;
+  right: 0;
+  bottom: -5px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+#toggle_icon.open {
+  transform: rotate(180deg);
+}
