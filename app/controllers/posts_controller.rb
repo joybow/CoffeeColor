@@ -122,6 +122,7 @@ class PostsController < ApplicationController
     @image_blob_id = ActiveStorage::Blob.find(params[:id])
     @image_blob_id.purge
   end
+
   def search_result
     @range = params[:range]
     @word = params[:word]
@@ -158,7 +159,7 @@ class PostsController < ApplicationController
           @blob = attc.blob
         end
       end
-      redirect_to post_url(@post), notice: "投稿はアップデートされました"
+      redirect_to post_url(@post), flash[:notice]
     else
       render :edit, alert: "アップデートされませんでした。"
     end
