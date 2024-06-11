@@ -8,7 +8,6 @@
 
 
 
-
 // const colorpicker = document.getElementById('arrow-icon-color-selector');
 //   const arrowicon = document.getElementById('arrow-icon');
 //   // カラーピッカーの入力値(inputの値)が変更されたら{}内の処理を実行する

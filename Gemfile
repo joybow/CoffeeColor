@@ -80,7 +80,7 @@ gem 'rails-i18n'
 gem 'active_storage_validations'
 
 gem 'faker'
-
+gem 'stimulus-rails'
 gem 'kaminari'
 
 gem 'simple_calendar', '~> 2.4'
