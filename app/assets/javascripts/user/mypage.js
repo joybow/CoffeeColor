@@ -16,4 +16,16 @@ function initialize() {
       toggleIcon.removeClass('open');
     }
   });
+
+  $('.slick-slider').slick({
+    infinite: true,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    autoplay: false,
+    dots: true,
+    arrows: true,
+    prevArrow: '<button type="button" class="slick-prev">Previous</button>',
+    nextArrow: '<button type="button" class="slick-next">Next</button>'
+
+  })
 };

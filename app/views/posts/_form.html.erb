@@ -21,8 +21,9 @@
   </div>
   <br>
   <div class="form-group gap-2 ">
-    <%= form.file_field :post_images,
+    <%= form.file_field :post_images, rows: 20,
       accept: "image/jpeg,image/gif,image/png",
+      data: { contorller: "ActiveStorage::Blob.create_and_upload!", action: "drop->markdown-upload#dropUpload"}
       multiple: true, class: "btn btn-primary",id: "post_images" %>
     <div id="post_images_preview_container">
       <% if @post.post_images.attached? %>

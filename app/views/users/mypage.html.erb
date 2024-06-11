@@ -54,11 +54,11 @@
         </div>
       <% end %>
     </div>
-    <%= render 'follow_list', user: @users%>
-    <h3>チャット機能
+    <%= render 'follow_list', user: @users%><br>
+    <h3>チャット機能<br>
       <% if @chat.present?%>
         <% @chat.each do |chat_user|%>
-          <%= link_to "#{chat_user.name}さんとチャット", chat_rooms_path(user_id: chat_user.id),method: :post%>
+          <%= link_to "#{chat_user.name}さんとチャット", chat_rooms_path(user_id: chat_user.id),method: :post,class: "mt-3 mb-3 "%><br>
         <% end %>
       <% else %>
         <h4>チャット可能なユーザーはいません</h4>
@@ -79,18 +79,19 @@
     <hr>
 
     <div class="col-12 mg-5">
-      <div class="row flex-column border-info align-items-light">最近の投稿
+      <div class="row flex-column border-info align-items-light">あなたの画像
       </div>
     </div>
-    <div class="posts border ">
+    <div class=" border slick-slider ">
       <% current_user.posts.each do |f| %>
         <% f.post_images.each do |img|%>
-          <%= image_tag img, size: '100x100'%>
+          <%= image_tag rails_blob_path(img, only_path: true), class: "carousel-image"%>
         <% end %><br>
-        <%= f.title %> <br>
-        <%= f.content %><br>
       <% end %>
-      <div class="calendar">
+      
+    </div>
+
+    <div class="calendar">
         <%= month_calendar(events: @tasks) do |date, tasks| %>
           <%= date.day %>
           <% tasks.each do |task| %>
@@ -100,17 +101,18 @@
           <% end %>
         <% end %>
       </div>
-    </div>
     <br>
     <div class="card-deck">
-      <div class="card col-12" style= "width: 18rem">
+      <div class="card  col-12" style= "width: 18rem">
         <p>↓イベント作成はこちら↓</p>
         <div class="cardtitle">
         <%= link_to "イベント作成", tasks_path %>
         </div>
       <br>
-        <div class="card-title">
+        <div>最近の投稿</div>
+        <div class=" card-title">
           <% current_user.posts.each do |f|%>
+            <%= image_tag f, size: "100x100"%>
           <%= f.title %><br>
         </div>
         <div class="card-text">

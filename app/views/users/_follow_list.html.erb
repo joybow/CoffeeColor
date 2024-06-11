@@ -1,24 +1,26 @@
 <% if user.present? %>
-  <h4 class= "text-primary">フォローしているユーザー</h4>
-  <div class= "border-top border-bottom">
-    <% user.each do |user| %>
-      <table>
-        <thead>
-          <tr>
-            <th>名前</th>
-            <th></th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><%= link_to user.name, user_path(user) %></td>
-            <td>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    <% end %>
+  <h4 class= "border-top">フォローしているユーザー</h4>
+  <div class= " border-bottom">
+      <% user.each_slice(5) do |users| %>
+      <div class="row">
+        <% users.each do |u|%>
+        <div class="col-md-2 ">
+          <div class="card">
+            <% if u.user_image.attached?%>
+              <%= image_tag u.user_image, size: "100x150",class: "card-img-top", alt:"user.name" %>
+            <% else %>
+              <%= image_tag 'CoffeeColorDashboard.jpeg',size: "100x150",class: "card-img-top" %>
+            <% end %>
+          </div>
+          <div class="card-body">
+            <h5 class="card-title"><%= u.name %></h5>
+            <p class="card-text"><%= u[:is_roaster] %></p>
+            <a href="<%= user_path(u)%>" class="btn btn-info btn-sm">Profile</a>
+          </div>
+        </div>
+        <% end %>
+      </div>
+      <% end %>
 <% else %>
   <p>フォローしているユーザーはいません</p>
 <% end %>
