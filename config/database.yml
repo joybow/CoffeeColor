@@ -22,9 +22,21 @@ test:
   database: db/cofffeecolor_test.sqlite3
 
 production:
+  <<: *default
   adapter: mysql2
   encoding: utf8mb4
+  charset: utf8mb4
+  database: <%= ENV['DB_DATABASE'] %>
+  collation: utf8mb4_general_ci
+  host: <%= ENV['DB_HOST'] %>
+  username: <%= ENV['DB_USERNAME'] %>
+  password: "<%= ENV['DB_PASSWORD'] %>"
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   timeout: 5000
   url: <%= ENV['DATABASE_URL'] %>
+
+  
+  
+  
+  
 

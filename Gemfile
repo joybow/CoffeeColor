@@ -11,7 +11,7 @@ gem 'rails', '~> 6.1.7', '>= 6.1.7.6'
 
 gem 'dotenv-rails'
 # Use Puma as the app server
-gem 'puma', '~> 5.0'
+gem 'puma', '~> 3.11'
 # Use SCSS for stylesheets
 gem 'sass-rails', '>= 6'
 # Transpile app-like JavaScript. Read more: https://github.com/rails/webpacker
@@ -65,7 +65,9 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem 'net-http'
-
+gem "net-smtp"
+gem "net-pop"
+gem "net-imap"
 gem 'devise'
 
 gem 'bootstrap', '~>4.6.0'
