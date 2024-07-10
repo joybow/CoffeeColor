@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '3.2.2'
+ruby '3.1.2'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails', branch: 'main'
 gem 'rails', '~> 6.1.7', '>= 6.1.7.6'
@@ -81,7 +81,6 @@ gem 'ruby-vips'
 gem 'rails-i18n'
 gem 'active_storage_validations'
 
-gem 'faker'
 gem 'stimulus-rails'
 gem 'kaminari'
 
