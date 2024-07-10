@@ -369,7 +369,6 @@ DEPENDENCIES
   rails-i18n
   ransack
   rspec-rails
-  ruby-vips
   sass-rails (>= 6)
   selenium-webdriver (>= 4.0.0.rc1)
   simple_calendar (~> 2.4)
