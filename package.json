@@ -2,7 +2,7 @@
   "name": "coffee-color",
   "private": true,
   "engines": {
-    "node": "14.x",
+    "node": "18.x",
     "npm": "6.x"
   },
   "dependencies": {
