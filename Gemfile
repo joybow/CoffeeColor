@@ -94,5 +94,5 @@ gem 'terser'
 
 group :production do
   # MySQL
-  gem 'mysql2', '~> 0.5.6'
+  gem 'mysql2'
 end
